@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickSell Enterprise Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>QuickSell Pro App</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -13,175 +13,186 @@
             --text: #1e293b;
             --price: #dc2626;
             --success: #16a34a;
+            --border: #e2e8f0;
         }
 
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); }
-        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); padding-bottom: 75px; }
         
-        /* Navbar & Auth Header */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: var(--card-bg); box-shadow: 0 2px 4px rgba(0,0,0,0.02); border-radius: 12px; margin-bottom: 25px; }
-        .nav-logo { font-weight: bold; color: var(--primary); font-size: 1.3rem; }
-        .user-badge { font-size: 14px; background: #e2e8f0; padding: 6px 12px; border-radius: 20px; font-weight: 600; }
+        .container { max-width: 500px; margin: 0 auto; background: #ffffff; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; padding: 15px; }
+        
+        /* App Header */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
+        header h1 { font-size: 1.2rem; color: var(--primary); margin: 0; font-weight: 700; }
+        .logout-btn { background: #fee2e2; color: #ef4444; border: none; padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; cursor: pointer; }
 
-        /* Screens Management */
-        .screen { display: none; }
-        .screen.active { display: block; }
+        /* Navigation Bottom Bar */
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #ffffff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border); box-shadow: 0 -4px 10px rgba(0,0,0,0.03); z-index: 999; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 600; text-decoration: none; width: 20%; text-align: center; }
+        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        .nav-item.active { color: var(--primary); }
+        #adminTab { display: none; } /* Hidden by default */
 
-        /* Auth Forms Card */
-        .auth-card, .section-card { background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 30px; }
-        .auth-card h2, .section-card h2 { margin-top: 0; margin-bottom: 20px; color: #0f172a; }
+        /* App Screens Router */
+        .app-screen { display: none; }
+        .app-screen.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Cards & Forms UI */
+        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom: 15px; }
+        .app-card h2 { margin-top: 0; font-size: 1.2rem; color: #0f172a; margin-bottom: 15px; }
         
-        .form-group { margin-bottom: 18px; }
-        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #475569; }
+        .form-group { margin-bottom: 14px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #475569; }
         
-        input, textarea, select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 16px; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s; }
-        input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        input, textarea, select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s; background: #f8fafc; }
+        input:focus, textarea:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08); }
         
-        button { background: var(--primary); color: white; border: none; padding: 14px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; width: 100%; }
+        button { background: var(--primary); color: white; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; transition: 0.2s; width: 100%; }
         button:hover { background: var(--primary-dark); }
         button:disabled { background: #cbd5e1; cursor: not-allowed; }
 
-        .switch-auth { text-align: center; margin-top: 15px; font-size: 14px; color: #64748b; cursor: pointer; }
-        .switch-auth b { color: var(--primary); }
+        /* Product Catalog UI */
+        .hero-product-img { width: 100%; height: 280px; object-fit: cover; border-radius: 14px; background: #f1f5f9; border: 1px solid var(--border); }
+        .prod-title { font-size: 1.4rem; color: #0f172a; margin: 12px 0 6px 0; font-weight: 700; }
+        .prod-price { font-size: 1.5rem; font-weight: bold; color: var(--price); margin-bottom: 10px; }
+        .prod-desc { color: #475569; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
 
-        /* Product Showcase Layout */
-        .product-hero { background: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 30px; }
-        .product-img { width: 100%; max-height: 380px; object-fit: cover; background: #f1f5f9; }
-        .product-details { padding: 25px; }
-        .product-title { font-size: 1.8rem; margin: 0 0 10px 0; color: #0f172a; }
-        .product-price { font-size: 1.6rem; font-weight: bold; color: var(--price); margin-bottom: 15px; }
-        .product-desc { color: #475569; line-height: 1.6; margin-bottom: 20px; }
-
-        /* Order Tracking Stepper */
-        .tracking-box { background: #eff6ff; border: 1px solid #bfdbfe; padding: 20px; border-radius: 12px; margin-bottom: 25px; }
-        .status-stepper { display: flex; justify-content: space-between; margin-top: 15px; position: relative; }
-        .step { font-size: 12px; font-weight: bold; color: #94a3b8; text-align: center; flex: 1; }
+        /* Live Tracking Component */
+        .track-container { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: center; }
+        .stepper { display: flex; justify-content: space-between; margin-top: 12px; position: relative; }
+        .step { font-size: 11px; font-weight: bold; color: #94a3b8; flex: 1; text-align: center; }
         .step.active { color: var(--primary); }
         .step.done { color: var(--success); }
 
-        /* Admin Layout Control Room */
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .stat-card h3 { margin: 0; font-size: 14px; color: #64748b; text-transform: uppercase; }
-        .stat-card .val { font-size: 24px; font-weight: bold; color: #0f172a; margin-top: 5px; }
-        
-        .order-table-wrapper { background: var(--card-bg); border-radius: 12px; border: 1px solid #e2e8f0; overflow-x: auto; padding: 15px; margin-bottom: 30px; }
-        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
-        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
-        th { background: #f8fafc; color: #475569; font-weight: 600; }
-        
-        .status-badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
-        .status-pending { background: #fef3c7; color: #d97706; }
-        .status-shipped { background: #e0f2fe; color: #0369a1; }
-        .status-delivered { background: #dcfce7; color: #15803d; }
+        /* Admin Layout Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .stat-item { background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid var(--border); text-align: center; }
+        .stat-item p { margin: 0; font-size: 12px; color: #64748b; text-transform: uppercase; }
+        .stat-item h3 { margin: 4px 0 0 0; font-size: 18px; color: #0f172a; }
+
+        .order-row { border-bottom: 1px solid var(--border); padding: 12px 0; font-size: 13px; }
+        .order-row:last-child { border-bottom: none; }
+        .badge { padding: 3px 6px; border-radius: 6px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+        .badge-pending { background: #fef3c7; color: #d97706; }
+        .badge-shipped { background: #e0f2fe; color: #0369a1; }
+        .badge-delivered { background: #dcfce7; color: #15803d; }
     </style>
+    <script type="module" src="https://unpkg.com/ionicons@7.10.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
 <body>
 
     <div class="container">
-        <nav>
-            <div class="nav-logo">📦 QuickSell Enterprise</div>
-            <div id="navUserArea">
-                <button onclick="logout()" style="padding:6px 12px; font-size:12px; background:#ef4444; width:auto;">Logout</button>
-            </div>
-        </nav>
+        <header id="appHeader" style="display:none;">
+            <h1>QuickSell Pro ⚡</h1>
+            <button class="logout-btn" onclick="appLogout()">Logout</button>
+        </header>
 
-        <div id="loginScreen" class="screen auth-card">
-            <h2>Sign In to Your Account</h2>
-            <form id="loginForm">
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="loginEmail" placeholder="name@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="loginPass" placeholder="••••••••" required>
-                </div>
-                <button type="submit">Sign In Securely</button>
-                <div class="switch-auth" onclick="showScreen('signupScreen')">Don't have an account? <b>Sign Up Here</b></div>
-            </form>
-        </div>
-
-        <div id="signupScreen" class="screen auth-card">
-            <h2>Create Your Customer Profile</h2>
-            <form id="signupForm">
-                <div class="form-group"><label>Full Name</label><input type="text" id="regName" placeholder="Enter full name" required></div>
-                <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="name@example.com" required></div>
-                <div class="form-group"><label>WhatsApp Mobile Number (With 91)</label><input type="tel" id="regPhone" placeholder="919999999999" required></div>
-                <div class="form-group"><label>Full Delivery Address</label><textarea id="regAddress" rows="2" placeholder="House No, Street, City, Pincode" required></textarea></div>
-                <div class="form-group"><label>Password</label><input type="password" id="regPass" placeholder="Create strong password" required></div>
-                <button type="submit">Complete Registration</button>
-                <div class="switch-auth" onclick="showScreen('loginScreen')">Already have an account? <b>Login Here</b></div>
-            </form>
-        </div>
-
-        <div id="storeScreen" class="screen">
-            <div id="orderTrackingCard" class="tracking-box" style="display:none;">
-                <h3 style="margin:0; color:#1e40af;">⏳ Live Tracking Status for Your Order</h3>
-                <div class="status-stepper">
-                    <div class="step" id="step-pending">● Placed</div>
-                    <div class="step" id="step-shipped">● Shipped</div>
-                    <div class="step" id="step-delivered">● Delivered</div>
-                </div>
-            </div>
-
-            <div class="product-hero">
-                <img class="product-img" id="storeImg" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800" alt="Product Live Preview">
-                <div class="product-details">
-                    <h2 class="product-title" id="storeTitle">Premium Corporate Hardware</h2>
-                    <div class="product-price" id="storePrice">₹0</div>
-                    <p class="product-desc" id="storeDesc">Loading official production-grade documentation details directly from store warehouse parameters...</p>
-                    <button id="buyBtn" style="padding:16px;">⚡ Click to Instant Checkout (COD)</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="adminScreen" class="screen">
-            <h2 style="color:#0f172a; margin-bottom:5px;">👑 Enterprise Control Center</h2>
-            <p style="color:#64748b; margin-top:0; margin-bottom:25px;">Logged in as Store Owner: tanishmandloi2006@gmail.com</p>
-
-            <div class="admin-grid">
-                <div class="stat-card"><h3>Total Sales Revenue</h3><div class="val" id="statRevenue">₹0</div></div>
-                <div class="stat-card"><h3>Total Received Orders</h3><div class="val" id="statOrders">0</div></div>
-                <div class="stat-card"><h3>Registered Customers</h3><div class="val" id="statUsers">0</div></div>
-            </div>
-
-            <div class="order-table-wrapper">
-                <h3>📦 Customer Incoming Orders Panel</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Customer Info</th>
-                            <th>Shipping Address</th>
-                            <th>Ordered Item</th>
-                            <th>Status Control</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminOrdersTable">
-                        <tr><td colspan="4" style="text-align:center; color:#64748b;">Awaiting live network stream data...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="section-card">
-                <h3>⚙️ Live Product Content Configurations</h3>
-                <form id="productConfigForm">
-                    <div class="form-group"><label>Title</label><input type="text" id="admTitle" required></div>
-                    <div class="form-group"><label>Price (₹)</label><input type="number" id="admPrice" required></div>
-                    <div class="form-group"><label>Description Text</label><textarea id="admDesc" rows="3" required></textarea></div>
-                    <div class="form-group"><label>Product Image Link (URL)</label><input type="text" id="admImg" required></div>
-                    <button type="submit" style="background:#10b981;">Save Configurations & Go Live</button>
+        <div id="scrLogin" class="app-screen active">
+            <div class="app-card" style="margin-top: 40px;">
+                <h2>Welcome Back!</h2>
+                <form id="formLogin">
+                    <div class="form-group"><label>Email Address</label><input type="email" id="logEmail" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" id="logPass" required></div>
+                    <button type="submit">Log In</button>
+                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrSignup')">New user? <b style="color:var(--primary);">Create Account</b></p>
                 </form>
             </div>
         </div>
+
+        <div id="scrSignup" class="app-screen">
+            <div class="app-card">
+                <h2>Create Profile</h2>
+                <form id="formSignup">
+                    <div class="form-group"><label>Full Name</label><input type="text" id="regName" required></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" required></div>
+                    <div class="form-group"><label>WhatsApp Number (With 91)</label><input type="tel" id="regPhone" placeholder="91XXXXXXXXXX" required></div>
+                    <div class="form-group"><label>Full Delivery Address</label><textarea id="regAddress" rows="2" required></textarea></div>
+                    <div class="form-group"><label>Password</label><input type="password" id="regPass" required></div>
+                    <button type="submit">Sign Up</button>
+                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrLogin')">Have an account? <b style="color:var(--primary);">Log In</b></p>
+                </form>
+            </div>
+        </div>
+
+        <div id="scrHome" class="app-screen">
+            <div id="userTrackingBox" class="track-container" style="display:none;">
+                <span style="font-size:13px; font-weight:bold; color:#1e40af;">🚚 Live Order Tracking Status</span>
+                <div class="stepper">
+                    <div class="step" id="cust-step-pending">● Placed</div>
+                    <div class="step" id="cust-step-shipped">● Shipped</div>
+                    <div class="step" id="cust-step-delivered">● Delivered</div>
+                </div>
+            </div>
+
+            <div class="app-card" style="padding:12px;">
+                <img class="hero-product-img" id="viewImg" src="" alt="Product">
+                <h2 class="prod-title" id="viewTitle">Loading Product...</h2>
+                <div class="prod-price" id="viewPrice">₹0</div>
+                <p class="prod-desc" id="viewDesc">Fetching details...</p>
+                <button id="btnCheckout">⚡ Buy Now (Cash on Delivery)</button>
+            </div>
+        </div>
+
+        <div id="scrOrders" class="app-screen">
+            <div class="app-card">
+                <h2>Your Orders History</h2>
+                <div id="customerOrdersList" style="font-size:14px; color:#64748b;">No orders placed yet.</div>
+            </div>
+        </div>
+
+        <div id="scrProfile" class="app-screen">
+            <div class="app-card">
+                <h2>My Account Profile</h2>
+                <div style="background:#f8fafc; padding:15px; border-radius:10px; border:1px solid var(--border); margin-bottom:15px;">
+                    <p style="margin:5px 0;"><b>Name:</b> <span id="profName">-</span></p>
+                    <p style="margin:5px 0;"><b>Email:</b> <span id="profEmail">-</span></p>
+                    <p style="margin:5px 0;"><b>WhatsApp:</b> <span id="profPhone">-</span></p>
+                    <p style="margin:5px 0;"><b>Address:</b> <span id="profAddress">-</span></p>
+                </div>
+                <button onclick="appLogout()" style="background:#ef4444;">Log Out From Account</button>
+            </div>
+        </div>
+
+        <div id="scrAdmin" class="app-screen">
+            <h2>👑 Admin Control Center</h2>
+            <div class="stats-grid">
+                <div class="stat-item"><p>Revenue</p><h3 id="admRevenue">₹0</h3></div>
+                <div class="stat-item"><p>Total Orders</p><h3 id="admOrderCount">0</h3></div>
+            </div>
+
+            <div class="app-card">
+                <h2>Live Orders Pipeline</h2>
+                <div id="admOrdersContainer">Awaiting orders...</div>
+            </div>
+
+            <div class="app-card">
+                <h2>Configure Product Asset</h2>
+                <form id="formAdminProduct">
+                    <div class="form-group"><label>Title</label><input type="text" id="admInpTitle" required></div>
+                    <div class="form-group"><label>Price (₹)</label><input type="number" id="admInpPrice" required></div>
+                    <div class="form-group"><label>Description</label><textarea id="admInpDesc" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Upload Product Photo</label><input type="file" id="admInpFile" accept="image/*"></div>
+                    <button type="submit" id="btnAdminSave" style="background:#10b981;">Sync Dynamic Product Assets</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="bottom-nav" id="appBottomNav" style="display:none;">
+            <div class="nav-item active" onclick="switchTab('scrHome', this)"><ion-icon name="storefront-outline"></ion-icon><div>Store</div></div>
+            <div class="nav-item" onclick="switchTab('scrOrders', this)"><ion-icon name="bag-handle-outline"></ion-icon><div>Orders</div></div>
+            <div class="nav-item" onclick="switchTab('scrProfile', this)"><ion-icon name="person-outline"></ion-icon><div>Profile</div></div>
+            <div class="nav-item" id="adminTab" onclick="switchTab('scrAdmin', this)"><ion-icon name="shield-checkmark-outline"></ion-icon><div>Admin</div></div>
+        </div>
+
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
 
-        // Firebase Core Credentials Match Key configurations
         const firebaseConfig = {
             apiKey: "AIzaSyDFCJP7HLy3Yri2mLu7o36RrgBgdl98MAk",
             authDomain: "taskcashweb-73839467-21713.firebaseapp.com",
@@ -194,214 +205,229 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
-        // System Constants 
         const ADMIN_EMAIL = "tanishmandloi2006@gmail.com";
         const productDocRef = doc(db, "store", "current_product");
+        let profileCache = null;
 
-        let currentUserProfile = null;
-
-        // SCREEN ROUTER UTILITY
-        window.showScreen = function(screenId) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
+        // ROUTER FUNCTIONS
+        window.switchAuthScreen = function(scrId) {
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(scrId).classList.add('active');
         }
 
-        // --- AUTHENTICATION MODULE CONTROLS ---
-        
-        // 1. Sign Up Logic
-        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        window.switchTab = function(tabId, el) {
+            document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            el.classList.add('active');
+        }
+
+        // CUSTOM LOGOUT
+        window.appLogout = function() { signOut(auth).then(() => location.reload()); }
+
+        // --- AUTH FORMS HANDLERS ---
+        document.getElementById('formSignup').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
             const email = document.getElementById('regEmail').value.trim();
             const phone = document.getElementById('regPhone').value.trim();
             const address = document.getElementById('regAddress').value.trim();
             const pass = document.getElementById('regPass').value;
-
             try {
-                const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                // Save additional metadata parameters to custom profiles database collections
-                await setDoc(doc(db, "users", cred.user.uid), { name, email, phone, address });
-                alert("Account registration successful! Welcome to the store.");
-            } catch (err) { alert("Registration Failed: " + err.message); }
+                const c = await createUserWithEmailAndPassword(auth, email, pass);
+                await setDoc(doc(db, "users", c.user.uid), { name, email, phone, address });
+                alert("Profile Registered Successfully! 🎉");
+            } catch(e) { alert(e.message); }
         });
 
-        // 2. Sign In Logic
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value.trim();
-            const pass = document.getElementById('loginPass').value;
             try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch(err) { alert("Invalid Credentials: " + err.message); }
+                await signInWithEmailAndPassword(auth, document.getElementById('logEmail').value.trim(), document.getElementById('logPass').value);
+            } catch(e) { alert(e.message); }
         });
 
-        // 3. Logout System Control
-        window.logout = function() { signOut(auth).then(() => location.reload()); }
+        // LIVE CONSOLE WHATSAPP METRICS LOGGER WEBHOOK GATEWAY
+        function fakeWhatsAppAlert(phone, msg) {
+            console.log(`%c[WhatsApp Trigger] To: +${phone} | Msg: "${msg}"`, "color:#10b981; font-weight:bold;");
+        }
 
-        // WATCH AUTH STATE CHANGE LIVE
+        // ON AUTH STATE CHANGED
         onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                if (user.email === ADMIN_EMAIL) {
-                    showScreen('adminScreen');
-                    loadAdminDashboardData();
+            if(user) {
+                document.getElementById('appHeader').style.display = "flex";
+                document.getElementById('appBottomNav').style.display = "flex";
+                
+                if(user.email === ADMIN_EMAIL) {
+                    document.getElementById('adminTab').style.display = "flex";
+                    switchTab('scrAdmin', document.getElementById('adminTab'));
+                    initAdminDashboard();
                 } else {
-                    // Fetch user account profiles meta properties
-                    const uDoc = await getDoc(doc(db, "users", user.uid));
-                    if(uDoc.exists()) currentUserProfile = uDoc.data();
-                    showScreen('storeScreen');
-                    listenToUserOrderTracking(user.uid);
+                    document.getElementById('adminTab').style.display = "none";
+                    const snap = await getDoc(doc(db, "users", user.uid));
+                    if(snap.exists()) {
+                        profileCache = snap.data();
+                        document.getElementById('profName').innerText = profileCache.name;
+                        document.getElementById('profEmail').innerText = profileCache.email;
+                        document.getElementById('profPhone').innerText = profileCache.phone;
+                        document.getElementById('profAddress').innerText = profileCache.address;
+                    }
+                    switchTab('scrHome', document.querySelectorAll('.nav-item')[0]);
+                    initCustomerView(user.uid);
                 }
             } else {
-                showScreen('loginScreen');
+                document.getElementById('appHeader').style.display = "none";
+                document.getElementById('appBottomNav').style.display = "none";
+                switchAuthScreen('scrLogin');
             }
         });
 
-        // --- WHATSAPP SIMULATION AUTOMATED NOTIFICATIONS SYSTEM ---
-        function triggerWhatsAppNotificationGateway(customerPhoneNumber, messageString) {
-            console.log(`%c[WhatsApp System Gateway Outbox Log Matrix] Sending payload alert to: +${customerPhoneNumber}`, "color: #16a34a; font-weight: bold;");
-            console.log(`%cMessage: "${messageString}"`, "color: #475569; italic: true;");
-            
-            // Webhook structural trigger framework configuration integration layout
-            // replace with active gateway endpoint routing string format payload block mapping array
-            // fetch(`https://api.whatsappgateway.com/send?to=${customerPhoneNumber}&text=${encodeURIComponent(messageString)}`).catch(e=>e);
-        }
-
-        // --- STORE SHOWCASE SYSTEM MANAGER ---
+        // --- PUBLIC STORE ENGINE ---
         onSnapshot(productDocRef, (snap) => {
             if(snap.exists()) {
                 const d = snap.data();
-                document.getElementById('storeTitle').innerText = d.title;
-                document.getElementById('storePrice').innerText = "₹" + d.price;
-                document.getElementById('storeDesc').innerText = d.desc;
-                document.getElementById('storeImg').src = d.img;
+                document.getElementById('viewTitle').innerText = d.title;
+                document.getElementById('viewPrice').innerText = "₹" + d.price;
+                document.getElementById('viewDesc').innerText = d.desc;
+                if(d.img) document.getElementById('viewImg').src = d.img;
 
-                // Bind Admin setup values buffer parameters automatically
-                document.getElementById('admTitle').value = d.title;
-                document.getElementById('admPrice').value = d.price;
-                document.getElementById('admDesc').value = d.desc;
-                document.getElementById('admImg').value = d.img;
-            } else {
-                setDoc(productDocRef, { title: "Premium Gadget Pro Edition", price: 4999, desc: "Enterprise standard hardware production architecture configurations specs.", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800" });
+                // Admin field auto filler buffer
+                document.getElementById('admInpTitle').value = d.title;
+                document.getElementById('admInpPrice').value = d.price;
+                document.getElementById('admInpDesc').value = d.desc;
             }
         });
 
-        // CUSTOMER ORDER DISPATCH SUBMIT
-        document.getElementById('buyBtn').addEventListener('click', async () => {
-            if(!currentUserProfile) return;
-            const buyBtn = document.getElementById('buyBtn');
-            buyBtn.disabled = true;
-            buyBtn.innerText = "Locking Order Package...";
-
+        // CUSTOMER INSTANT CHECKOUT
+        document.getElementById('btnCheckout').addEventListener('click', async () => {
+            if(!profileCache) return;
+            const b = document.getElementById('btnCheckout');
+            b.disabled = true; b.innerText = "Booking Package order...";
             try {
-                const orderPayload = {
+                const order = {
                     uid: auth.currentUser.uid,
-                    customerName: currentUserProfile.name,
-                    customerPhone: currentUserProfile.phone,
-                    deliveryAddress: currentUserProfile.address,
-                    itemTitle: document.getElementById('storeTitle').innerText,
-                    itemPrice: Number(document.getElementById('storePrice').innerText.replace("₹","")),
+                    name: profileCache.name,
+                    phone: profileCache.phone,
+                    address: profileCache.address,
+                    item: document.getElementById('viewTitle').innerText,
+                    price: Number(document.getElementById('viewPrice').innerText.replace("₹","")),
                     status: "pending",
-                    createdAt: new Date().toISOString()
+                    date: new Date().toISOString()
                 };
-
-                await addDoc(collection(db, "orders"), orderPayload);
-                alert("Order confirmed via Cash on Delivery! Check notification alerts.");
-                
-                // Trigger immediate WhatsApp receipt webhook notification dispatch
-                const text = `Hello ${orderPayload.customerName}, Your order for "${orderPayload.itemTitle}" has been PLACED successfully on our app! Status: PENDING. We will update you when it ships.`;
-                triggerWhatsAppNotificationGateway(orderPayload.customerPhone, text);
-
-            } catch(e) { alert("Order submission error trace callback."); }
-            finally { buyBtn.disabled = false; buyBtn.innerText = "⚡ Click to Instant Checkout (COD)"; }
+                await addDoc(collection(db, "orders"), order);
+                alert("Order Placed Successfully via COD! 🎉");
+                fakeWhatsAppAlert(order.phone, `Hello ${order.name}, your order for "${order.item}" has been PLACED! Status: PENDING.`);
+            } catch(e) { alert("Checkout failed error callback."); }
+            finally { b.disabled = false; b.innerText = "⚡ Buy Now (Cash on Delivery)"; }
         });
 
-        // USER ORDER TRACKING STATUS CONTROLLER
-        function listenToUserOrderTracking(uid) {
-            onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (snap) => {
-                let userActiveOrder = null;
-                snap.forEach(doc => { if(doc.data().uid === uid) userActiveOrder = doc.data(); });
+        // RECONSTRUCT CUSTOMER TRACKING MODULES LIVE PIPELINE
+        function initCustomerView(uid) {
+            onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
+                let activeOrder = null;
+                const list = document.getElementById('customerOrdersList');
+                list.innerHTML = "";
 
-                const card = document.getElementById('orderTrackingCard');
-                if(userActiveOrder) {
-                    card.style.display = "block";
-                    document.querySelectorAll('.step').forEach(el=>el.className = 'step');
-                    
-                    const st = userActiveOrder.status;
-                    if(st === 'pending') { document.getElementById('step-pending').className = 'step active'; }
-                    if(st === 'shipped') { document.getElementById('step-pending').className = 'step done'; document.getElementById('step-shipped').className = 'step active'; }
-                    if(st === 'delivered') { document.getElementById('step-pending').className = 'step done'; document.getElementById('step-shipped').className = 'step done'; document.getElementById('step-delivered').className = 'step done'; }
-                } else { card.style.display = "none"; }
+                snap.forEach(d => {
+                    const o = d.data();
+                    if(o.uid === uid) {
+                        if(!activeOrder) activeOrder = o;
+                        const div = document.createElement('div');
+                        div.style.cssText = "border-bottom:1px solid #e2e8f0; padding:10px 0;";
+                        div.innerHTML = `<b>${o.item}</b> - ₹${o.price}<br><span class="badge badge-${o.status}">${o.status}</span>`;
+                        list.appendChild(div);
+                    }
+                });
+
+                const trackBox = document.getElementById('userTrackingBox');
+                if(activeOrder) {
+                    trackBox.style.display = "block";
+                    document.getElementById('cust-step-pending').className = "step";
+                    document.getElementById('cust-step-shipped').className = "step";
+                    document.getElementById('cust-step-delivered').className = "step";
+
+                    if(activeOrder.status === 'pending') document.getElementById('cust-step-pending').className = "step active";
+                    if(activeOrder.status === 'shipped') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step active"; }
+                    if(activeOrder.status === 'delivered') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step done"; document.getElementById('cust-step-delivered').className = "step done"; }
+                } else { trackBox.style.display = "none"; if(list.innerHTML==="") list.innerHTML = "No orders found."; }
             });
         }
 
-        // --- REVENUE ENGINE & ADMIN MANAGEMENT ---
-        function loadAdminDashboardData() {
-            // Count registered users parameters live feed trackers
-            onSnapshot(collection(db, "users"), (snap) => { document.getElementById('statUsers').innerText = snap.size; });
+        // --- OWNERS BACKEND ANALYTICS CONTROLLER PANEL ---
+        function initAdminDashboard() {
+            onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
+                document.getElementById('admOrderCount').innerText = snap.size;
+                let revenue = 0;
+                const container = document.getElementById('admOrdersContainer');
+                container.innerHTML = "";
 
-            // Stream Order configurations entries data structural lists array tables
-            onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (snap) => {
-                document.getElementById('statOrders').innerText = snap.size;
-                let revSum = 0;
-                const tbody = document.getElementById('adminOrdersTable');
-                tbody.innerHTML = "";
-
-                if(snap.empty) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No processing orders queued.</td></tr>`; return; }
+                if(snap.empty) { container.innerHTML = "No customer orders online grid pipeline."; return; }
 
                 snap.forEach((docSnap) => {
                     const id = docSnap.id;
                     const o = docSnap.data();
-                    if(o.status === 'delivered') revSum += Number(o.itemPrice);
+                    if(o.status === 'delivered') revenue += Number(o.price);
 
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td><b>${o.customerName}</b><br><small>${o.customerPhone}</small></td>
-                        <td><small>${o.deliveryAddress}</small></td>
-                        <td>${o.itemTitle}<br><b>₹${o.itemPrice}</b></td>
-                        <td>
-                            <select class="status-select" data-id="${id}" data-phone="${o.customerPhone}" data-name="${o.customerName}" data-title="${o.itemTitle}">
+                    const div = document.createElement('div');
+                    div.className = "order-row";
+                    div.innerHTML = `
+                        <div>👤 <b>${o.name}</b> (${o.phone})</div>
+                        <div>📍 Address: <small>${o.address}</small></div>
+                        <div style="margin-top:4px;">📦 Item: <b>${o.item}</b> | Price: <b>₹${o.price}</b></div>
+                        <div style="margin-top:6px;">Status: 
+                            <select class="adm-status-select" data-id="${id}" data-phone="${o.phone}" data-name="${o.name}" data-title="${o.item}">
                                 <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
                                 <option value="shipped" ${o.status==='shipped'?'selected':''}>Shipped</option>
                                 <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
                             </select>
-                        </td>
+                        </div>
                     `;
-                    tbody.appendChild(tr);
+                    container.appendChild(div);
                 });
 
-                document.getElementById('statRevenue').innerText = "₹" + revSum;
+                document.getElementById('admRevenue').innerText = "₹" + revenue;
 
-                // Handle live status selector alterations callbacks integrations hooks
-                document.querySelectorAll('.status-select').forEach(sel => {
+                document.querySelectorAll('.adm-status-select').forEach(sel => {
                     sel.addEventListener('change', async (e) => {
-                        const targetDocId = e.target.getAttribute('data-id');
-                        const targetVal = e.target.value;
-                        const cPhone = e.target.getAttribute('data-phone');
-                        const cName = e.target.getAttribute('data-name');
-                        const pTitle = e.target.getAttribute('data-title');
+                        const targetId = e.target.getAttribute('data-id');
+                        const statusVal = e.target.value;
+                        const p = e.target.getAttribute('data-phone');
+                        const n = e.target.getAttribute('data-name');
+                        const t = e.target.getAttribute('data-title');
 
-                        await updateDoc(doc(db, "orders", targetDocId), { status: targetVal });
-                        alert("Order Status Updated Live!");
-
-                        // Trigger dynamic matching WhatsApp status update alert notification streams
-                        const updateAlertText = `Hello ${cName}, Quick status update for your order "${pTitle}": Your item is now officially ${targetVal.toUpperCase()}! Thank you for shopping with us.`;
-                        triggerWhatsAppNotificationGateway(cPhone, updateAlertText);
+                        await updateDoc(doc(db, "orders", targetId), { status: statusVal });
+                        alert("Database synchronized updated status!");
+                        fakeWhatsAppAlert(p, `Hello ${n}, update for your order "${t}": It is now ${statusVal.toUpperCase()}!`);
                     });
                 });
             });
         }
 
-        // SAVE PRODUCT OVERWRITES SUBMISSION
-        document.getElementById('productConfigForm').addEventListener('submit', async (e) => {
+        // ADMIN ASSETS FORM MANAGEMENT (WITH IMAGE BINARY STREAM FILE STORE)
+        document.getElementById('formAdminProduct').addEventListener('submit', async (e) => {
             e.preventDefault();
-            await setDoc(productDocRef, {
-                title: document.getElementById('admTitle').value,
-                price: Number(document.getElementById('admPrice').value),
-                desc: document.getElementById('admDesc').value,
-                img: document.getElementById('admImg').value
-            });
-            alert("Product assets properties metrics synced live to the storefront grid layout elements! 🚀");
+            const btn = document.getElementById('btnAdminSave');
+            btn.disabled = true; btn.innerText = "Uploading Media Framework Asset...";
+
+            const file = document.getElementById('admInpFile').files[0];
+            const title = document.getElementById('admInpTitle').value.trim();
+            const price = Number(document.getElementById('admInpPrice').value);
+            const desc = document.getElementById('admInpDesc').value.trim();
+
+            try {
+                let imgUrl = document.getElementById('viewImg').src || "";
+                if(file) {
+                    const fileRef = ref(storage, 'products/' + Date.now() + '_' + file.name);
+                    const uploadTask = await uploadBytes(fileRef, file);
+                    imgUrl = await getDownloadURL(uploadTask.ref);
+                }
+
+                await setDoc(productDocRef, { title, price, desc, img: imgUrl });
+                alert("Storefront assets synchronized completely live! 🚀");
+            } catch(e) { alert("Media sync stream error."); }
+            finally { btn.disabled = false; btn.innerText = "Sync Dynamic Product Assets"; }
         });
     </script>
 </body>

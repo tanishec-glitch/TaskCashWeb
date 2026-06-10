@@ -3,206 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickSell Pro Marketplace</title>
+    <title>QuickSell Enterprise Store</title>
     <style>
-        /* Modern UI Theme */
         :root {
-            --primary: #ff9900;
-            --primary-dark: #e08800;
-            --bg: #f4f6f9;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
-            --text: #333333;
-            --price-color: #b12704;
+            --text: #1e293b;
+            --price: #dc2626;
+            --success: #16a34a;
         }
 
-        body { 
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background: var(--bg); 
-            color: var(--text); 
-        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* Navbar & Auth Header */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background: var(--card-bg); box-shadow: 0 2px 4px rgba(0,0,0,0.02); border-radius: 12px; margin-bottom: 25px; }
+        .nav-logo { font-weight: bold; color: var(--primary); font-size: 1.3rem; }
+        .user-badge { font-size: 14px; background: #e2e8f0; padding: 6px 12px; border-radius: 20px; font-weight: 600; }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        
-        header { 
-            text-align: center; 
-            padding: 30px 20px; 
-            background: var(--card-bg); 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
-        header h1 { margin: 0; color: var(--primary); font-size: 2.2rem; }
+        /* Screens Management */
+        .screen { display: none; }
+        .screen.active { display: block; }
 
-        /* Form Controls */
-        .form-card { 
-            background: var(--card-bg); 
-            padding: 25px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-            margin-bottom: 30px; 
-        }
-        .form-card h2 { margin-top: 0; font-size: 1.4rem; color: #444; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: inline-block; }
+        /* Auth Forms Card */
+        .auth-card, .section-card { background: var(--card-bg); padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 30px; }
+        .auth-card h2, .section-card h2 { margin-top: 0; margin-bottom: 20px; color: #0f172a; }
         
-        .form-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 15px; 
-            margin-bottom: 15px; 
-        }
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; color: #475569; }
         
-        input, select { 
-            padding: 12px; 
-            border: 1px solid #cccccc; 
-            border-radius: 8px; 
-            font-size: 16px; 
-            width: 100%; 
-            box-sizing: border-box; 
-            outline: none;
-        }
-        input:focus, select:focus { border-color: var(--primary); }
+        input, textarea, select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 16px; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s; }
+        input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
         
-        button { 
-            background: var(--primary); 
-            color: white; 
-            border: none; 
-            padding: 14px 20px; 
-            font-size: 16px; 
-            font-weight: bold; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            transition: background 0.2s; 
-            width: 100%;
-        }
+        button { background: var(--primary); color: white; border: none; padding: 14px 20px; font-size: 16px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: 0.2s; width: 100%; }
         button:hover { background: var(--primary-dark); }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
 
-        /* Search & Filter Bar */
-        .search-filter-bar {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-        .search-filter-bar input { flex: 2; min-width: 200px; }
-        .search-filter-bar select { flex: 1; min-width: 150px; }
+        .switch-auth { text-align: center; margin-top: 15px; font-size: 14px; color: #64748b; cursor: pointer; }
+        .switch-auth b { color: var(--primary); }
 
-        /* Marketplace Grid */
-        .grid-title { font-size: 1.6rem; margin-bottom: 20px; color: #444; }
-        .grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-            gap: 25px; 
-        }
-        
-        /* Product Card UI */
-        .card { 
-            background: var(--card-bg); 
-            padding: 20px; 
-            border-radius: 12px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
-            border: 1px solid #eef0f2;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            transition: transform 0.2s;
-        }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
-        
-        .category-tag {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: #eef2f7;
-            color: #666;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
+        /* Product Showcase Layout */
+        .product-hero { background: var(--card-bg); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; margin-bottom: 30px; }
+        .product-img { width: 100%; max-height: 380px; object-fit: cover; background: #f1f5f9; }
+        .product-details { padding: 25px; }
+        .product-title { font-size: 1.8rem; margin: 0 0 10px 0; color: #0f172a; }
+        .product-price { font-size: 1.6rem; font-weight: bold; color: var(--price); margin-bottom: 15px; }
+        .product-desc { color: #475569; line-height: 1.6; margin-bottom: 20px; }
 
-        .card h3 { margin: 15px 0 8px 0; font-size: 1.25rem; color: #222; text-align: left; }
-        .card .price { color: var(--price-color); font-size: 22px; font-weight: bold; margin: 5px 0 20px 0; text-align: left; }
+        /* Order Tracking Stepper */
+        .tracking-box { background: #eff6ff; border: 1px solid #bfdbfe; padding: 20px; border-radius: 12px; margin-bottom: 25px; }
+        .status-stepper { display: flex; justify-content: space-between; margin-top: 15px; position: relative; }
+        .step { font-size: 12px; font-weight: bold; color: #94a3b8; text-align: center; flex: 1; }
+        .step.active { color: var(--primary); }
+        .step.done { color: var(--success); }
+
+        /* Admin Layout Control Room */
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .stat-card h3 { margin: 0; font-size: 14px; color: #64748b; text-transform: uppercase; }
+        .stat-card .val { font-size: 24px; font-weight: bold; color: #0f172a; margin-top: 5px; }
         
-        .card-actions {
-            display: flex;
-            gap: 10px;
-        }
+        .order-table-wrapper { background: var(--card-bg); border-radius: 12px; border: 1px solid #e2e8f0; overflow-x: auto; padding: 15px; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 14px; }
+        th, td { padding: 12px; border-bottom: 1px solid #e2e8f0; }
+        th { background: #f8fafc; color: #475569; font-weight: 600; }
         
-        .buy-btn { 
-            background: #ffd814; 
-            color: #111; 
-            border: 1px solid #fcd200; 
-            border-radius: 8px; 
-            padding: 10px; 
-            font-size: 14px;
-            flex: 3;
-        }
-        .buy-btn:hover { background: #f7ca00; }
-        
-        .delete-btn {
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 14px;
-            cursor: pointer;
-            flex: 1;
-        }
-        .delete-btn:hover { background: #cc0000; }
+        .status-badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-shipped { background: #e0f2fe; color: #0369a1; }
+        .status-delivered { background: #dcfce7; color: #15803d; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <header>
-            <h1>QuickSell Pro Marketplace 🛒</h1>
-            <p>Smart way to list, search, and sell items instantly</p>
-        </header>
-        
-        <div class="form-card">
-            <h2>List a New Item</h2>
-            <form id="productForm">
-                <div class="form-grid">
-                    <input type="text" id="title" placeholder="What are you selling?" required>
-                    <input type="number" id="price" placeholder="Price (₹)" required>
-                    <select id="category" required>
-                        <option value="" disabled selected>Select Category</option>
-                        <option value="Mobile">Mobiles & Tablets</option>
-                        <option value="Electronics">Laptops & Electronics</option>
-                        <option value="Fashion">Clothes & Fashion</option>
-                        <option value="Gaming">Gaming & Toys</option>
-                        <option value="Other">Others</option>
-                    </select>
+        <nav>
+            <div class="nav-logo">📦 QuickSell Enterprise</div>
+            <div id="navUserArea">
+                <button onclick="logout()" style="padding:6px 12px; font-size:12px; background:#ef4444; width:auto;">Logout</button>
+            </div>
+        </nav>
+
+        <div id="loginScreen" class="screen auth-card">
+            <h2>Sign In to Your Account</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="name@example.com" required>
                 </div>
-                <button type="submit">Publish Product Live</button>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" required>
+                </div>
+                <button type="submit">Sign In Securely</button>
+                <div class="switch-auth" onclick="showScreen('signupScreen')">Don't have an account? <b>Sign Up Here</b></div>
             </form>
         </div>
 
-        <div class="search-filter-bar">
-            <input type="text" id="searchBar" placeholder="🔍 Search items by name...">
-            <select id="filterCategory">
-                <option value="All">All Categories</option>
-                <option value="Mobile">Mobiles</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Fashion">Fashion</option>
-                <option value="Gaming">Gaming</option>
-                <option value="Other">Others</option>
-            </select>
+        <div id="signupScreen" class="screen auth-card">
+            <h2>Create Your Customer Profile</h2>
+            <form id="signupForm">
+                <div class="form-group"><label>Full Name</label><input type="text" id="regName" placeholder="Enter full name" required></div>
+                <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="name@example.com" required></div>
+                <div class="form-group"><label>WhatsApp Mobile Number (With 91)</label><input type="tel" id="regPhone" placeholder="919999999999" required></div>
+                <div class="form-group"><label>Full Delivery Address</label><textarea id="regAddress" rows="2" placeholder="House No, Street, City, Pincode" required></textarea></div>
+                <div class="form-group"><label>Password</label><input type="password" id="regPass" placeholder="Create strong password" required></div>
+                <button type="submit">Complete Registration</button>
+                <div class="switch-auth" onclick="showScreen('loginScreen')">Already have an account? <b>Login Here</b></div>
+            </form>
         </div>
 
-        <h2 class="grid-title">Recent Active Listings</h2>
-        <div class="grid" id="productsGrid"></div>
+        <div id="storeScreen" class="screen">
+            <div id="orderTrackingCard" class="tracking-box" style="display:none;">
+                <h3 style="margin:0; color:#1e40af;">⏳ Live Tracking Status for Your Order</h3>
+                <div class="status-stepper">
+                    <div class="step" id="step-pending">● Placed</div>
+                    <div class="step" id="step-shipped">● Shipped</div>
+                    <div class="step" id="step-delivered">● Delivered</div>
+                </div>
+            </div>
+
+            <div class="product-hero">
+                <img class="product-img" id="storeImg" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800" alt="Product Live Preview">
+                <div class="product-details">
+                    <h2 class="product-title" id="storeTitle">Premium Corporate Hardware</h2>
+                    <div class="product-price" id="storePrice">₹0</div>
+                    <p class="product-desc" id="storeDesc">Loading official production-grade documentation details directly from store warehouse parameters...</p>
+                    <button id="buyBtn" style="padding:16px;">⚡ Click to Instant Checkout (COD)</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="adminScreen" class="screen">
+            <h2 style="color:#0f172a; margin-bottom:5px;">👑 Enterprise Control Center</h2>
+            <p style="color:#64748b; margin-top:0; margin-bottom:25px;">Logged in as Store Owner: tanishmandloi2006@gmail.com</p>
+
+            <div class="admin-grid">
+                <div class="stat-card"><h3>Total Sales Revenue</h3><div class="val" id="statRevenue">₹0</div></div>
+                <div class="stat-card"><h3>Total Received Orders</h3><div class="val" id="statOrders">0</div></div>
+                <div class="stat-card"><h3>Registered Customers</h3><div class="val" id="statUsers">0</div></div>
+            </div>
+
+            <div class="order-table-wrapper">
+                <h3>📦 Customer Incoming Orders Panel</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer Info</th>
+                            <th>Shipping Address</th>
+                            <th>Ordered Item</th>
+                            <th>Status Control</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrdersTable">
+                        <tr><td colspan="4" style="text-align:center; color:#64748b;">Awaiting live network stream data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="section-card">
+                <h3>⚙️ Live Product Content Configurations</h3>
+                <form id="productConfigForm">
+                    <div class="form-group"><label>Title</label><input type="text" id="admTitle" required></div>
+                    <div class="form-group"><label>Price (₹)</label><input type="number" id="admPrice" required></div>
+                    <div class="form-group"><label>Description Text</label><textarea id="admDesc" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Product Image Link (URL)</label><input type="text" id="admImg" required></div>
+                    <button type="submit" style="background:#10b981;">Save Configurations & Go Live</button>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-        // Your exact Firebase project database configuration
+        // Firebase Core Credentials Match Key configurations
         const firebaseConfig = {
             apiKey: "AIzaSyDFCJP7HLy3Yri2mLu7o36RrgBgdl98MAk",
             authDomain: "taskcashweb-73839467-21713.firebaseapp.com",
@@ -212,109 +191,218 @@
             appId: "1:79338523301:web:124732f91d3dc8de215b4c"
         };
 
-        // Initialize connection setups
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const db = getFirestore(app);
-        const productsCollection = collection(db, "products");
-        
-        const productForm = document.getElementById('productForm');
-        const productsGrid = document.getElementById('productsGrid');
-        const searchBar = document.getElementById('searchBar');
-        const filterCategory = document.getElementById('filterCategory');
 
-        let allItemsArray = []; // Store array locally for local fast search/filter
+        // System Constants 
+        const ADMIN_EMAIL = "tanishmandloi2006@gmail.com";
+        const productDocRef = doc(db, "store", "current_product");
 
-        // 📥 READ: Fetch real-time items from Firestore
-        const q = query(productsCollection, orderBy("createdAt", "desc"));
-        onSnapshot(q, (snapshot) => {
-            allItemsArray = [];
-            snapshot.forEach((doc) => {
-                allItemsArray.push({ id: doc.id, ...doc.data() });
-            });
-            renderItems(allItemsArray); // Display them on screen
-        });
+        let currentUserProfile = null;
 
-        // 🖼️ RENDER FUNCTION: Creates cards with full filtration control
-        function renderItems(itemsList) {
-            productsGrid.innerHTML = "";
-            
-            if(itemsList.length === 0) {
-                productsGrid.innerHTML = "<p style='color:#666;'>No listings matching your selection found.</p>";
-                return;
-            }
-
-            itemsList.forEach((item) => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                
-                // WhatsApp URL template to text the seller directly
-                const whatsappMessage = `Hello, I am interested in buying your item listed on the marketplace: ${item.title} for ₹${item.price}. Is it available?`;
-                const whatsappUrl = `https://wa.me/919999999999?text=${encodeURIComponent(whatsappMessage)}`; // Replace with your number if you want orders there
-
-                card.innerHTML = `
-                    <span class="category-tag">${item.category || 'Other'}</span>
-                    <h3>${item.title}</h3>
-                    <div class="price">₹${item.price}</div>
-                    <div class="card-actions">
-                        <button class="buy-btn" onclick="window.open('${whatsappUrl}', '_blank')">Buy Now</button>
-                        <button class="delete-btn" data-id="${item.id}">🗑️</button>
-                    </div>
-                `;
-                productsGrid.appendChild(card);
-            });
-
-            // Attach delete functionality listeners securely
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const documentId = e.target.getAttribute('data-id');
-                    if(confirm("Are you sure this item is sold and you want to remove it?")) {
-                        try {
-                            await deleteDoc(doc(db, "products", documentId));
-                        } catch(err) {
-                            alert("Failed to delete item!");
-                        }
-                    }
-                });
-            });
+        // SCREEN ROUTER UTILITY
+        window.showScreen = function(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
         }
 
-        // 📤 WRITE: Save new complex product object to Firestore
-        productForm.addEventListener('submit', async (e) => {
+        // --- AUTHENTICATION MODULE CONTROLS ---
+        
+        // 1. Sign Up Logic
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const title = document.getElementById('title').value;
-            const price = Number(document.getElementById('price').value);
-            const category = document.getElementById('category').value;
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const address = document.getElementById('regAddress').value.trim();
+            const pass = document.getElementById('regPass').value;
 
             try {
-                await addDoc(productsCollection, {
-                    title: title,
-                    price: price,
-                    category: category,
-                    createdAt: new Date().toISOString()
-                });
-                productForm.reset();
-            } catch (error) { 
-                alert("Database write error! Check console permission settings."); 
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                // Save additional metadata parameters to custom profiles database collections
+                await setDoc(doc(db, "users", cred.user.uid), { name, email, phone, address });
+                alert("Account registration successful! Welcome to the store.");
+            } catch (err) { alert("Registration Failed: " + err.message); }
+        });
+
+        // 2. Sign In Logic
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPass').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch(err) { alert("Invalid Credentials: " + err.message); }
+        });
+
+        // 3. Logout System Control
+        window.logout = function() { signOut(auth).then(() => location.reload()); }
+
+        // WATCH AUTH STATE CHANGE LIVE
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                if (user.email === ADMIN_EMAIL) {
+                    showScreen('adminScreen');
+                    loadAdminDashboardData();
+                } else {
+                    // Fetch user account profiles meta properties
+                    const uDoc = await getDoc(doc(db, "users", user.uid));
+                    if(uDoc.exists()) currentUserProfile = uDoc.data();
+                    showScreen('storeScreen');
+                    listenToUserOrderTracking(user.uid);
+                }
+            } else {
+                showScreen('loginScreen');
             }
         });
 
-        // 🔍 SEARCH & FILTER: Listen to events and instantly process logic
-        function filterAndSearchHandler() {
-            const searchText = searchBar.value.toLowerCase();
-            const selectedCat = filterCategory.value;
-
-            const filtered = allItemsArray.filter(item => {
-                const matchesSearch = item.title.toLowerCase().includes(searchText);
-                const matchesCategory = (selectedCat === "All") || (item.category === selectedCat);
-                return matchesSearch && matchesCategory;
-            });
-
-            renderItems(filtered);
+        // --- WHATSAPP SIMULATION AUTOMATED NOTIFICATIONS SYSTEM ---
+        function triggerWhatsAppNotificationGateway(customerPhoneNumber, messageString) {
+            console.log(`%c[WhatsApp System Gateway Outbox Log Matrix] Sending payload alert to: +${customerPhoneNumber}`, "color: #16a34a; font-weight: bold;");
+            console.log(`%cMessage: "${messageString}"`, "color: #475569; italic: true;");
+            
+            // Webhook structural trigger framework configuration integration layout
+            // replace with active gateway endpoint routing string format payload block mapping array
+            // fetch(`https://api.whatsappgateway.com/send?to=${customerPhoneNumber}&text=${encodeURIComponent(messageString)}`).catch(e=>e);
         }
 
-        searchBar.addEventListener('input', filterAndSearchHandler);
-        filterCategory.addEventListener('change', filterAndSearchHandler);
+        // --- STORE SHOWCASE SYSTEM MANAGER ---
+        onSnapshot(productDocRef, (snap) => {
+            if(snap.exists()) {
+                const d = snap.data();
+                document.getElementById('storeTitle').innerText = d.title;
+                document.getElementById('storePrice').innerText = "₹" + d.price;
+                document.getElementById('storeDesc').innerText = d.desc;
+                document.getElementById('storeImg').src = d.img;
+
+                // Bind Admin setup values buffer parameters automatically
+                document.getElementById('admTitle').value = d.title;
+                document.getElementById('admPrice').value = d.price;
+                document.getElementById('admDesc').value = d.desc;
+                document.getElementById('admImg').value = d.img;
+            } else {
+                setDoc(productDocRef, { title: "Premium Gadget Pro Edition", price: 4999, desc: "Enterprise standard hardware production architecture configurations specs.", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800" });
+            }
+        });
+
+        // CUSTOMER ORDER DISPATCH SUBMIT
+        document.getElementById('buyBtn').addEventListener('click', async () => {
+            if(!currentUserProfile) return;
+            const buyBtn = document.getElementById('buyBtn');
+            buyBtn.disabled = true;
+            buyBtn.innerText = "Locking Order Package...";
+
+            try {
+                const orderPayload = {
+                    uid: auth.currentUser.uid,
+                    customerName: currentUserProfile.name,
+                    customerPhone: currentUserProfile.phone,
+                    deliveryAddress: currentUserProfile.address,
+                    itemTitle: document.getElementById('storeTitle').innerText,
+                    itemPrice: Number(document.getElementById('storePrice').innerText.replace("₹","")),
+                    status: "pending",
+                    createdAt: new Date().toISOString()
+                };
+
+                await addDoc(collection(db, "orders"), orderPayload);
+                alert("Order confirmed via Cash on Delivery! Check notification alerts.");
+                
+                // Trigger immediate WhatsApp receipt webhook notification dispatch
+                const text = `Hello ${orderPayload.customerName}, Your order for "${orderPayload.itemTitle}" has been PLACED successfully on our app! Status: PENDING. We will update you when it ships.`;
+                triggerWhatsAppNotificationGateway(orderPayload.customerPhone, text);
+
+            } catch(e) { alert("Order submission error trace callback."); }
+            finally { buyBtn.disabled = false; buyBtn.innerText = "⚡ Click to Instant Checkout (COD)"; }
+        });
+
+        // USER ORDER TRACKING STATUS CONTROLLER
+        function listenToUserOrderTracking(uid) {
+            onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (snap) => {
+                let userActiveOrder = null;
+                snap.forEach(doc => { if(doc.data().uid === uid) userActiveOrder = doc.data(); });
+
+                const card = document.getElementById('orderTrackingCard');
+                if(userActiveOrder) {
+                    card.style.display = "block";
+                    document.querySelectorAll('.step').forEach(el=>el.className = 'step');
+                    
+                    const st = userActiveOrder.status;
+                    if(st === 'pending') { document.getElementById('step-pending').className = 'step active'; }
+                    if(st === 'shipped') { document.getElementById('step-pending').className = 'step done'; document.getElementById('step-shipped').className = 'step active'; }
+                    if(st === 'delivered') { document.getElementById('step-pending').className = 'step done'; document.getElementById('step-shipped').className = 'step done'; document.getElementById('step-delivered').className = 'step done'; }
+                } else { card.style.display = "none"; }
+            });
+        }
+
+        // --- REVENUE ENGINE & ADMIN MANAGEMENT ---
+        function loadAdminDashboardData() {
+            // Count registered users parameters live feed trackers
+            onSnapshot(collection(db, "users"), (snap) => { document.getElementById('statUsers').innerText = snap.size; });
+
+            // Stream Order configurations entries data structural lists array tables
+            onSnapshot(query(collection(db, "orders"), orderBy("createdAt", "desc")), (snap) => {
+                document.getElementById('statOrders').innerText = snap.size;
+                let revSum = 0;
+                const tbody = document.getElementById('adminOrdersTable');
+                tbody.innerHTML = "";
+
+                if(snap.empty) { tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No processing orders queued.</td></tr>`; return; }
+
+                snap.forEach((docSnap) => {
+                    const id = docSnap.id;
+                    const o = docSnap.data();
+                    if(o.status === 'delivered') revSum += Number(o.itemPrice);
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><b>${o.customerName}</b><br><small>${o.customerPhone}</small></td>
+                        <td><small>${o.deliveryAddress}</small></td>
+                        <td>${o.itemTitle}<br><b>₹${o.itemPrice}</b></td>
+                        <td>
+                            <select class="status-select" data-id="${id}" data-phone="${o.customerPhone}" data-name="${o.customerName}" data-title="${o.itemTitle}">
+                                <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
+                                <option value="shipped" ${o.status==='shipped'?'selected':''}>Shipped</option>
+                                <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
+                            </select>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                document.getElementById('statRevenue').innerText = "₹" + revSum;
+
+                // Handle live status selector alterations callbacks integrations hooks
+                document.querySelectorAll('.status-select').forEach(sel => {
+                    sel.addEventListener('change', async (e) => {
+                        const targetDocId = e.target.getAttribute('data-id');
+                        const targetVal = e.target.value;
+                        const cPhone = e.target.getAttribute('data-phone');
+                        const cName = e.target.getAttribute('data-name');
+                        const pTitle = e.target.getAttribute('data-title');
+
+                        await updateDoc(doc(db, "orders", targetDocId), { status: targetVal });
+                        alert("Order Status Updated Live!");
+
+                        // Trigger dynamic matching WhatsApp status update alert notification streams
+                        const updateAlertText = `Hello ${cName}, Quick status update for your order "${pTitle}": Your item is now officially ${targetVal.toUpperCase()}! Thank you for shopping with us.`;
+                        triggerWhatsAppNotificationGateway(cPhone, updateAlertText);
+                    });
+                });
+            });
+        }
+
+        // SAVE PRODUCT OVERWRITES SUBMISSION
+        document.getElementById('productConfigForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await setDoc(productDocRef, {
+                title: document.getElementById('admTitle').value,
+                price: Number(document.getElementById('admPrice').value),
+                desc: document.getElementById('admDesc').value,
+                img: document.getElementById('admImg').value
+            });
+            alert("Product assets properties metrics synced live to the storefront grid layout elements! 🚀");
+        });
     </script>
 </body>
 </html>
-

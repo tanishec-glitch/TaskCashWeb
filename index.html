@@ -3,82 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickSell Marketplace</title>
+    <title>QuickSell Pro Marketplace</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; color: #333; }
-        header { text-align: center; padding: 20px 0; background: #ffffff; border-bottom: 1px solid #ddd; margin-bottom: 30px; border-radius: 8px; }
-        h1 { margin: 0; color: #ff9900; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .form-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 40px; }
-        .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        input { padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; width: 100%; box-sizing: border-box; }
-        button { background: #ff9900; color: white; border: none; padding: 12px 20px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; }
-        .grid-title { border-bottom: 2px solid #ff9900; padding-bottom: 5px; margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-        .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border: 1px solid #eee; }
-        .price { color: #b12704; font-size: 20px; font-weight: bold; margin: 10px 0; }
+        /* Modern UI Theme */
+        :root {
+            --primary: #ff9900;
+            --primary-dark: #e08800;
+            --bg: #f4f6f9;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --price-color: #b12704;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background: var(--bg); 
+            color: var(--text); 
+        }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        
+        header { 
+            text-align: center; 
+            padding: 30px 20px; 
+            background: var(--card-bg); 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        header h1 { margin: 0; color: var(--primary); font-size: 2.2rem; }
+
+        /* Form Controls */
+        .form-card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            margin-bottom: 30px; 
+        }
+        .form-card h2 { margin-top: 0; font-size: 1.4rem; color: #444; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: inline-block; }
+        
+        .form-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin-bottom: 15px; 
+        }
+        
+        input, select { 
+            padding: 12px; 
+            border: 1px solid #cccccc; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            outline: none;
+        }
+        input:focus, select:focus { border-color: var(--primary); }
+        
+        button { 
+            background: var(--primary); 
+            color: white; 
+            border: none; 
+            padding: 14px 20px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            transition: background 0.2s; 
+            width: 100%;
+        }
+        button:hover { background: var(--primary-dark); }
+
+        /* Search & Filter Bar */
+        .search-filter-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .search-filter-bar input { flex: 2; min-width: 200px; }
+        .search-filter-bar select { flex: 1; min-width: 150px; }
+
+        /* Marketplace Grid */
+        .grid-title { font-size: 1.6rem; margin-bottom: 20px; color: #444; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+            gap: 25px; 
+        }
+        
+        /* Product Card UI */
+        .card { 
+            background: var(--card-bg); 
+            padding: 20px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04); 
+            border: 1px solid #eef0f2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
+        
+        .category-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #eef2f7;
+            color: #666;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .card h3 { margin: 15px 0 8px 0; font-size: 1.25rem; color: #222; text-align: left; }
+        .card .price { color: var(--price-color); font-size: 22px; font-weight: bold; margin: 5px 0 20px 0; text-align: left; }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .buy-btn { 
+            background: #ffd814; 
+            color: #111; 
+            border: 1px solid #fcd200; 
+            border-radius: 8px; 
+            padding: 10px; 
+            font-size: 14px;
+            flex: 3;
+        }
+        .buy-btn:hover { background: #f7ca00; }
+        
+        .delete-btn {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            flex: 1;
+        }
+        .delete-btn:hover { background: #cc0000; }
     </style>
 </head>
 <body>
+
     <div class="container">
         <header>
-            <h1>QuickSell Marketplace 🛒</h1>
+            <h1>QuickSell Pro Marketplace 🛒</h1>
+            <p>Smart way to list, search, and sell items instantly</p>
         </header>
+        
         <div class="form-card">
             <h2>List a New Item</h2>
             <form id="productForm">
-                <div class="form-group">
-                    <input type="text" id="title" placeholder="Item Name" required>
+                <div class="form-grid">
+                    <input type="text" id="title" placeholder="What are you selling?" required>
                     <input type="number" id="price" placeholder="Price (₹)" required>
+                    <select id="category" required>
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="Mobile">Mobiles & Tablets</option>
+                        <option value="Electronics">Laptops & Electronics</option>
+                        <option value="Fashion">Clothes & Fashion</option>
+                        <option value="Gaming">Gaming & Toys</option>
+                        <option value="Other">Others</option>
+                    </select>
                 </div>
-                <button type="submit">Publish Listing</button>
+                <button type="submit">Publish Product Live</button>
             </form>
         </div>
-        <h2 class="grid-title">Recent Listings</h2>
+
+        <div class="search-filter-bar">
+            <input type="text" id="searchBar" placeholder="🔍 Search items by name...">
+            <select id="filterCategory">
+                <option value="All">All Categories</option>
+                <option value="Mobile">Mobiles</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Other">Others</option>
+            </select>
+        </div>
+
+        <h2 class="grid-title">Recent Active Listings</h2>
         <div class="grid" id="productsGrid"></div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-        // ⚠️ REPLACE WITH YOUR FIREBASE CONFIG KEYS
+        // Your exact Firebase project database configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyDFCJP7HLy3Yri2mLu7o36RrgBgdl98MAk",
+            authDomain: "taskcashweb-73839467-21713.firebaseapp.com",
+            projectId: "taskcashweb-73839467-21713",
+            storageBucket: "taskcashweb-73839467-21713.firebasestorage.app",
+            messagingSenderId: "79338523301",
+            appId: "1:79338523301:web:124732f91d3dc8de215b4c"
         };
 
+        // Initialize connection setups
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const productsCollection = collection(db, "products");
+        
         const productForm = document.getElementById('productForm');
         const productsGrid = document.getElementById('productsGrid');
+        const searchBar = document.getElementById('searchBar');
+        const filterCategory = document.getElementById('filterCategory');
 
+        let allItemsArray = []; // Store array locally for local fast search/filter
+
+        // 📥 READ: Fetch real-time items from Firestore
         const q = query(productsCollection, orderBy("createdAt", "desc"));
         onSnapshot(q, (snapshot) => {
-            productsGrid.innerHTML = "";
+            allItemsArray = [];
             snapshot.forEach((doc) => {
-                const item = doc.data();
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `<h3>${item.title}</h3><div class="price">₹${item.price}</div>`;
-                productsGrid.appendChild(card);
+                allItemsArray.push({ id: doc.id, ...doc.data() });
             });
+            renderItems(allItemsArray); // Display them on screen
         });
 
+        // 🖼️ RENDER FUNCTION: Creates cards with full filtration control
+        function renderItems(itemsList) {
+            productsGrid.innerHTML = "";
+            
+            if(itemsList.length === 0) {
+                productsGrid.innerHTML = "<p style='color:#666;'>No listings matching your selection found.</p>";
+                return;
+            }
+
+            itemsList.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                // WhatsApp URL template to text the seller directly
+                const whatsappMessage = `Hello, I am interested in buying your item listed on the marketplace: ${item.title} for ₹${item.price}. Is it available?`;
+                const whatsappUrl = `https://wa.me/919999999999?text=${encodeURIComponent(whatsappMessage)}`; // Replace with your number if you want orders there
+
+                card.innerHTML = `
+                    <span class="category-tag">${item.category || 'Other'}</span>
+                    <h3>${item.title}</h3>
+                    <div class="price">₹${item.price}</div>
+                    <div class="card-actions">
+                        <button class="buy-btn" onclick="window.open('${whatsappUrl}', '_blank')">Buy Now</button>
+                        <button class="delete-btn" data-id="${item.id}">🗑️</button>
+                    </div>
+                `;
+                productsGrid.appendChild(card);
+            });
+
+            // Attach delete functionality listeners securely
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const documentId = e.target.getAttribute('data-id');
+                    if(confirm("Are you sure this item is sold and you want to remove it?")) {
+                        try {
+                            await deleteDoc(doc(db, "products", documentId));
+                        } catch(err) {
+                            alert("Failed to delete item!");
+                        }
+                    }
+                });
+            });
+        }
+
+        // 📤 WRITE: Save new complex product object to Firestore
         productForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('title').value;
             const price = Number(document.getElementById('price').value);
+            const category = document.getElementById('category').value;
+
             try {
-                await addDoc(productsCollection, { title, price, createdAt: new Date().toISOString() });
+                await addDoc(productsCollection, {
+                    title: title,
+                    price: price,
+                    category: category,
+                    createdAt: new Date().toISOString()
+                });
                 productForm.reset();
-            } catch (error) { alert("Error adding product!"); }
+            } catch (error) { 
+                alert("Database write error! Check console permission settings."); 
+            }
         });
+
+        // 🔍 SEARCH & FILTER: Listen to events and instantly process logic
+        function filterAndSearchHandler() {
+            const searchText = searchBar.value.toLowerCase();
+            const selectedCat = filterCategory.value;
+
+            const filtered = allItemsArray.filter(item => {
+                const matchesSearch = item.title.toLowerCase().includes(searchText);
+                const matchesCategory = (selectedCat === "All") || (item.category === selectedCat);
+                return matchesSearch && matchesCategory;
+            });
+
+            renderItems(filtered);
+        }
+
+        searchBar.addEventListener('input', filterAndSearchHandler);
+        filterCategory.addEventListener('change', filterAndSearchHandler);
     </script>
 </body>
 </html>

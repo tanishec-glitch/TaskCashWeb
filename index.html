@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QuickSell Pro - Ultimate Enterprise</title>
+    <title>QuickSell Pro - Ultimate Cloud Enterprise</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -31,7 +31,7 @@
 
         .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 440px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 999; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 700; text-decoration: none; width: 22%; text-align: center; }
-        .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-item tensor-icon, .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary); }
         #adminTab { display: none; } 
 
@@ -39,7 +39,7 @@
         .app-screen.active { display: block; animation: smoothSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         @keyframes smoothSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); margin-bottom: 20px; }
+        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); margin-bottom: 20px; position: relative; }
         .app-card h2 { margin-top: 0; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 18px; }
         
         .form-group { margin-bottom: 16px; }
@@ -52,26 +52,37 @@
         button:hover { background: var(--primary-dark); }
         button:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; }
 
-        /* Search Bar Styles */
+        /* Dynamic Custom Notifications Banner Bar */
+        .notification-banner { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: #166534; animation: pulse 2s infinite; }
+        .notification-banner.alert-admin { background: #fff1f2; border-color: #fecdd3; color: #9f1239; }
+        @keyframes pulse { 0% { opacity: 0.95; } 50% { opacity: 1; } 100% { opacity: 0.95; } }
+
         .search-wrapper { margin-bottom: 15px; position: relative; }
         .search-wrapper input { padding-left: 40px; }
         .search-wrapper ion-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--text-muted); }
 
-        /* MultiProduct Grid */
+        .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; }
+        .category-scroll::-webkit-scrollbar { display: none; }
+        .cat-badge { padding: 6px 14px; background: #fff; border: 1px solid var(--border); border-radius: 20px; font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+        .cat-badge.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
         .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .product-mini-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; cursor: pointer; position: relative; transition: 0.2s; }
-        .product-mini-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.05); }
         .mini-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; background: #e2e8f0; }
         .mini-title { font-size: 14px; font-weight: 700; margin: 8px 0 3px 0; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .mini-price { font-size: 15px; color: var(--price); font-weight: 800; }
-        .mini-mrp { font-size: 11px; text-decoration: line-through; color: var(--text-muted); margin-left: 5px; font-weight: normal; }
+        .mini-mrp { font-size: 11px; text-decoration: line-through; color: var(--text-muted); margin-left: 5px; }
 
-        /* Image Carousel Slider System */
+        /* Wishlist Heart Icon Style overlay */
+        .wishlist-heart-btn { position: absolute; top: 18px; left: 18px; font-size: 22px; color: #cbd5e1; z-index: 6; transition: 0.2s; cursor: pointer; }
+        .wishlist-heart-btn.active { color: #ef4444; }
+
+        /* Image Carousel Slider */
         .slider-viewport { width: 100%; height: 260px; position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border); background: #f8fafc; }
         .slider-track { display: flex; width: 100%; height: 100%; transition: transform 0.3s ease-in-out; }
         .slider-slide { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
         .slider-slide img { width: 100%; height: 100%; object-fit: cover; }
-        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 10; }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.8); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; z-index: 10; }
         .slider-prev { left: 10px; } .slider-next { right: 10px; }
         .slider-dots { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; z-index: 10; }
         .slider-dot { width: 6px; height: 6px; background: rgba(0,0,0,0.2); border-radius: 50%; }
@@ -90,7 +101,7 @@
         .stat-item p { margin: 0 0 4px 0; font-size: 11px; font-weight: 700; color: var(--text-muted); }
         .stat-item h3 { margin: 0; font-size: 20px; font-weight: 800; }
         
-        .adm-prod-row { border-bottom: 1px solid var(--border); padding: 15px 0; font-size: 14px; }
+        .adm-prod-row { border-bottom: 1px solid var(--border); padding: 15px 0; font-size: 14px; position: relative; }
         .badge { padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; display: inline-block; }
         .badge-pending { background: #fef3c7; color: #d97706; }
         .badge-shipped { background: #e0f2fe; color: #0369a1; }
@@ -99,6 +110,19 @@
 
         .cancel-btn { background: #fee2e2; color: #ef4444; padding: 6px 14px; font-size: 11px; border-radius: 8px; margin-top: 10px; display: inline-block; cursor: pointer; font-weight: 700; }
         .stock-badge { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: bold; z-index: 5; }
+
+        .quantity-selector { display: flex; align-items: center; gap: 12px; margin: 15px 0; }
+        .qty-btn { width: 36px; height: 36px; background: #e2e8f0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; cursor: pointer; border: none; }
+        .qty-val { font-size: 16px; font-weight: bold; width: 20px; text-align: center; }
+
+        .order-expand-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-top: 8px; display: none; font-size: 13px; line-height: 1.5; }
+        .upi-intent-btn { background: #10b981; color: white; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; padding: 14px; border-radius: 12px; text-decoration: none; width: 100%; margin-bottom: 12px; font-size: 15px; box-shadow: 0 4px 10px rgba(16,185,129,0.2); }
+
+        /* Review and Rating Section UI Grid */
+        .reviews-section { margin-top: 25px; border-top: 1px solid var(--border); padding-top: 15px; }
+        .review-card { background: #f8fafc; border: 1px solid var(--border); padding: 12px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; }
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: bold; color: var(--text); }
+        .stars-gold { color: #f59e0b; font-size: 14px; }
     </style>
     <script type="module" src="https://unpkg.com/ionicons@7.10.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
@@ -110,6 +134,11 @@
             <button class="logout-btn" onclick="appLogout()">Logout</button>
         </header>
 
+        <div id="appNotificationBanner" class="notification-banner" style="display:none;">
+            <ion-icon name="notifications-outline" style="font-size:18px;"></ion-icon>
+            <span id="appNotificationText">Loading platform notifications...</span>
+        </div>
+
         <div id="scrLogin" class="app-screen active">
             <div class="app-card" style="margin-top: 60px;">
                 <h2>Welcome Back</h2>
@@ -117,6 +146,7 @@
                     <div class="form-group"><label>Email Address</label><input type="email" id="logEmail" required></div>
                     <div class="form-group"><label>Password</label><input type="password" id="logPass" required></div>
                     <button type="submit" style="margin-top: 10px;">Log In</button>
+                    <p style="text-align:right; font-size:12px; margin-top:8px; color:var(--primary); cursor:pointer; font-weight:bold;" onclick="triggerPasswordReset()">Forgot Password?</p>
                     <p style="text-align:center; font-size:13px; margin-top:20px; color:var(--text-muted);" onclick="switchAuthScreen('scrSignup')">New user? <b style="color:var(--primary); cursor:pointer;">Register Profile</b></p>
                 </form>
             </div>
@@ -130,7 +160,7 @@
                     <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" required></div>
                     <div class="form-group"><label>WhatsApp Mobile Number (With 91)</label><input type="tel" id="regPhone" placeholder="91XXXXXXXXXX" required></div>
                     <div class="form-group"><label>Full Shipping Address</label><textarea id="regAddress" rows="2" required></textarea></div>
-                    <div class="form-group"><label>Password</label><input type="password" id="regPass" required></div>
+                    <div class="form-group"><label>Password (Min 6 Characters)</label><input type="password" id="regPass" minlength="6" required></div>
                     <button type="submit">Complete Signup</button>
                     <p style="text-align:center; font-size:13px; margin-top:20px; color:var(--text-muted);" onclick="switchAuthScreen('scrLogin')">Already registered? <b style="color:var(--primary); cursor:pointer;">Log In</b></p>
                 </form>
@@ -139,7 +169,7 @@
 
         <div id="scrHome" class="app-screen">
             <div id="userTrackingBox" class="track-container" style="display:none;">
-                <span style="font-size:13px; font-weight:800; color:#1e40af; display:block; margin-bottom:5px;">🚚 Order Tracking Monitor</span>
+                <span style="font-size:13px; font-weight:800; color:#1e40af; display:block; margin-bottom:5px;">🚚 Active Order Progress</span>
                 <div class="stepper">
                     <div class="step" id="cust-step-pending">● Placed</div>
                     <div class="step" id="cust-step-shipped">● Shipped</div>
@@ -150,9 +180,25 @@
             <div id="catalogListView">
                 <div class="search-wrapper">
                     <ion-icon name="search-outline"></ion-icon>
-                    <input type="text" id="catalogSearchInp" placeholder="Search product portfolio...">
+                    <input type="text" id="catalogSearchInp" placeholder="Search products...">
                 </div>
-                <h2 style="font-size:1.2rem; font-weight:800; margin-bottom:5px;">Exclusive Catalog</h2>
+
+                <div class="category-scroll" id="catalogCategoryContainer">
+                    <div class="cat-badge active" onclick="filterByProductCategory('ALL', this)">All Products</div>
+                    <div class="cat-badge" onclick="filterByProductCategory('WISH', this)">❤️ Wishlist</div>
+                    <div class="cat-badge" onclick="filterByProductCategory('Electronics', this)">Electronics</div>
+                    <div class="cat-badge" onclick="filterByProductCategory('Clothing', this)">Clothing</div>
+                    <div class="cat-badge" onclick="filterByProductCategory('Gadgets', this)">Gadgets</div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h2 style="font-size:1.2rem; font-weight:800; margin:0;">Exclusive Catalog</h2>
+                    <select id="catalogSortSelect" style="width: auto; padding: 6px 10px; font-size: 12px; border-radius: 20px;" onchange="sortCatalogGrid(this.value)">
+                        <option value="NEWEST">Newest First</option>
+                        <option value="PRICE_LOW">Price: Low to High</option>
+                        <option value="PRICE_HIGH">Price: High to Low</option>
+                    </select>
+                </div>
                 <div class="products-grid" id="catalogGrid"></div>
             </div>
 
@@ -169,40 +215,67 @@
 
                     <h2 style="font-size:1.4rem; font-weight:800; margin:15px 0 6px 0;" id="dtlTitle">-</h2>
                     
-                    <div style="margin-bottom: 12px; display: flex; align-items: baseline; gap: 8px;">
+                    <div style="margin-bottom: 5px; display: flex; align-items: baseline; gap: 8px;">
                         <span style="font-size:1.6rem; font-weight:800; color:var(--price);" id="dtlPrice">₹0</span>
                         <span style="font-size:1.1rem; text-decoration: line-through; color: var(--text-muted);" id="dtlOriginalMrp"></span>
                     </div>
 
+                    <div style="font-size: 12px; color: var(--success); font-weight: bold; margin-bottom: 12px;" id="dtlDeliveryEstimationLine">🚚 Estimated Delivery: 3-5 Working Days</div>
                     <div id="dtlStockWarning" style="font-size:13px; font-weight:bold; margin-bottom:12px; display:none;"></div>
+                    
+                    <div id="dtlAdminStockBlinker" style="font-size:12px; font-weight:bold; color:var(--price); margin-bottom:10px; display:none; animation: pulse 1s infinite;">⚠️ SYSTEM CRITICAL ALERT: LOW STOCK IN WAREHOUSE! RE-STOCK IMMEDIATELY.</div>
 
-                    <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;" id="dtlDesc">-</p>
+                    <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:15px;" id="dtlDesc">-</p>
 
-                    <div class="form-group" id="variantWrapper" style="margin-top:15px;">
+                    <div class="form-group" id="variantWrapper">
                         <label>Select Option (Size/Color)</label>
                         <select id="dtlVariantSelect"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select Purchase Quantity</label>
+                        <div class="quantity-selector">
+                            <button type="button" class="qty-btn" onclick="updatePurchaseQtyMultiplier(-1)">-</button>
+                            <span class="qty-val" id="dtlQtyValue">1</span>
+                            <button type="button" class="qty-btn" onclick="updatePurchaseQtyMultiplier(1)">+</button>
+                        </div>
                     </div>
 
                     <div class="app-card" style="background:#f8fafc; border:1px solid var(--border); padding:15px; margin-top:20px; border-radius:14px;">
                         <h4 style="margin:0 0 10px 0; font-weight:800; font-size:14px;">💳 Select Checkout Mode</h4>
                         <select id="checkoutModeSelect" onchange="togglePaymentWindow(this.value)">
                             <option value="COD">Cash on Delivery (COD)</option>
-                            <option value="ONLINE">Pay via UPI QR Code Scan</option>
+                            <option value="ONLINE">Pay via UPI App Instant Intent / QR</option>
                         </select>
-
                         <div id="upiPaymentBox" style="display:none; margin-top:15px; text-align:center;">
-                            <p style="font-size:12px; font-weight:700; color:#64748b; margin-bottom:10px;">Scan QR & Pay. Upload proof screenshot:</p>
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=tanishmandloi2006@okaxis%26pn=Tanish%20Mandloi" alt="QR Code" style="width:140px; height:140px; margin-bottom:12px; border-radius:10px; border:1px solid #e2e8f0; padding:5px;">
-                            <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px;">
+                            <a href="#" id="btnUpiIntentLink" class="upi-intent-btn"><ion-icon name="flash-outline"></ion-icon> Pay Instantly via GPay/PhonePe</a>
+                            <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">Or scan this QR Code from secondary device:</p>
+                            <img id="dtlDynamicQrImg" src="" alt="Dynamic QR" style="width:130px; height:130px; margin-bottom:12px; border-radius:10px; border:1px solid #e2e8f0; padding:5px;">
+                            <div class="form-group" style="text-align:left; margin-top:10px;">
+                                <label>Enter UPI Ref Number (UTR / Txn ID)</label>
+                                <input type="text" id="checkoutUpiUtrInp" placeholder="12-digit UTR Number or Transaction ID">
+                            </div>
                         </div>
-
                         <div style="display:flex; gap:8px; margin-top:15px;">
-                            <input type="text" id="couponCodeInp" placeholder="Coupon Code (e.g. FIRST10)" style="padding:10px; font-size:13px; background:#fff;">
+                            <input type="text" id="couponCodeInp" placeholder="Enter Coupon Code" style="padding:10px; font-size:13px; background:#fff;">
                             <button type="button" onclick="applyPromoCouponCode()" style="width:auto; padding:0 16px; font-size:13px; background:#0f172a;">Apply</button>
                         </div>
                     </div>
-
                     <button id="btnCheckout" style="margin-top:15px; padding:16px;">⚡ Lock Instant Order Package</button>
+                    
+                    <div class="reviews-section">
+                        <h3 style="font-size:14px; font-weight:800; margin-bottom:12px;">Customer Ratings & Reviews</h3>
+                        <div id="dtlReviewsContainer">No reviews posted yet for this catalog variant asset.</div>
+                        <form id="formSubmitReview" style="margin-top:15px; background:#f8fafc; padding:10px; border-radius:10px; border:1px solid var(--border);">
+                            <div class="form-group" style="margin-bottom:8px;">
+                                <label style="font-size:11px;">Star Rating</label>
+                                <select id="revInpStars" style="padding:8px; font-size:12px; background:#fff;"><option value="5">⭐⭐⭐⭐⭐ (5/5)</option><option value="4">⭐⭐⭐⭐ (4/5)</option><option value="3">⭐⭐⭐ (3/5)</option><option value="2">⭐⭐ (2/5)</option><option value="1">⭐ (1/5)</option></select>
+                            </div>
+                            <div class="form-group" style="margin-bottom:8px;"><label style="font-size:11px;">Write Review Comment</label><input type="text" id="revInpText" placeholder="Share your experience..." style="padding:8px; font-size:12px; background:#fff;" required></div>
+                            <button type="submit" style="padding:8px; font-size:12px;">Submit Feedback</button>
+                        </form>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -215,12 +288,18 @@
         </div>
 
         <div id="scrProfile" class="app-screen">
+            <div class="app-card" style="background:var(--primary-light); border-color:#c7d2fe; display:flex; justify-content:space-around; text-align:center;">
+                <div><p style="margin:0; font-size:11px; font-weight:bold; color:var(--text-muted);">TOTAL PURCHASED</p><h3 id="profMetricOrdersCount" style="margin:4px 0 0 0; font-size:1.4rem;">0 Orders</h3></div>
+                <div><p style="margin:0; font-size:11px; font-weight:bold; color:var(--text-muted);">TOTAL CAPITAL SPENT</p><h3 id="profMetricSpendSum" style="margin:4px 0 0 0; font-size:1.4rem; color:var(--price);">₹0</h3></div>
+            </div>
             <div class="app-card">
                 <h2>Profile Settings</h2>
                 <form id="formEditProfile">
                     <div class="form-group"><label>Full Name</label><input type="text" id="profInpName" required></div>
                     <div class="form-group"><label>WhatsApp Number</label><input type="tel" id="profInpPhone" required></div>
-                    <div class="form-group"><label>Default Delivery Address</label><textarea id="profInpAddress" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Home Shipping Address</label><textarea id="profInpAddressHome" rows="2" required></textarea></div>
+                    <div class="form-group"><label>Office Shipping Address (Optional)</label><textarea id="profInpAddressOffice" rows="2" placeholder="Workplace coordinate address parameters"></textarea></div>
+                    <div class="form-group"><label>Alternative Friend's Shipping Address (Optional)</label><textarea id="profInpAddressFriend" rows="2" placeholder="Alternative dropshipping parameters address"></textarea></div>
                     <button type="submit" id="btnUpdateProfile" style="background:#0f172a; margin-bottom:12px;">Save Profile Changes</button>
                 </form>
                 <button onclick="appLogout()" style="background:#ef4444;">Disconnect Authentication</button>
@@ -230,13 +309,34 @@
         <div id="scrAdmin" class="app-screen">
             <h2>Control Panel</h2>
             <div class="stats-grid">
-                <div class="stat-item"><p>NET REVENUE</p><h3 id="admRevenue" style="color:var(--success);">₹0</h3></div>
-                <div class="stat-item"><p>TOTAL ORDERS</p><h3 id="admOrderCount">0</h3></div>
+                <div class="stat-item"><p>DELIVERED REVENUE</p><h3 id="admRevenue" style="color:var(--success);">₹0</h3></div>
+                <div class="stat-item"><p>PENDING VALUES</p><h3 id="admPendingRevenue" style="color:#d97706;">₹0</h3></div>
             </div>
-
+            <div class="app-card" style="padding:15px; display:flex; gap:8px;">
+                <input type="text" id="admOrderSearchInp" placeholder="Filter orders by customer name..." style="padding:10px; font-size:13px;">
+                <button type="button" onclick="exportOrderLogsToCsvFileFormat()" style="width:auto; padding:0 12px; font-size:12px; background:#0f172a;"><ion-icon name="download-outline"></ion-icon></button>
+            </div>
             <div class="app-card">
                 <h2>Incoming Purchase Logs</h2>
                 <div id="admOrdersContainer" style="font-size:13px;">Awaiting live streams...</div>
+            </div>
+
+            <div class="app-card">
+                <h2>🎟️ Deploy Custom Smart Coupon</h2>
+                <form id="formAdminCoupon">
+                    <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <div><label>Voucher Code String</label><input type="text" id="admCpnCode" placeholder="E.g. DIWALI50" required></div>
+                        <div><label>Discount Value</label><input type="number" id="admCpnVal" placeholder="E.g. 15" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Type of Markdown Deductions</label>
+                        <select id="admCpnType">
+                            <option value="PERCENTAGE">Percentage Drop (%)</option>
+                            <option value="FLAT">Flat Subtraction Amount (₹)</option>
+                        </select>
+                    </div>
+                    <button type="submit" style="background:#4f46e5;">Push Discount Coupon Live</button>
+                </form>
             </div>
 
             <div class="app-card">
@@ -250,8 +350,20 @@
                     </div>
                     <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                         <div><label>Initial Stock Units</label><input type="number" id="admInpStock" value="10" required></div>
-                        <div><label>Variants (e.g. Red, Blue)</label><input type="text" id="admInpVariants" placeholder="M, L or Black"></div>
+                        <div>
+                            <label>Product Category</label>
+                            <select id="admInpCategory">
+                                <option value="Electronics">Electronics</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Gadgets">Gadgets</option>
+                            </select>
+                        </div>
                     </div>
+                    <div class="form-group" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                        <div><label>Fixed Shipping Fee (₹)</label><input type="number" id="admInpShipping" value="40" required></div>
+                        <div><label>Estimated Delivery Offset (Days)</label><input type="number" id="admInpDeliveryDays" value="4" required></div>
+                    </div>
+                    <div class="form-group"><label>Product Variants (Comma Separated)</label><input type="text" id="admInpVariants" placeholder="M, L, XL or Black, White"></div>
                     <div class="form-group"><label>Specifications Description</label><textarea id="admInpDesc" rows="3" required></textarea></div>
                     <div class="form-group">
                         <label>Select Product Photos (Multiple Images)</label>
@@ -278,8 +390,9 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc, deleteDoc, runTransaction } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc, deleteDoc, runTransaction, where } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDFCJP7HLy3Yri2mLu7o36RrgBgdl98MAk",
@@ -293,13 +406,26 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
+        const storage = getStorage(app);
 
         const ADMIN_EMAIL = "tanishmandloi2006@gmail.com";
+        const MERCHANT_UPI = "tanishmandloi2006@okaxis";
+        const MERCHANT_NAME = "Tanish Mandloi";
+
         let profileCache = null;
         let activeProductContext = null;
-        let appliedPriceFactor = 1.0;
         let currentSliderIndex = 0;
+        let currentPurchaseQty = 1;
+        
         let masterProductsCache = [];
+        let masterOrdersCache = [];
+        let wishlistMapCache = {};
+        
+        let activeCategoryFilter = "ALL";
+        let activeSortCriteria = "NEWEST";
+        let liveCouponsDatabaseMap = {};
+        let activeCouponMeta = null;
+        let totalOrdersSnapshotCounter = -1;
 
         window.switchAuthScreen = function(scrId) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
@@ -317,45 +443,78 @@
         window.appLogout = function() { signOut(auth).then(() => location.reload()); }
         window.togglePaymentWindow = function(val) {
             document.getElementById('upiPaymentBox').style.display = (val === 'ONLINE') ? 'block' : 'none';
+            if(val === 'ONLINE') recomputeDynamicIntentPaymentGateways();
+        }
+
+        function pushInAppBannerNotification(text, isAdminAlert = false) {
+            const banner = document.getElementById('appNotificationBanner');
+            const txtNode = document.getElementById('appNotificationText');
+            txtNode.innerText = text; banner.style.display = "flex";
+            if(isAdminAlert) banner.classList.add('alert-admin'); else banner.classList.remove('alert-admin');
+            setTimeout(() => { banner.style.display = "none"; }, 7000);
+        }
+
+        window.triggerPasswordReset = async function() {
+            const email = document.getElementById('logEmail').value.trim();
+            if(!email) { alert("Enter email address above."); return; }
+            try { await sendPasswordResetEmail(auth, email); alert("Reset link sent!"); } catch(e) { alert(e.message); }
         }
 
         // SIGNUP/LOGIN
         document.getElementById('formSignup').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.getElementById('regName').value.trim();
             const email = document.getElementById('regEmail').value.trim();
-            const phone = document.getElementById('regPhone').value.trim();
-            const address = document.getElementById('regAddress').value.trim();
             const pass = document.getElementById('regPass').value;
+            const phone = document.getElementById('regPhone').value.trim();
+            if(!phone.startsWith("91") || phone.length !== 12) { alert("Requires starting with 91 followed by 10 digits."); return; }
             try {
                 const c = await createUserWithEmailAndPassword(auth, email, pass);
-                await setDoc(doc(db, "users", c.user.uid), { name, email, phone, address });
+                await setDoc(doc(db, "users", c.user.uid), {
+                    name: document.getElementById('regName').value.trim(), email: email, phone: phone,
+                    addressHome: document.getElementById('regAddress').value.trim(), addressOffice: "", addressFriend: ""
+                });
                 alert("Profile registered successfully! 🎉");
             } catch(e) { alert(e.message); }
         });
 
         document.getElementById('formLogin').addEventListener('submit', async (e) => {
             e.preventDefault();
-            try {
-                await signInWithEmailAndPassword(auth, document.getElementById('logEmail').value.trim(), document.getElementById('logPass').value);
-            } catch(e) { alert(e.message); }
+            try { await signInWithEmailAndPassword(auth, document.getElementById('logEmail').value.trim(), document.getElementById('logPass').value); } catch(e) { alert(e.message); }
         });
 
-        // EDIT PROFILE LOGIC
+        // EDIT PROFILE
         document.getElementById('formEditProfile').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const name = document.getElementById('profInpName').value.trim();
-            const phone = document.getElementById('profInpPhone').value.trim();
-            const address = document.getElementById('profInpAddress').value.trim();
-            const btn = document.getElementById('btnUpdateProfile');
-            
-            btn.disabled = true; btn.innerText = "Updating profile parameters...";
+            const btn = document.getElementById('btnUpdateProfile'); btn.disabled = true;
             try {
-                await updateDoc(doc(db, "users", auth.currentUser.uid), { name, phone, address });
-                profileCache = { ...profileCache, name, phone, address };
-                alert("Profile synchronized successfully! ✨");
-            } catch(err) { alert("Failed to synchronize profile metadata."); }
-            finally { btn.disabled = false; btn.innerText = "Save Profile Changes"; }
+                const name = document.getElementById('profInpName').value.trim();
+                const phone = document.getElementById('profInpPhone').value.trim();
+                const addressHome = document.getElementById('profInpAddressHome').value.trim();
+                const addressOffice = document.getElementById('profInpAddressOffice').value.trim();
+                const addressFriend = document.getElementById('profInpAddressFriend').value.trim();
+                
+                await updateDoc(doc(db, "users", auth.currentUser.uid), { name, phone, addressHome, addressOffice, addressFriend });
+                profileCache = { ...profileCache, name, phone, addressHome, addressOffice, addressFriend }; alert("Profile updated! ✨");
+            } catch(err) { alert("Failed to update profile Changes."); } finally { btn.disabled = false; }
+        });
+
+        function recomputeDynamicIntentPaymentGateways() {
+            if(!activeProductContext) return;
+            let netBasePrice = activeProductContext.price;
+            if(activeCouponMeta) {
+                if(activeCouponMeta.type === "PERCENTAGE") netBasePrice = netBasePrice * (1 - (activeCouponMeta.val / 100));
+                if(activeCouponMeta.type === "FLAT") netBasePrice = Math.max(0, netBasePrice - activeCouponMeta.val);
+            }
+            const shippingCost = Number(activeProductContext.shipping || 0);
+            const finalNetInvoiceBillAmount = Math.round((netBasePrice * currentPurchaseQty) + shippingCost);
+
+            const upiStringRaw = `upi://pay?pa=${MERCHANT_UPI}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${finalNetInvoiceBillAmount}&cu=INR&tn=${encodeURIComponent('Pay ' + activeProductContext.title)}`;
+            document.getElementById('btnUpiIntentLink').href = upiStringRaw;
+            document.getElementById('dtlDynamicQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiStringRaw)}`;
+        }
+
+        onSnapshot(collection(db, "coupons"), (snap) => {
+            liveCouponsDatabaseMap = {}; snap.forEach(d => { liveCouponsDatabaseMap[d.data().code] = d.data(); });
         });
 
         // AUTH WATCHER
@@ -363,6 +522,13 @@
             if(user) {
                 document.getElementById('appHeader').style.display = "flex";
                 document.getElementById('appBottomNav').style.display = "flex";
+                
+                // Initialize personal user-side wishlist snapshots pipeline listeners
+                onSnapshot(collection(db, "users", user.uid, "wishlist"), (wSnap) => {
+                    wishlistMapCache = {}; wSnap.forEach(d => { wishlistMapCache[d.id] = true; });
+                    applyGlobalCatalogPipelineFilters();
+                });
+
                 if(user.email === ADMIN_EMAIL) {
                     document.getElementById('adminTab').style.display = "flex";
                     switchTab('scrAdmin', document.getElementById('adminTab'));
@@ -374,42 +540,74 @@
                         profileCache = snap.data();
                         document.getElementById('profInpName').value = profileCache.name || "";
                         document.getElementById('profInpPhone').value = profileCache.phone || "";
-                        document.getElementById('profInpAddress').value = profileCache.address || "";
+                        document.getElementById('profInpAddressHome').value = profileCache.addressHome || "";
+                        document.getElementById('profInpAddressOffice').value = profileCache.addressOffice || "";
+                        document.getElementById('profInpAddressFriend').value = profileCache.addressFriend || "";
                     }
                     switchTab('scrHome', document.querySelectorAll('.nav-item')[0]);
                     initCustomerTimelineObserver(user.uid);
+                    initCustomerMetricsDashboard(user.uid);
                 }
             } else {
-                document.getElementById('appHeader').style.display = "none";
-                document.getElementById('appBottomNav').style.display = "none";
-                switchAuthScreen('scrLogin');
+                document.getElementById('appHeader').style.display = "none"; document.getElementById('appBottomNav').style.display = "none";
+                document.getElementById('appNotificationBanner').style.display = "none"; switchAuthScreen('scrLogin');
             }
         });
 
-        // LIVE CATALOG REALTIME FETCH WITH SEARCH & FILTER CAPABILITY
+        // WISHLIST HUB ACCELERATOR TRIGGER LOCKS
+        window.toggleProductWishlistTokenState = async function(e, id) {
+            e.stopPropagation(); if(!auth.currentUser) return;
+            const refDoc = doc(db, "users", auth.currentUser.uid, "wishlist", id);
+            if(wishlistMapCache[id]) {
+                await deleteDoc(refDoc); pushInAppBannerNotification("Removed item asset from your Wishlist logs.");
+            } else {
+                await setDoc(refDoc, { addedAt: new Date().toISOString() }); pushInAppBannerNotification("Added product live into your active Wishlist hub! ❤️");
+            }
+        }
+
+        // PRODUCT RENDERS
         onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
-            masterProductsCache = [];
-            snap.forEach(d => { masterProductsCache.push({ id: d.id, ...d.data() }); });
-            renderCatalogGrid(masterProductsCache);
+            masterProductsCache = []; snap.forEach(d => { masterProductsCache.push({ id: d.id, ...d.data() }); });
+            applyGlobalCatalogPipelineFilters();
         });
 
-        function renderCatalogGrid(products) {
-            const grid = document.getElementById('catalogGrid');
-            grid.innerHTML = "";
-            if(products.length === 0) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>No matching products found.</p>"; return; }
+        window.filterByProductCategory = function(category, element) {
+            document.querySelectorAll('.cat-badge').forEach(b => b.classList.remove('active'));
+            element.classList.add('active'); activeCategoryFilter = category; applyGlobalCatalogPipelineFilters();
+        }
+
+        window.sortCatalogGrid = function(criteria) { activeSortCriteria = criteria; applyGlobalCatalogPipelineFilters(); }
+
+        function applyGlobalCatalogPipelineFilters() {
+            let stream = [...masterProductsCache];
+            const searchVal = document.getElementById('catalogSearchInp').value.toLowerCase().trim();
+
+            if(searchVal) stream = stream.filter(p => p.title.toLowerCase().includes(searchVal) || p.desc.toLowerCase().includes(searchVal));
+            if(activeCategoryFilter === "WISH") stream = stream.filter(p => wishlistMapCache[p.id] === true);
+            else if(activeCategoryFilter !== "ALL") stream = stream.filter(p => p.category === activeCategoryFilter);
+
+            if(activeSortCriteria === "PRICE_LOW") stream.sort((a,b) => a.price - b.price);
+            if(activeSortCriteria === "PRICE_HIGH") stream.sort((a,b) => b.price - a.price);
+            if(activeSortCriteria === "NEWEST") stream.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+            renderFilteredCatalogView(stream);
+        }
+
+        function renderFilteredCatalogView(products) {
+            const grid = document.getElementById('catalogGrid'); grid.innerHTML = "";
+            if(products.length === 0) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>No matching items allocated.</p>"; return; }
             
             products.forEach(p => {
-                const card = document.createElement('div');
-                card.className = "product-mini-card";
-                card.onclick = () => launchProductDeepDetails(p.id, p);
-                
+                const card = document.createElement('div'); card.className = "product-mini-card"; card.onclick = () => launchProductDeepDetails(p.id, p);
                 const firstImg = (p.images && p.images.length > 0) ? p.images[0] : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23e2e8f0'></svg>";
                 const mrpString = p.mrp ? `<span class="mini-mrp">~~₹${p.mrp}~~</span>` : "";
                 const outOfStockLabel = Number(p.stock || 0) <= 0 ? `<div class="stock-badge" style="background:#ef4444;">SOLD OUT</div>` : "";
+                const isHeartActive = wishlistMapCache[p.id] ? "active" : "";
 
                 card.innerHTML = `
                     ${outOfStockLabel}
-                    <img class="mini-img" src="${firstImg}" alt="asset">
+                    <ion-icon name="heart" class="wishlist-heart-btn ${isHeartActive}" onclick="toggleProductWishlistTokenState(event, '${p.id}')"></ion-icon>
+                    <img class="mini-img" src="${firstImg}">
                     <div class="mini-title">${p.title}</div>
                     <div class="mini-price">₹${p.price} ${mrpString}</div>
                 `;
@@ -417,52 +615,69 @@
             });
         }
 
-        // Search Bar Event Listener
-        document.getElementById('catalogSearchInp').addEventListener('input', (e) => {
-            const queryText = e.target.value.toLowerCase().trim();
-            const filtered = masterProductsCache.filter(p => p.title.toLowerCase().includes(queryText) || p.desc.toLowerCase().includes(queryText));
-            renderCatalogGrid(filtered);
-        });
+        document.getElementById('catalogSearchInp').addEventListener('input', applyGlobalCatalogPipelineFilters);
 
-        // LAUNCH DEEP MODAL DETAILS CELL
+        // QUANTITY MODIFIER
+        window.updatePurchaseQtyMultiplier = function(factor) {
+            if(!activeProductContext) return;
+            const target = currentPurchaseQty + factor; const maxLimit = Number(activeProductContext.stock || 0);
+            if(target < 1) return; if(target > maxLimit) { alert(`Only ${maxLimit} units remaining inside warehouse stock channels.`); return; }
+            
+            currentPurchaseQty = target; document.getElementById('dtlQtyValue').innerText = currentPurchaseQty;
+            let unitPrice = activeProductContext.price;
+            if(activeCouponMeta) {
+                if(activeCouponMeta.type === "PERCENTAGE") unitPrice = unitPrice * (1 - (activeCouponMeta.val / 100));
+                if(activeCouponMeta.type === "FLAT") unitPrice = Math.max(0, unitPrice - activeCouponMeta.val);
+            }
+            document.getElementById('dtlPrice').innerText = "₹" + Math.round(unitPrice * currentPurchaseQty);
+            if(document.getElementById('checkoutModeSelect').value === 'ONLINE') recomputeDynamicIntentPaymentGateways();
+        }
+
+        // DEEP DETAILS PAGE WITH DYNAMIC ESTIMATED SHIPPING LOGICS AND REVIEWS STREAMS
         window.launchProductDeepDetails = function(id, data) {
             activeProductContext = { id, ...data };
-            appliedPriceFactor = 1.0;
-            currentSliderIndex = 0;
+            activeCouponMeta = null; currentSliderIndex = 0; currentPurchaseQty = 1;
+            document.getElementById('dtlQtyValue').innerText = 1;
 
             document.getElementById('dtlTitle').innerText = data.title;
             document.getElementById('dtlPrice').innerText = "₹" + data.price;
             document.getElementById('dtlOriginalMrp').innerText = data.mrp ? "₹" + data.mrp : "";
-            document.getElementById('dtlDesc').innerText = data.desc || "No specifications description provided.";
+            document.getElementById('dtlDesc').innerText = data.desc || "No descriptions specifications parameters available.";
             document.getElementById('couponCodeInp').value = "";
 
-            const warningBox = document.getElementById('dtlStockWarning');
-            const stockNum = Number(data.stock || 0);
-            const btnPay = document.getElementById('btnCheckout');
+            // Dynamic Date Estimation Calculations Logic Mapping Block
+            const offsetDays = Number(data.deliveryDays || 4);
+            const deliveryDateObject = new Date(); deliveryDateObject.setDate(deliveryDateObject.getDate() + offsetDays);
+            const options = { weekday: 'long', month: 'short', day: 'numeric' };
+            const dateStringFormatted = deliveryDateObject.toLocaleDateString('en-US', options);
+            const shippingChargesValue = Number(data.shipping || 0);
+            const shippingTextStr = shippingChargesValue === 0 ? "FREE Delivery" : `₹${shippingChargesValue} Shipping Charges`;
+            
+            document.getElementById('dtlDeliveryEstimationLine').innerText = `🚚 Estimated Delivery by: ${dateStringFormatted} (${shippingTextStr})`;
+
+            const warningBox = document.getElementById('dtlStockWarning'); const stockNum = Number(data.stock || 0); const btnPay = document.getElementById('btnCheckout');
+            const adminBlinker = document.getElementById('dtlAdminStockBlinker');
+
+            // Low Stock Blinker Configuration
+            if(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL && stockNum <= 3 && stockNum > 0) adminBlinker.style.display = "block";
+            else adminBlinker.style.display = "none";
 
             if(stockNum <= 0) {
-                warningBox.style.display = "block"; warningBox.style.color = "#ef4444"; warningBox.innerText = "❌ Out of stock! Temporarily unavailable.";
-                btnPay.disabled = true; btnPay.innerText = "Sold Out completely";
+                warningBox.style.display = "block"; warningBox.style.color = "#ef4444"; warningBox.innerText = "❌ Out of Stock! Temporary warehouse node locks activated.";
+                btnPay.disabled = true; btnPay.innerText = "Sold Out";
             } else if(stockNum <= 3) {
-                warningBox.style.display = "block"; warningBox.style.color = "#f59e0b"; warningBox.innerText = `🔥 Only ${stockNum} packages left! Hurry up.`;
+                warningBox.style.display = "block"; warningBox.style.color = "#f59e0b"; warningBox.innerText = `🔥 High Conversion: Only ${stockNum} packages remaining left in registry slots!`;
                 btnPay.disabled = false; btnPay.innerText = "⚡ Lock Instant Order Package";
             } else {
                 warningBox.style.display = "none"; btnPay.disabled = false; btnPay.innerText = "⚡ Lock Instant Order Package";
             }
 
-            const track = document.getElementById('dtlSliderTrack');
-            const dots = document.getElementById('dtlSliderDots');
+            const track = document.getElementById('dtlSliderTrack'); const dots = document.getElementById('dtlSliderDots');
             track.innerHTML = ""; dots.innerHTML = "";
-
             const imgList = (data.images && data.images.length > 0) ? data.images : ["data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%23f1f5f9'></svg>"];
-            
             imgList.forEach((imgSrc, idx) => {
-                const slide = document.createElement('div'); slide.className = "slider-slide";
-                slide.innerHTML = `<img src="${imgSrc}" alt="slide">`;
-                track.appendChild(slide);
-
-                const dot = document.createElement('div'); dot.className = `slider-dot ${idx===0?'active':''}`;
-                dots.appendChild(dot);
+                const slide = document.createElement('div'); slide.className = "slider-slide"; slide.innerHTML = `<img src="${imgSrc}">`; track.appendChild(slide);
+                const dot = document.createElement('div'); dot.className = `slider-dot ${idx===0?'active':''}`; dots.appendChild(dot);
             });
             track.style.transform = `translateX(0%)`;
 
@@ -472,183 +687,287 @@
                 data.variants.forEach(v => { const opt = document.createElement('option'); opt.value = v; opt.innerText = v; sel.appendChild(opt); });
             } else { document.getElementById('variantWrapper').style.display = "none"; }
 
+            // Re-render Public Ratings & Reviews thread pipeline snapshots arrays
+            initProductPublicFeedbackFeed(id);
+
             document.getElementById('catalogListView').style.display = "none";
             document.getElementById('productDetailView').style.display = "block";
+            if(document.getElementById('checkoutModeSelect').value === 'ONLINE') recomputeDynamicIntentPaymentGateways();
         }
 
         window.shiftSliderNode = function(dir) {
             if(!activeProductContext || !activeProductContext.images) return;
             const len = activeProductContext.images.length; if(len <= 1) return;
             currentSliderIndex = (currentSliderIndex + dir + len) % len;
-            
             document.getElementById('dtlSliderTrack').style.transform = `translateX(-${currentSliderIndex * 100}%)`;
-            const dots = document.querySelectorAll('.slider-dot');
-            dots.forEach((d, idx) => d.className = `slider-dot ${idx===currentSliderIndex?'active':''}`);
+            document.querySelectorAll('.slider-dot').forEach((d, idx) => d.className = `slider-dot ${idx===currentSliderIndex?'active':''}`);
         }
 
-        window.closeProductDetails = function() {
-            document.getElementById('catalogListView').style.display = "block";
-            document.getElementById('productDetailView').style.display = "none";
-            activeProductContext = null;
-        }
+        window.closeProductDetails = function() { document.getElementById('catalogListView').style.display = "block"; document.getElementById('productDetailView').style.display = "none"; activeProductContext = null; }
 
         window.applyPromoCouponCode = function() {
             if(!activeProductContext) return;
-            if(document.getElementById('couponCodeInp').value.trim().toUpperCase() === "FIRST10") {
-                appliedPriceFactor = 0.90;
-                document.getElementById('dtlPrice').innerText = `₹${Math.round(activeProductContext.price * appliedPriceFactor)} (10% Coupon!)`;
-                alert("Promo Verified! 10% instant markdown applied.");
-            } else { alert("Invalid coupon properties."); }
+            const entered = document.getElementById('couponCodeInp').value.trim().toUpperCase();
+            if(liveCouponsDatabaseMap[entered]) {
+                activeCouponMeta = liveCouponsDatabaseMap[entered]; let unitPrice = activeProductContext.price;
+                if(activeCouponMeta.type === "PERCENTAGE") unitPrice = unitPrice * (1 - (activeCouponMeta.val / 100));
+                if(activeCouponMeta.type === "FLAT") unitPrice = Math.max(0, unitPrice - activeCouponMeta.val);
+                
+                const finalProductSum = Math.round(unitPrice * currentPurchaseQty);
+                const totalBillWithShippingCalculated = finalProductSum + Number(activeProductContext.shipping || 0);
+                
+                document.getElementById('dtlPrice').innerText = "₹" + totalBillWithShippingCalculated;
+                if(document.getElementById('checkoutModeSelect').value === 'ONLINE') recomputeDynamicIntentPaymentGateways();
+                alert("Smart coupon validation successful matrix sync! ✨");
+            } else { alert("Voucher validation exception parameters mismatch."); }
         }
 
-        function convertFileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader(); reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result); reader.onerror = e => reject(e);
+        // RE-ORDER CONVENIENCE READD FEATURE ALGORITHM
+        window.triggerFastReorderSequencePipeline = async function(titleText, basePrice) {
+            if(!profileCache) return;
+            if(!confirm(`Do you completely want to instantly reorder another package of "${titleText}" for flat COD value amount?`)) return;
+            
+            try {
+                const fastOrderPayload = {
+                    uid: auth.currentUser.uid, name: profileCache.name, phone: profileCache.phone, address: profileCache.addressHome,
+                    item: `${titleText} (Reordered)`, qty: 1, price: Number(basePrice), payMode: "COD", proofImg: "", utr: "COD_REORDER", status: "pending", date: new Date().toISOString()
+                };
+                await addDoc(collection(db, "orders"), fastOrderPayload);
+                alert("Fast Reorder processing pipeline complete! Check tracker matrix. 🚀");
+            } catch(e) { alert("Fast reorder routing failed."); }
+        }
+
+        // RATINGS & REVIEWS SUBMISSION PIPELINE CORE
+        document.getElementById('formSubmitReview').addEventListener('submit', async (e) => {
+            e.preventDefault(); if(!activeProductContext || !auth.currentUser) return;
+            const stars = Number(document.getElementById('revInpStars').value);
+            const comment = document.getElementById('revInpText').value.trim();
+            const reviewerName = profileCache ? profileCache.name : auth.currentUser.email;
+
+            try {
+                await addDoc(collection(db, "products", activeProductContext.id, "reviews"), {
+                    name: reviewerName, stars, comment, date: new Date().toISOString()
+                });
+                alert("Feedback feedback matrix dispatched live to catalog thread nodes! 📝");
+                document.getElementById('formSubmitReview').reset();
+                initProductPublicFeedbackFeed(activeProductContext.id);
+            } catch(err) { alert("Submission thread array tracking error."); }
+        });
+
+        function initProductPublicFeedbackFeed(prodId) {
+            const container = document.getElementById('dtlReviewsContainer');
+            onSnapshot(query(collection(db, "products", prodId, "reviews"), orderBy("date", "desc")), (snap) => {
+                container.innerHTML = "";
+                if(snap.empty) { container.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>No feedback logs published yet for this listing registry node.</p>"; return; }
+                snap.forEach(d => {
+                    const r = d.data(); const card = document.createElement('div'); card.className = "review-card";
+                    let starsStringStr = "⭐".repeat(r.stars);
+                    card.innerHTML = `<div class='review-header'><span>👤 ${r.name}</span><span class='stars-gold'>${starsStringStr}</span></div><p style='margin:4px 0 0 0; color:#475569;'>${r.comment}</p>`;
+                    container.appendChild(card);
+                });
             });
         }
 
-        // CRITICAL BUG SOLVED: FIRESTORE TRANSACTION SECURE TRANSACTION TO ELIMINATE CHEKOUT RACE CONDITION
+        // CUSTOMER ATOMIC CHECKOUT SECURE TRANSACTION
         document.getElementById('btnCheckout').addEventListener('click', async () => {
             if(!profileCache || !activeProductContext) return;
-            const b = document.getElementById('btnCheckout'); 
-            b.disabled = true; b.innerText = "Executing Atomic Stock Transaction Locks...";
             
-            const mode = document.getElementById('checkoutModeSelect').value;
-            const file = document.getElementById('checkoutPaymentProof').files[0];
+            // Choose dynamic profile addresses from form cache selections array fallback
+            const finalDestinationPath = profileCache.addressHome; // Defaults to home coordinate parameters pipeline
+
+            const b = document.getElementById('btnCheckout'); const mode = document.getElementById('checkoutModeSelect').value;
+            const file = document.getElementById('checkoutPaymentProof').files[0]; const utrNumber = document.getElementById('checkoutUpiUtrInp').value.trim();
+
+            if(mode === "ONLINE" && !utrNumber) { alert("Requires bank 12-digit UTR ID."); return; }
+            b.disabled = true; b.innerText = "Securing transaction array matrix locks...";
             let proofUrl = "";
 
             try {
-                if(mode === "ONLINE" && file) { b.innerText = "Encoding screenshot proof..."; proofUrl = await convertFileToBase64(file); }
+                if(mode === "ONLINE" && file) {
+                    b.innerText = "Syncing backup image asset proof stream...";
+                    const storageRef = ref(storage, `receipts/${Date.now()}_${file.name}`);
+                    const uploadSnap = await uploadBytes(storageRef, file);
+                    proofUrl = await getDownloadURL(uploadSnap.ref);
+                }
 
-                const finalOrderPrice = Math.round(activeProductContext.price * appliedPriceFactor);
-                const selectedVar = document.getElementById('dtlVariantSelect').value || "Regular";
+                let unitPrice = activeProductContext.price;
+                if(activeCouponMeta) {
+                    if(activeCouponMeta.type === "PERCENTAGE") unitPrice = unitPrice * (1 - (activeCouponMeta.val / 100));
+                    if(activeCouponMeta.type === "FLAT") unitPrice = Math.max(0, unitPrice - activeCouponMeta.val);
+                }
+                const baseProductsSumTotal = Math.round(unitPrice * currentPurchaseQty);
+                const finalOrderBillCalculation = baseProductsSumTotal + Number(activeProductContext.shipping || 0);
+
+                const selectedVar = document.getElementById('dtlVariantSelect').value || "Regular Specs";
                 const productRef = doc(db, "products", activeProductContext.id);
 
-                // RUN ATOMIC SERVER TRANSACTION BLOCK
                 await runTransaction(db, async (transaction) => {
                     const sfDoc = await transaction.get(productRef);
-                    if (!sfDoc.exists()) { throw "Product does not exist!"; }
-                    
                     const currentStock = Number(sfDoc.data().stock || 0);
-                    if (currentStock <= 0) {
-                        throw "SOLDOUT_RACE_CONDITION";
-                    }
+                    if (currentStock < currentPurchaseQty) throw "INSUFFICIENT_STOCK_MUTATION";
                     
-                    // 1. Decrement Stock atomically
-                    transaction.update(productRef, { stock: currentStock - 1 });
-
-                    // 2. Create Order Payload Document reference mapping metadata
-                    const orderPayload = {
-                        uid: auth.currentUser.uid,
-                        name: profileCache.name, phone: profileCache.phone, address: profileCache.address,
-                        item: `${activeProductContext.title} (${selectedVar})`, price: Number(finalOrderPrice),
-                        payMode: mode, proofImg: proofUrl, status: "pending", date: new Date().toISOString()
-                    };
+                    transaction.update(productRef, { stock: currentStock - currentPurchaseQty });
                     const newOrderRef = doc(collection(db, "orders"));
-                    transaction.set(newOrderRef, orderPayload);
+                    transaction.set(newOrderRef, {
+                        uid: auth.currentUser.uid, name: profileCache.name, phone: profileCache.phone, address: finalDestinationPath,
+                        item: `${activeProductContext.title} (${selectedVar})`, qty: currentPurchaseQty, price: Number(finalOrderBillCalculation),
+                        payMode: mode, proofImg: proofUrl, utr: utrNumber, status: "pending", date: new Date().toISOString()
+                    });
                 });
 
-                alert(`Order locked successfully via secure atomic network channel! 🎉`);
-                closeProductDetails();
+                alert(`Order confirmed successfully pipeline metrics safe! 🎉`); closeProductDetails();
             } catch(e) { 
-                if(e === "SOLDOUT_RACE_CONDITION") {
-                    alert("Oh snap! Someone bought the last item a fraction of a second before you. Stock rolled back.");
-                } else {
-                    alert("Atomic checkout lock routine failure tracking trace."); 
-                }
-            }
-            finally { b.disabled = false; b.innerText = "⚡ Lock Instant Order Package"; }
+                if(e === "INSUFFICIENT_STOCK_MUTATION") alert("Race condition rollback initiated."); else alert("Execution terminal failure trace."); 
+            } finally { b.disabled = false; b.innerText = "⚡ Lock Instant Order Package"; }
         });
 
-        // CLIENT ORDERS OBSERVER
+        // CLIENT PURCHASES TIMELINE AND ACCOUNT CONSUMERS LOYALTY METRIC STATS
+        function initCustomerMetricsDashboard(uid) {
+            onSnapshot(query(collection(db, "orders")), (snap) => {
+                let cnt = 0; let totalSpendValueSum = 0;
+                snap.forEach(d => {
+                    const o = d.data(); if(o.uid === uid && o.status !== 'cancelled') { cnt++; totalSpendValueSum += Number(o.price); }
+                });
+                document.getElementById('profMetricOrdersCount').innerText = `${cnt} Orders`;
+                document.getElementById('profMetricSpendSum').innerText = `₹${totalSpendValueSum}`;
+            });
+        }
+
+        let customerActiveOrdersPreviousStatusCacheMap = {};
         function initCustomerTimelineObserver(uid) {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
-                let activeNode = null; const list = document.getElementById('customerOrdersList'); list.innerHTML = "";
+                let currentActiveNode = null; const list = document.getElementById('customerOrdersList'); list.innerHTML = "";
                 snap.forEach(d => {
                     const o = d.data();
                     if(o.uid === uid) {
-                        if(!activeNode && o.status !== 'cancelled') activeNode = o;
-                        const card = document.createElement('div'); card.style.cssText = "border-bottom:1px solid var(--border); padding:15px 0;";
-                        const minutesDiff = (new Date() - new Date(o.date)) / (1000 * 60);
-                        let cancelBtnStr = "";
-                        if(o.status === 'pending' && minutesDiff <= 15) {
-                            cancelBtnStr = `<br><span class="cancel-btn" onclick="triggerUserSideCancellation('${d.id}')">Cancel Order</span>`;
+                        const id = d.id; if(!currentActiveNode && o.status !== 'cancelled') currentActiveNode = o;
+                        if(customerActiveOrdersPreviousStatusCacheMap[id] && customerActiveOrdersPreviousStatusCacheMap[id] !== o.status) {
+                            pushInAppBannerNotification(`🔔 Order Status Update: Your package for "${o.item}" is now shifted to [${o.status.toUpperCase()}]!`);
                         }
-                        card.innerHTML = `<div style='font-weight:700; font-size:15px;'>📦 ${o.item}</div><div style='color:var(--text-muted); font-size:13px; margin:4px 0;'>Price: <b style='color:var(--price)'>₹${o.price}</b> | Mode: ${o.payMode}</div><div><span class='badge badge-${o.status}'>${o.status}</span>${cancelBtnStr}</div>`;
+                        customerActiveOrdersPreviousStatusCacheMap[id] = o.status;
+
+                        const card = document.createElement('div'); card.style.cssText = "border-bottom:1px solid var(--border); padding:15px 0;";
+                        const minDiff = (new Date() - new Date(o.date)) / (1000 * 60);
+                        let cancelBtn = (o.status === 'pending' && minDiff <= 15) ? `<br><span class="cancel-btn" onclick="triggerUserSideCancellation('${id}')">Cancel Order</span>` : "";
+                        let utrDisplayString = o.utr ? `<br><b>Bank Txn Ref/UTR:</b> ${o.utr}` : "";
+
+                        card.innerHTML = `
+                            <div onclick="toggleDetailedViewPanel('${id}')" style="cursor:pointer; font-weight:700;">📦 ${o.item} (x${o.qty || 1}) <ion-icon name="chevron-down-outline" style="float:right;"></ion-icon></div>
+                            <div style="font-size:13px; color:var(--text-muted); margin-top:2px;">Bill: <b style="color:var(--price)">₹${o.price}</b> | Status: <span class="badge badge-${o.status}">${o.status}</span></div>
+                            <div class="order-expand-box" id="exp-${id}">
+                                <b>Booking Invoice Reference:</b> #${id}<br><b>Logistics Destination:</b> ${o.address}<br><b>Checkout Channel:</b> ${o.payMode} ${utrDisplayString}
+                                <br><button type="button" onclick="triggerFastReorderSequencePipeline(\`${o.item}\`, ${o.price})" style='padding:6px 10px; font-size:11px; margin-top:8px; width:auto; background:#0f172a;'>🔄 Order Again</button>
+                            </div>
+                            ${cancelBtn}
+                        `;
                         list.appendChild(card);
                     }
                 });
                 const box = document.getElementById('userTrackingBox');
-                if(activeNode) {
+                if(currentActiveNode) {
                     box.style.display = "block"; document.getElementById('cust-step-pending').className = "step"; document.getElementById('cust-step-shipped').className = "step"; document.getElementById('cust-step-delivered').className = "step";
-                    if(activeNode.status === 'pending') document.getElementById('cust-step-pending').className = "step active";
-                    if(activeNode.status === 'shipped') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step active"; }
-                    if(activeNode.status === 'delivered') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step done"; document.getElementById('cust-step-delivered').className = "step done"; }
-                } else { box.style.display = "none"; if(list.innerHTML==="") list.innerHTML = "No history purchase records."; }
+                    if(currentActiveNode.status === 'pending') document.getElementById('cust-step-pending').className = "step active";
+                    if(currentActiveNode.status === 'shipped') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step active"; }
+                    if(currentActiveNode.status === 'delivered') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step done"; document.getElementById('cust-step-delivered').className = "step done"; }
+                } else box.style.display = "none";
             });
         }
 
-        window.triggerUserSideCancellation = async function(id) {
-            if(confirm("Are you sure you want to cancel this booking entry parameters stream?")) {
-                await updateDoc(doc(db, "orders", id), { status: "cancelled" }); alert("Order cancelled successfully!");
-            }
-        }
+        window.toggleDetailedViewPanel = function(id) { const block = document.getElementById(`exp-${id}`); block.style.display = (block.style.display === "block") ? "none" : "block"; }
+        window.triggerUserSideCancellation = async function(id) { if(confirm("Cancel order?")) { await updateDoc(doc(db, "orders", id), { status: "cancelled" }); } }
 
-        // --- ADMINISTRATIVE CORE ROOM ---
+        // --- ADMINISTRATIVE DESK OPERATIONS ---
         function initAdminCoreOperationsEngine() {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
-                document.getElementById('admOrderCount').innerText = snap.size; let revenueSum = 0;
-                const container = document.getElementById('admOrdersContainer'); container.innerHTML = "";
-                if(snap.empty) { container.innerHTML = "<p style='text-align:center; color:var(--text-muted);'>No orders placed yet.</p>"; return; }
-
-                snap.forEach(d => {
-                    const id = d.id; const o = d.data(); if(o.status === 'delivered') revenueSum += Number(o.price);
-                    let proofDomLink = o.proofImg ? `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">View Base64 Payment Screenshot Proof</a>` : "";
-                    const card = document.createElement('div'); card.className = "adm-prod-row";
-                    card.innerHTML = `<div style='border-bottom:1px dashed #e2e8f0; padding-bottom:6px; margin-bottom:6px;'>👤 <b>${o.name}</b> (${o.phone}) <span class='badge badge-${o.status}' style='float:right;'>${o.status}</span></div><div>Item Asset: <b>${o.item}</b> | Bill: <b>₹${o.price}</b></div><div style='font-size:12px; color:var(--text-muted); margin-top:4px;'>📍 ${o.address} <br><b>PayMode:</b> ${o.payMode} ${proofDomLink}</div><div style='margin-top:10px;'><select class='adm-pipeline-status-selector' data-id='${id}' style='padding:6px; font-size:13px; background:#fff;'><option value='pending' ${o.status==='pending'?'selected':''}>Pending</option><option value='shipped' ${o.status==='shipped'?'selected':''}>Shipped</option><option value='delivered' ${o.status==='delivered'?'selected':''}>Delivered</option><option value='cancelled' ${o.status==='cancelled'?'selected':''}>Cancelled</option></select></div>`;
-                    container.appendChild(card);
-                });
-                document.getElementById('admRevenue').innerText = "₹" + revenueSum;
-
-                document.querySelectorAll('.adm-pipeline-status-selector').forEach(sel => {
-                    sel.addEventListener('change', async (e) => {
-                        await updateDoc(doc(db, "orders", e.target.getAttribute('data-id')), { status: e.target.value }); alert("Status synchronized!");
-                    });
-                });
+                masterOrdersCache = []; snap.forEach(d => masterOrdersCache.push({ id: d.id, ...d.data() }));
+                if(totalOrdersSnapshotCounter !== -1 && snap.size > totalOrdersSnapshotCounter) {
+                    pushInAppBannerNotification("🔥 Alert: New Incoming Sales Order Received in Pipeline Queue!", true);
+                }
+                totalOrdersSnapshotCounter = snap.size; applyAdminOrderSearchingPipeline();
             });
 
             onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
                 const holder = document.getElementById('admInventoryContainer'); holder.innerHTML = "";
-                if(snap.empty) { holder.innerHTML = "<p style='text-align:center; color:var(--text-muted);'>Warehouse catalog entries empty.</p>"; return; }
                 snap.forEach(d => {
-                    const p = d.data(); const line = document.createElement('div'); line.className = "adm-prod-row"; line.style.cssText = "display:flex; justify-content:space-between; align-items:center;";
-                    
-                    // FIXED btoa CRASH BUG: Passing raw object references instead of encoding heavy binary streams
-                    line.innerHTML = `<div><b>${p.title}</b> (Stock: <b>${p.stock || 0}</b>)<br><span style='color:var(--price); font-weight:700;'>₹${p.price}</span></div><div><button onclick="launchAdminProductEditMode('${d.id}')" style='padding:6px 12px; font-size:12px; width:auto; background:#f59e0b; margin-right:4px;'>Edit</button><button onclick="triggerAdminDeleteTransaction('${d.id}')" style='padding:6px 12px; font-size:12px; width:auto; background:#ef4444;'>Del</button></div>`;
+                    const p = d.data(); const line = document.createElement('div'); line.className = "adm-prod-row";
+                    const criticalBlinkerStyleLabel = Number(p.stock || 0) <= 3 ? "<span style='color:var(--price); font-weight:bold; animation:pulse 1s infinite;'> [⚠️ LOW STOCK]</span>" : "";
+                    line.innerHTML = `<div><b>${p.title}</b> [Cat: ${p.category || 'None'}] (Units: ${p.stock}) ${criticalBlinkerStyleLabel}<br><b>₹${p.price}</b></div><div><button type="button" onclick="launchAdminProductEditMode('${d.id}')" style='padding:6px 12px; background:#f59e0b; margin-right:4px;'>Edit</button><button type="button" onclick="triggerAdminDeleteTransaction('${d.id}')" style='padding:6px 12px; background:#ef4444;'>Del</button></div>`;
                     holder.appendChild(line);
                 });
             });
+
+            document.getElementById('formAdminCoupon').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const code = document.getElementById('admCpnCode').value.trim().toUpperCase();
+                const val = Number(document.getElementById('admCpnVal').value); const type = document.getElementById('admCpnType').value;
+                try {
+                    await addDoc(collection(db, "coupons"), { code, val, type, createdAt: new Date().toISOString() });
+                    alert(`Coupon Token [${code}] deployed successfully! 🎟️`); document.getElementById('formAdminCoupon').reset();
+                } catch(err) { alert("Failed to deploy coupon."); }
+            });
         }
 
-        window.triggerAdminDeleteTransaction = async function(id) {
-            if(confirm("Delete this item permanently?")) { await deleteDoc(doc(db, "products", id)); alert("Wiped! 🗑️"); }
+        function applyAdminOrderSearchingPipeline() {
+            const queryText = document.getElementById('admOrderSearchInp').value.toLowerCase().trim();
+            let stream = [...masterOrdersCache];
+            if(queryText) stream = stream.filter(o => o.name.toLowerCase().includes(queryText) || o.item.toLowerCase().includes(queryText));
+
+            let deliveredRev = 0; let pendingRev = 0;
+            const container = document.getElementById('admOrdersContainer'); container.innerHTML = "";
+
+            stream.forEach(o => {
+                if(o.status === 'delivered') deliveredRev += Number(o.price); if(o.status === 'pending') pendingRev += Number(o.price);
+
+                let linkBlock = o.proofImg ? `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">Open Payment Proof</a>` : "";
+                let utrDisplay = o.utr ? `<br>🔑 <b>UTR Reference ID:</b> <mark style='font-family:monospace; font-weight:bold;'>${o.utr}</mark>` : "";
+
+                const card = document.createElement('div'); card.className = "adm-prod-row";
+                card.innerHTML = `<div>👤 <b>${o.name}</b> (${o.phone}) <span class='badge badge-${o.status}' style='float:right;'>${o.status}</span></div><div>Item Matrix: <b>${o.item} (x${o.qty || 1})</b> | Price: <b>₹${o.price}</b></div><div style='font-size:12px; color:var(--text-muted);'>📍 Destination: ${o.address} <br><b>Mode:</b> ${o.payMode} ${utrDisplay} ${linkBlock}</div><div style='margin-top:10px;'><select class='adm-pipeline-status-selector' data-id='${o.id}' style='padding:6px; background:#fff;'><option value='pending' ${o.status==='pending'?'selected':''}>Pending</option><option value='shipped' ${o.status==='shipped'?'selected':''}>Shipped</option><option value='delivered' ${o.status==='delivered'?'selected':''}>Delivered</option><option value='cancelled' ${o.status==='cancelled'?'selected':''}>Cancelled</option></select></div>`;
+                container.appendChild(card);
+            });
+
+            document.getElementById('admRevenue').innerText = "₹" + deliveredRev;
+            document.getElementById('admPendingRevenue').innerText = "₹" + pendingRev;
+            
+            document.querySelectorAll('.adm-pipeline-status-selector').forEach(sel => {
+                sel.addEventListener('change', async (e) => { await updateDoc(doc(db, "orders", e.target.getAttribute('data-id')), { status: e.target.value }); });
+            });
         }
 
-        // FIXED: FETCHING DIRECTLY FROM DOCUMENT REFERENCE SNAPSHOT TO PREVENT ANY JAVASCRIPT CRASH OVER ARRAY BLOCKS
+        // LOGISTICS EXCEL DATA EXPORTER CSV ENGINE WRITER
+        window.exportOrderLogsToCsvFileFormat = function() {
+            if(masterOrdersCache.length === 0) { alert("No transaction records available in buffer map."); return; }
+            let csvContentString = "data:text/csv;charset=utf-8,InvoiceID,CustomerName,Phone,Item,Quantity,TotalPrice,PaymentMode,UTR,Status,Date\n";
+            
+            masterOrdersCache.forEach(o => {
+                let sanitizedAddress = (o.address || "").replace(/,/g, " ");
+                let sanitizedItem = (o.item || "").replace(/,/g, " ");
+                csvContentString += `${o.id},${o.name},${o.phone},${sanitizedItem},${o.qty || 1},${o.price},${o.payMode},${o.utr || "None"},${o.status},${o.date}\n`;
+            });
+
+            const encodedUriString = encodeURI(csvContentString);
+            const anchorTokenElement = document.createElement("a");
+            anchorTokenElement.setAttribute("href", encodedUriString);
+            anchorTokenElement.setAttribute("download", `QuickSell_Orders_Report_${new Date().toLocaleDateString()}.csv`);
+            document.body.appendChild(anchorTokenElement);
+            anchorTokenElement.click(); document.body.removeChild(anchorTokenElement);
+        }
+
+        document.getElementById('admOrderSearchInp').addEventListener('input', applyAdminOrderSearchingPipeline);
+        window.triggerAdminDeleteTransaction = async function(id) { if(confirm("Delete item permanently?")) await deleteDoc(doc(db, "products", id)); }
+
         window.launchAdminProductEditMode = async function(id) {
-            const docSnap = await getDoc(doc(db, "products", id));
-            if(!docSnap.exists()) return;
-            const data = docSnap.data();
-
+            const docSnap = await getDoc(doc(db, "products", id)); const data = docSnap.data();
             document.getElementById('admEditId').value = id;
             document.getElementById('admInpTitle').value = data.title || "";
             document.getElementById('admInpPrice').value = data.price || "";
             document.getElementById('admInpMrp').value = data.mrp || "";
             document.getElementById('admInpStock').value = data.stock || 0;
+            document.getElementById('admInpCategory').value = data.category || "Electronics";
+            document.getElementById('admInpShipping').value = data.shipping || 40;
+            document.getElementById('admInpDeliveryDays').value = data.deliveryDays || 4;
             document.getElementById('admInpDesc').value = data.desc || "";
             document.getElementById('admInpVariants').value = data.variants ? data.variants.join(", ") : "";
-            
             document.getElementById('formAdminTitle').innerText = "📝 Modify Warehouse Stock Properties";
             document.getElementById('btnAdminSave').innerText = "Update Storefront Properties Live";
             document.getElementById('btnCancelEdit').style.display = "block";
@@ -660,17 +979,20 @@
             document.getElementById('btnAdminSave').innerText = "Push Changes Live"; document.getElementById('btnCancelEdit').style.display = "none";
         }
 
-        // SAVE AND ENCODE DYNAMIC ASSETS MULTIPLE IMAGES
+        // DEPLOY SECURE FILE ATTACHMENTS
         document.getElementById('formAdminProduct').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const btn = document.getElementById('btnAdminSave'); btn.disabled = true; btn.innerText = "Encoding images matrix arrays parameters...";
+            const btn = document.getElementById('btnAdminSave'); btn.disabled = true; btn.innerText = "Processing Cloud Sync Nodes...";
 
             const id = document.getElementById('admEditId').value;
             const title = document.getElementById('admInpTitle').value.trim();
             const price = Number(document.getElementById('admInpPrice').value);
             const mrp = document.getElementById('admInpMrp').value ? Number(document.getElementById('admInpMrp').value) : "";
             const stock = Number(document.getElementById('admInpStock').value);
-            const desc = document.getElementById('admInpDesc').value.trim(); // DESCRIPTION INJECTION FIELD MAP FIXED
+            const category = document.getElementById('admInpCategory').value;
+            const shipping = Number(document.getElementById('admInpShipping').value);
+            const deliveryDays = Number(document.getElementById('admInpDeliveryDays').value);
+            const desc = document.getElementById('admInpDesc').value.trim();
             const variantsRaw = document.getElementById('admInpVariants').value.trim();
             const files = document.getElementById('admInpFile').files;
 
@@ -679,28 +1001,24 @@
 
             try {
                 let finalImagesArray = [];
-                if(id) {
-                    const snap = await getDoc(doc(db, "products", id));
-                    if(snap.exists()) finalImagesArray = snap.data().images || [];
-                }
+                if(id) { const snap = await getDoc(doc(db, "products", id)); if(snap.exists()) finalImagesArray = snap.data().images || []; }
 
                 if(files.length > 0) {
-                    finalImagesArray = []; 
+                    finalImagesArray = [];
                     for(let i=0; i<files.length; i++) {
-                        btn.innerText = `Encoding local image asset (${i+1}/${files.length})...`;
-                        const b64Str = await convertFileToBase64(files[i]);
-                        finalImagesArray.push(b64Str);
+                        btn.innerText = `Uploading image array node (${i+1}/${files.length})...`;
+                        const fileRef = ref(storage, `products/${Date.now()}_${files[i].name}`);
+                        const uploadSnap = await uploadBytes(fileRef, files[i]);
+                        const downloadUrl = await getDownloadURL(uploadSnap.ref);
+                        finalImagesArray.push(downloadUrl);
                     }
                 }
 
-                // FIXED DESCRIPTION EXPLICIT DATABASE MAPPING SLOT INCLUSION
-                const productPayload = { title, price, mrp, stock, desc, variants: variantsArray, images: finalImagesArray, createdAt: new Date().toISOString() };
-
-                if(id) { await updateDoc(doc(db, "products", id), productPayload); alert("Updated successfully! ✨"); }
-                else { await addDoc(collection(db, "products"), productPayload); alert("Product added successfully live! 🚀"); }
-                resetAdminForm();
-            } catch(e) { alert("Sync failed error."); }
-            finally { btn.disabled = false; }
+                const productPayload = { title, price, mrp, stock, category, shipping, deliveryDays, desc, variants: variantsArray, images: finalImagesArray, createdAt: new Date().toISOString() };
+                if(id) await updateDoc(doc(db, "products", id), productPayload); else await addDoc(collection(db, "products"), productPayload);
+                
+                alert("Cloud Storage Sync Complete! Platform active. 🚀"); resetAdminForm();
+            } catch(e) { alert("Matrix stream upload error."); } finally { btn.disabled = false; }
         });
     </script>
 </body>

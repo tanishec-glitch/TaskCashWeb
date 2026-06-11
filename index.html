@@ -24,15 +24,13 @@
         
         .container { max-width: 480px; margin: 0 auto; background: #ffffff; min-height: 100vh; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08); position: relative; padding: 20px; }
         
-        /* Premium Header */
         header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px 15px 5px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
         header h1 { font-size: 1.4rem; color: var(--text); margin: 0; font-weight: 800; letter-spacing: -0.5px; }
         header h1 span { color: var(--primary); }
-        .logout-btn { background: #fee2e2; color: #ef4444; border: none; padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: 0.2s; }
+        .logout-btn { background: #fee2e2; color: #ef4444; border: none; padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: 30px; cursor: pointer; }
 
-        /* Elegant Floating Bottom Nav Bar */
         .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 440px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 999; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 700; text-decoration: none; width: 22%; text-align: center; transition: 0.2s; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 700; text-decoration: none; width: 22%; text-align: center; }
         .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary); }
         #adminTab { display: none; } 
@@ -50,21 +48,18 @@
         input, textarea, select { padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; background: #f8fafc; color: var(--text); }
         
         button { background: var(--primary); color: white; border: none; padding: 15px 20px; font-size: 15px; font-weight: 700; border-radius: 12px; cursor: pointer; transition: 0.2s; width: 100%; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); }
-        button:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; }
+        button:hover { background: var(--primary-dark); }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; }
 
-        /* High-End MultiProduct Grid */
         .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .product-mini-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; cursor: pointer; transition: 0.2s; }
-        .product-mini-card:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -8px rgba(0,0,0,0.08); }
         .mini-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; background: #e2e8f0; }
         .mini-title { font-size: 14px; font-weight: 700; margin: 8px 0 3px 0; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .mini-price { font-size: 15px; color: var(--price); font-weight: 800; }
 
-        /* Premium Detail View Overlay */
         .detail-view img { width: 100%; height: 280px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); }
         .back-to-shop { display: inline-flex; align-items: center; color: var(--primary); font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 15px; }
 
-        /* Sleek Stepper */
         .track-container { background: var(--primary-light); border: 1px solid #c7d2fe; border-radius: var(--radius); padding: 16px; margin-bottom: 20px; }
         .stepper { display: flex; justify-content: space-between; margin-top: 12px; }
         .step { font-size: 12px; font-weight: 700; color: #94a3b8; flex: 1; text-align: center; }
@@ -140,7 +135,7 @@
             <div id="productDetailView" class="detail-view" style="display:none;">
                 <div class="back-to-shop" onclick="closeProductDetails()"><ion-icon name="arrow-back-outline" style="margin-right:6px; font-size:18px;"></ion-icon> Back to Catalog</div>
                 <div class="app-card" style="padding:15px; border-radius:20px;">
-                    <img id="dtlImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23f1f5f9'/><text x='50%' y='50%' font-family='sans-serif' font-size='12' fill='%2394a3b8' text-anchor='middle' dy='.3em'>Loading Image...</text></svg>" alt="preview">
+                    <img id="dtlImg" src="" alt="preview">
                     <h2 style="font-size:1.4rem; font-weight:800; margin:15px 0 6px 0;" id="dtlTitle">-</h2>
                     <div style="font-size:1.5rem; font-weight:800; color:var(--price); margin-bottom:12px;" id="dtlPrice">₹0</div>
                     <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;" id="dtlDesc">-</p>
@@ -152,15 +147,15 @@
 
                     <div class="app-card" style="background:#f8fafc; border:1px solid var(--border); padding:15px; margin-top:20px; border-radius:14px;">
                         <h4 style="margin:0 0 10px 0; font-weight:800; font-size:14px;">💳 Select Checkout Mode</h4>
-                        <select id="checkoutModeSelect" onchange="togglePaymentWindow(this.value)" style="background:#fff;">
+                        <select id="checkoutModeSelect" onchange="togglePaymentWindow(this.value)">
                             <option value="COD">Cash on Delivery (COD)</option>
                             <option value="ONLINE">Pay via UPI QR Code Scan</option>
                         </select>
 
                         <div id="upiPaymentBox" style="display:none; margin-top:15px; text-align:center;">
-                            <p style="font-size:12px; font-weight:700; color:#64748b; margin-bottom:10px;">Scan QR & Pay Amount. Upload proof screenshot:</p>
+                            <p style="font-size:12px; font-weight:700; color:#64748b; margin-bottom:10px;">Scan QR & Pay. Upload proof screenshot:</p>
                             <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=tanishmandloi2006@okaxis%26pn=Tanish%20Mandloi" alt="QR Code" style="width:140px; height:140px; margin-bottom:12px; border-radius:10px; border:1px solid #e2e8f0; padding:5px;">
-                            <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px; background:none; border:none; padding:0;">
+                            <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px;">
                         </div>
 
                         <div style="display:flex; gap:8px; margin-top:15px;">
@@ -185,10 +180,10 @@
             <div class="app-card">
                 <h2>Profile Settings</h2>
                 <div style="background:#f8fafc; padding:18px; border-radius:14px; border:1px solid var(--border); font-size:14px; margin-bottom:20px; line-height:1.7;">
-                    <p style="margin:4px 0;"><b>Identity Name:</b> <span id="profName" style="color:#000; font-weight:600;">-</span></p>
-                    <p style="margin:4px 0;"><b>Registered Email:</b> <span id="profEmail" style="color:#000; font-weight:600;">-</span></p>
-                    <p style="margin:4px 0;"><b>WhatsApp Contact:</b> <span id="profPhone" style="color:#000; font-weight:600;">-</span></p>
-                    <p style="margin:4px 0; display:flex; flex-direction:column;"><b>Logistics Destination:</b> <span id="profAddress" style="color:#475569; font-weight:600; margin-top:2px; background:#fff; padding:8px; border-radius:8px; border:1px solid #e2e8f0;">-</span></p>
+                    <p><b>Identity Name:</b> <span id="profName" style="color:#000; font-weight:600;">-</span></p>
+                    <p><b>Registered Email:</b> <span id="profEmail" style="color:#000; font-weight:600;">-</span></p>
+                    <p><b>WhatsApp Contact:</b> <span id="profPhone" style="color:#000; font-weight:600;">-</span></p>
+                    <p style="display:flex; flex-direction:column;"><b>Logistics Destination:</b> <span id="profAddress" style="color:#475569; font-weight:600; margin-top:2px; background:#fff; padding:8px; border-radius:8px; border:1px solid #e2e8f0;">-</span></p>
                 </div>
                 <button onclick="appLogout()" style="background:#ef4444;">Disconnect Authentication</button>
             </div>
@@ -213,10 +208,9 @@
                     <div class="form-group"><label>Product Title Name</label><input type="text" id="admInpTitle" required></div>
                     <div class="form-group"><label>Price Parameter Tag (₹)</label><input type="number" id="admInpPrice" required></div>
                     <div class="form-group"><label>Specifications Description</label><textarea id="admInpDesc" rows="3" required></textarea></div>
-                    <div class="form-group"><label>Product Variants (Comma Separated, e.g: Black, Red, White)</label><input type="text" id="admInpVariants" placeholder="M, L, XL or Black, White"></div>
+                    <div class="form-group"><label>Product Variants (Comma Separated)</label><input type="text" id="admInpVariants" placeholder="M, L, XL or Black, White"></div>
                     <div class="form-group">
-                        <label>Image Assets (Select Gallery File)</label>
-                        <input type="text" id="admInpImgUrl" placeholder="Direct URL (Optional)" style="margin-bottom:8px;">
+                        <label>Image (Select Gallery File - Direct Local Encoding)</label>
                         <input type="file" id="admInpFile" accept="image/*" style="border:none; font-size:12px; padding:0; background:none;">
                     </div>
                     <button type="submit" id="btnAdminSave" style="background:#10b981;">Push Changes Live</button>
@@ -236,7 +230,6 @@
             <div class="nav-item" onclick="switchTab('scrProfile', this)"><ion-icon name="person-outline"></ion-icon><div>Profile</div></div>
             <div class="nav-item" id="adminTab" onclick="switchTab('scrAdmin', this)"><ion-icon name="shield-checkmark-outline"></ion-icon><div>Admin</div></div>
         </div>
-
     </div>
 
     <script type="module">
@@ -276,12 +269,11 @@
         }
 
         window.appLogout = function() { signOut(auth).then(() => location.reload()); }
-
         window.togglePaymentWindow = function(val) {
             document.getElementById('upiPaymentBox').style.display = (val === 'ONLINE') ? 'block' : 'none';
         }
 
-        // --- IDENTITY REGISTRATION ---
+        // SIGNUP/LOGIN
         document.getElementById('formSignup').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
@@ -292,7 +284,7 @@
             try {
                 const c = await createUserWithEmailAndPassword(auth, email, pass);
                 await setDoc(doc(db, "users", c.user.uid), { name, email, phone, address });
-                alert("Account profile registered successfully! 🎉");
+                alert("Profile registered successfully! 🎉");
             } catch(e) { alert(e.message); }
         });
 
@@ -304,10 +296,10 @@
         });
 
         function fireMockWhatsAppPayloadGateway(ph, txt) {
-            console.log(`%c[WhatsApp Hub Alert] To: +${ph} | Msg: "${txt}"`, "color:#2563eb; font-weight:bold;");
+            console.log(`%c[WhatsApp Alert] To: +${ph} | Msg: "${txt}"`, "color:#2563eb; font-weight:bold;");
         }
 
-        // AUTH WATCHER LIVE STREAMS
+        // AUTH WATCHER
         onAuthStateChanged(auth, async (user) => {
             if(user) {
                 document.getElementById('appHeader').style.display = "flex";
@@ -337,23 +329,19 @@
             }
         });
 
-        // --- PUBLIC STORE FRONT CATALOG ---
+        // PUBLIC STORE FRONT
         onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
             const grid = document.getElementById('catalogGrid');
             grid.innerHTML = "";
-            if(snap.empty) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>Catalog is empty. Add products from Admin!</p>"; return; }
+            if(snap.empty) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>No products. Add from Admin Tab!</p>"; return; }
             
             snap.forEach(d => {
                 const p = d.data();
                 const card = document.createElement('div');
                 card.className = "product-mini-card";
                 card.onclick = () => launchProductDeepDetails(d.id, p);
-                
-                // HEADPHONE FALLBACK REMOVED: Replaced with clean gray canvas base tag code
-                const imageSrc = p.img ? p.img : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23e2e8f0'/></svg>";
-                
                 card.innerHTML = `
-                    <img class="mini-img" src="${imageSrc}" alt="asset">
+                    <img class="mini-img" src="${p.img || 'data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23e2e8f0\'></svg>'}" alt="asset">
                     <div class="mini-title">${p.title}</div>
                     <div class="mini-price">₹${p.price}</div>
                 `;
@@ -367,9 +355,7 @@
             document.getElementById('dtlTitle').innerText = data.title;
             document.getElementById('dtlPrice').innerText = "₹" + data.price;
             document.getElementById('dtlDesc').innerText = data.desc;
-            
-            // HEADPHONE FALLBACK REMOVED
-            document.getElementById('dtlImg').src = data.img ? data.img : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23f1f5f9'/></svg>";
+            document.getElementById('dtlImg').src = data.img || '';
             document.getElementById('couponCodeInp').value = "";
 
             const sel = document.getElementById('dtlVariantSelect');
@@ -397,16 +383,26 @@
             if(val === "FIRST10") {
                 appliedPriceFactor = 0.90;
                 const newPrice = Math.round(activeProductContext.price * appliedPriceFactor);
-                document.getElementById('dtlPrice').innerText = `₹${newPrice} (10% Coupon Applied!)`;
-                alert("Promo Coupon validated! 10% discount applied.");
-            } else { alert("Invalid promo coupon code."); }
+                document.getElementById('dtlPrice').innerText = `₹${newPrice} (10% Off Applied!)`;
+                alert("Coupon applied successfully!");
+            } else { alert("Invalid coupon code."); }
+        }
+
+        // Helper function to convert file input to Base64 String locally
+        function convertFileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
         }
 
         // CHECKOUT
         document.getElementById('btnCheckout').addEventListener('click', async () => {
             if(!profileCache || !activeProductContext) return;
             const b = document.getElementById('btnCheckout');
-            b.disabled = true; b.innerText = "Securing order transaction...";
+            b.disabled = true; b.innerText = "Securing transaction...";
 
             const mode = document.getElementById('checkoutModeSelect').value;
             const file = document.getElementById('checkoutPaymentProof').files[0];
@@ -414,15 +410,12 @@
 
             try {
                 if(mode === "ONLINE" && file) {
-                    b.innerText = "Syncing payment proof...";
-                    const form = new FormData(); form.append('image', file);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=6df750fdf509531a74d50937a06041ec`, { method: 'POST', body: form });
-                    const rData = await res.json();
-                    if(rData.success) uploadedProofUrl = rData.data.url;
+                    b.innerText = "Encoding screenshot proof...";
+                    uploadedProofUrl = await convertFileToBase64(file);
                 }
 
                 const finalOrderPrice = Math.round(activeProductContext.price * appliedPriceFactor);
-                const selectedVar = document.getElementById('dtlVariantSelect').value || "Regular Specs";
+                const selectedVar = document.getElementById('dtlVariantSelect').value || "Regular";
 
                 const orderPayload = {
                     uid: auth.currentUser.uid,
@@ -438,14 +431,13 @@
                 };
 
                 await addDoc(collection(db, "orders"), orderPayload);
-                alert(`Order confirmed for ${orderPayload.item}! 🎉`);
-                fireMockWhatsAppPayloadGateway(orderPayload.phone, `Hello ${orderPayload.name}, purchase entry logged! Status: PENDING.`);
+                alert(`Order confirmed! 🎉`);
                 closeProductDetails();
             } catch(e) { alert("Checkout failed."); }
             finally { b.disabled = false; b.innerText = "⚡ Lock Instant Order Package"; }
         });
 
-        // TIMELINE HISTORY
+        // CLIENT TIMELINE OBSERVER
         function initCustomerTimelineObserver(uid) {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 let currentActiveOrderTrackerNode = null;
@@ -485,19 +477,18 @@
                     if(currentActiveOrderTrackerNode.status === 'pending') document.getElementById('cust-step-pending').className = "step active";
                     if(currentActiveOrderTrackerNode.status === 'shipped') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step active"; }
                     if(currentActiveOrderTrackerNode.status === 'delivered') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step done"; document.getElementById('cust-step-delivered').className = "step done"; }
-                } else { box.style.display = "none"; if(histList.innerHTML==="") histList.innerHTML = "No orders found in your timeline log."; }
+                } else { box.style.display = "none"; if(histList.innerHTML==="") histList.innerHTML = "No orders found."; }
             });
         }
 
         window.triggerUserSideCancellation = async function(id, ph, nm, item) {
-            if(confirm("Are you sure you want to cancel this order entry?")) {
+            if(confirm("Cancel this order?")) {
                 await updateDoc(doc(db, "orders", id), { status: "cancelled" });
-                alert("Order cancelled successfully!");
-                fireMockWhatsAppPayloadGateway(ph, `Hello ${nm}, order for "${item}" has been CANCELLED.`);
+                alert("Order cancelled!");
             }
         }
 
-        // --- ADMIN OPERATIONAL CORE ---
+        // ADMIN HUB ENGINE
         function initAdminCoreOperationsEngine() {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 document.getElementById('admOrderCount').innerText = snap.size;
@@ -505,14 +496,12 @@
                 const container = document.getElementById('admOrdersContainer');
                 container.innerHTML = "";
 
-                if(snap.empty) { container.innerHTML = "<p style='text-align:center; color:var(--text-muted); padding:15px 0;'>No orders placed yet.</p>"; return; }
-
                 snap.forEach(d => {
                     const id = d.id; const o = d.data();
                     if(o.status === 'delivered') calculatedRevenueMetricSum += Number(o.price);
 
                     let proofLinkDomElementBlock = "";
-                    if(o.proofImg) proofLinkDomElementBlock = `<br>🖼 ... <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">View Payment Proof</a>`;
+                    if(o.proofImg) proofLinkDomElementBlock = `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">View Base64 Payment Proof</a>`;
 
                     const row = document.createElement('div');
                     row.className = "adm-prod-row";
@@ -531,16 +520,12 @@
                     `;
                     container.appendChild(row);
                 });
-
                 document.getElementById('admRevenue').innerText = "₹" + calculatedRevenueMetricSum;
 
                 document.querySelectorAll('.adm-pipeline-status-selector').forEach(sel => {
                     sel.addEventListener('change', async (e) => {
-                        const targetDocId = e.target.getAttribute('data-id');
-                        const statusValueStr = e.target.value;
-                        await updateDoc(doc(db, "orders", targetDocId), { status: statusValueStr });
-                        alert("Database records updated successfully!");
-                        fireMockWhatsAppPayloadGateway(e.target.getAttribute('data-phone'), `Hello ${e.target.getAttribute('data-name')}, your order status is: ${statusValueStr.toUpperCase()}.`);
+                        await updateDoc(doc(db, "orders", e.target.getAttribute('data-id')), { status: e.target.value });
+                        alert("Status updated successfully!");
                     });
                 });
             });
@@ -548,7 +533,7 @@
             onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
                 const holder = document.getElementById('admInventoryContainer');
                 holder.innerHTML = "";
-                if(snap.empty) { holder.innerHTML = "<p style='text-align:center; color:var(--text-muted);'>No current stock available.</p>"; return; }
+                if(snap.empty) { holder.innerHTML = "<p style='text-align:center; color:var(--text-muted);'>Inventory is empty.</p>"; return; }
 
                 snap.forEach(d => {
                     const p = d.data();
@@ -568,9 +553,9 @@
         }
 
         window.triggerAdminDeleteTransaction = async function(id) {
-            if(confirm("Confirm action: Permanently delete this product?")) {
+            if(confirm("Permanently delete this product?")) {
                 await deleteDoc(doc(db, "products", id));
-                alert("Asset deleted from catalog store! 🗑️");
+                alert("Deleted! 🗑️");
             }
         }
 
@@ -580,11 +565,10 @@
             document.getElementById('admInpTitle').value = data.title;
             document.getElementById('admInpPrice').value = data.price;
             document.getElementById('admInpDesc').value = data.desc;
-            document.getElementById('admInpImgUrl').value = data.img || "";
             document.getElementById('admInpVariants').value = data.variants ? data.variants.join(", ") : "";
 
-            document.getElementById('formAdminTitle').innerText = "📝 Edit Store Asset Properties";
-            document.getElementById('btnAdminSave').innerText = "Update Storefront Asset Properties";
+            document.getElementById('formAdminTitle').innerText = "📝 Edit Store Asset";
+            document.getElementById('btnAdminSave').innerText = "Update Product";
             document.getElementById('btnCancelEdit').style.display = "block";
         }
 
@@ -599,14 +583,13 @@
         document.getElementById('formAdminProduct').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnAdminSave');
-            btn.disabled = true; btn.innerText = "Synchronizing node asset parameters pipeline...";
+            btn.disabled = true; btn.innerText = "Processing dynamic encoder...";
 
             const id = document.getElementById('admEditId').value;
             const title = document.getElementById('admInpTitle').value.trim();
             const price = Number(document.getElementById('admInpPrice').value);
             const desc = document.getElementById('admInpDesc').value.trim();
             const variantsRaw = document.getElementById('admInpVariants').value.trim();
-            let imgUrl = document.getElementById('admInpImgUrl').value.trim();
             const file = document.getElementById('admInpFile').files[0];
 
             let variantsArray = [];
@@ -615,25 +598,30 @@
             }
 
             try {
-                if(file) {
-                    btn.innerText = "Uploading Content Stream to Media Cloud...";
-                    const form = new FormData(); form.append('image', file);
-                    const res = await fetch(`https://api.imgbb.com/1/upload?key=6df750fdf509531a74d50937a06041ec`, { method: 'POST', body: form });
-                    const resData = await res.json();
-                    if(resData.success) imgUrl = resData.data.url;
+                let finalImgData = "";
+                
+                // If editing, preserve the previous image if no new file is chosen
+                if(id) {
+                    const docSnap = await getDoc(doc(db, "products", id));
+                    if(docSnap.exists()) finalImgData = docSnap.data().img || "";
                 }
 
-                const productPayload = { title, price, desc, variants: variantsArray, img: imgUrl, createdAt: new Date().toISOString() };
+                if(file) {
+                    btn.innerText = "Encoding local binary base string array...";
+                    finalImgData = await convertFileToBase64(file);
+                }
+
+                const productPayload = { title, price, desc, variants: variantsArray, img: finalImgData, createdAt: new Date().toISOString() };
 
                 if(id) {
                     await updateDoc(doc(db, "products", id), productPayload);
-                    alert("Product changes synchronized successfully! ✨");
+                    alert("Product synchronized successfully! ✨");
                 } else {
                     await addDoc(collection(db, "products"), productPayload);
-                    alert("New product asset pushed live to catalog! 🚀");
+                    alert("Product added successfully live! 🚀");
                 }
                 resetAdminForm();
-            } catch(e) { alert("Asset synchronization failure."); }
+            } catch(e) { alert("Encoding sync failed."); }
             finally { btn.disabled = false; }
         });
     </script>

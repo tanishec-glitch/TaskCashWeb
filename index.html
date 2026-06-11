@@ -6,75 +6,94 @@
     <title>QuickSell Ultimate Hub</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --bg: #f8fafc;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #eef2ff;
+            --bg: #f1f5f9;
             --card-bg: #ffffff;
-            --text: #1e293b;
-            --price: #dc2626;
-            --success: #16a34a;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --price: #e11d48;
+            --success: #10b981;
             --border: #e2e8f0;
+            --radius: 16px;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: var(--text); padding-bottom: 75px; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { margin: 0; padding: 0; background: var(--bg); color: var(--text); padding-bottom: 85px; }
         
-        .container { max-width: 500px; margin: 0 auto; background: #ffffff; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; padding: 15px; }
+        .container { max-width: 480px; margin: 0 auto; background: #ffffff; min-height: 100vh; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08); position: relative; padding: 20px; }
         
-        header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
-        header h1 { font-size: 1.3rem; color: var(--primary); margin: 0; font-weight: 700; }
-        .logout-btn { background: #fee2e2; color: #ef4444; border: none; padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; cursor: pointer; }
+        /* Premium Header */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px 15px 5px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        header h1 { font-size: 1.4rem; color: var(--text); margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+        header h1 span { color: var(--primary); }
+        .logout-btn { background: #fee2e2; color: #ef4444; border: none; padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: 0.2s; }
+        .logout-btn:hover { background: #fca5a5; }
 
-        /* Bottom Mobile Tabs bar */
-        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #ffffff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border); box-shadow: 0 -4px 10px rgba(0,0,0,0.03); z-index: 999; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 600; text-decoration: none; width: 25%; text-align: center; }
-        .nav-item i { font-size: 20px; margin-bottom: 4px; }
+        /* Elegant Floating Bottom Nav Bar */
+        .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 440px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 999; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 700; text-decoration: none; width: 22%; text-align: center; transition: 0.2s; }
+        .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; transition: 0.2s; }
         .nav-item.active { color: var(--primary); }
+        .nav-item.active ion-icon { transform: translateY(-2px); color: var(--primary); }
         #adminTab { display: none; } 
 
         .app-screen { display: none; }
-        .app-screen.active { display: block; animation: fadeIn 0.2s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .app-screen.active { display: block; animation: smoothSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes smoothSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom: 15px; }
-        .app-card h2 { margin-top: 0; font-size: 1.2rem; color: #0f172a; margin-bottom: 15px; }
+        /* Luxury Cards & Elements */
+        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); margin-bottom: 20px; }
+        .app-card h2 { margin-top: 0; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 18px; letter-spacing: -0.3px; }
         
-        .form-group { margin-bottom: 14px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #475569; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 700; font-size: 13px; color: #475569; }
         
-        input, textarea, select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; background: #f8fafc; }
-        input:focus, textarea:focus { border-color: var(--primary); background: #fff; }
+        input, textarea, select { padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; background: #f8fafc; color: var(--text); transition: 0.2s; }
+        input:focus, textarea:focus, select:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
         
-        button { background: var(--primary); color: white; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; }
-        button:disabled { background: #cbd5e1; }
+        button { background: var(--primary); color: white; border: none; padding: 15px 20px; font-size: 15px; font-weight: 700; border-radius: 12px; cursor: pointer; transition: 0.2s; width: 100%; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); }
+        button:hover { background: var(--primary-dark); transform: translateY(-1px); }
+        button:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; }
 
-        /* MultiProduct Feed Layout */
-        .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
-        .product-mini-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 10px; cursor: pointer; }
-        .mini-img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; background: #f1f5f9; }
-        .mini-title { font-size: 13px; font-weight: bold; margin: 6px 0 2px 0; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .mini-price { font-size: 14px; color: var(--price); font-weight: bold; }
+        /* High-End MultiProduct Grid */
+        .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .product-mini-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
+        .product-mini-card:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -8px rgba(0,0,0,0.08); border-color: #cbd5e1; }
+        .mini-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; background: #f8fafc; }
+        .mini-title { font-size: 14px; font-weight: 700; margin: 8px 0 3px 0; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mini-price { font-size: 15px; color: var(--price); font-weight: 800; }
 
-        .detail-view img { width: 100%; height: 250px; object-fit: cover; border-radius: 14px; border: 1px solid var(--border); }
-        .back-to-shop { display: inline-flex; align-items: center; color: var(--primary); font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+        /* Premium Detail View Overlay */
+        .detail-view img { width: 100%; height: 280px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .back-to-shop { display: inline-flex; align-items: center; color: var(--primary); font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 15px; transition: 0.2s; }
+        .back-to-shop:hover { color: var(--primary-dark); }
 
-        .track-container { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 12px; margin-bottom: 15px; text-align: center; }
-        .stepper { display: flex; justify-content: space-between; margin-top: 10px; }
-        .step { font-size: 11px; font-weight: bold; color: #94a3b8; flex: 1; text-align: center; }
+        /* Sleek Stepper */
+        .track-container { background: var(--primary-light); border: 1px solid #c7d2fe; border-radius: var(--radius); padding: 16px; margin-bottom: 20px; }
+        .stepper { display: flex; justify-content: space-between; margin-top: 12px; }
+        .step { font-size: 12px; font-weight: 700; color: #94a3b8; flex: 1; text-align: center; }
         .step.active { color: var(--primary); }
         .step.done { color: var(--success); }
 
-        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-        .stat-item { background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid var(--border); text-align: center; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .stat-item { background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid var(--border); text-align: center; }
+        .stat-item p { margin: 0 0 4px 0; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; }
+        .stat-item h3 { margin: 0; font-size: 20px; font-weight: 800; }
         
-        .adm-prod-row { border-bottom: 1px solid var(--border); padding: 12px 0; font-size: 13px; }
-        .badge { padding: 3px 6px; border-radius: 6px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+        .adm-prod-row { border-bottom: 1px solid var(--border); padding: 15px 0; font-size: 14px; }
+        .adm-prod-row:last-child { border-bottom: none; }
+        
+        /* Modern Badges */
+        .badge { padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; display: inline-block; }
         .badge-pending { background: #fef3c7; color: #d97706; }
         .badge-shipped { background: #e0f2fe; color: #0369a1; }
         .badge-delivered { background: #dcfce7; color: #15803d; }
         .badge-cancelled { background: #fee2e2; color: #ef4444; }
 
-        .cancel-btn { background: #ef4444; color: white; padding: 6px 12px; font-size: 12px; border-radius: 6px; margin-top: 8px; width: auto; font-weight: bold; display: inline-block; }
+        .cancel-btn { background: #fee2e2; color: #ef4444; padding: 6px 14px; font-size: 11px; border-radius: 8px; margin-top: 10px; width: auto; font-weight: 700; display: inline-block; cursor: pointer; transition: 0.2s; }
+        .cancel-btn:hover { background: #fca5a5; }
     </style>
     <script type="module" src="https://unpkg.com/ionicons@7.10.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
@@ -82,18 +101,18 @@
 
     <div class="container">
         <header id="appHeader" style="display:none;">
-            <h1 id="headerText">QuickSell SuperApp 👑</h1>
+            <h1 id="headerText">QuickSell <span>Pro</span></h1>
             <button class="logout-btn" onclick="appLogout()">Logout</button>
         </header>
 
         <div id="scrLogin" class="app-screen active">
-            <div class="app-card" style="margin-top: 50px;">
-                <h2>Welcome Back!</h2>
+            <div class="app-card" style="margin-top: 60px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);">
+                <h2>Welcome Back</h2>
                 <form id="formLogin">
                     <div class="form-group"><label>Email Address</label><input type="email" id="logEmail" required></div>
                     <div class="form-group"><label>Password</label><input type="password" id="logPass" required></div>
-                    <button type="submit">Log In</button>
-                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrSignup')">New user? <b style="color:var(--primary);">Register Profile</b></p>
+                    <button type="submit" style="margin-top: 10px;">Log In</button>
+                    <p style="text-align:center; font-size:13px; margin-top:20px; color:var(--text-muted);" onclick="switchAuthScreen('scrSignup')">New user? <b style="color:var(--primary); cursor:pointer;">Register Profile</b></p>
                 </form>
             </div>
         </div>
@@ -108,14 +127,14 @@
                     <div class="form-group"><label>Full Shipping Address</label><textarea id="regAddress" rows="2" required></textarea></div>
                     <div class="form-group"><label>Password</label><input type="password" id="regPass" required></div>
                     <button type="submit">Complete Signup</button>
-                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrLogin')">Already registered? <b style="color:var(--primary);">Log In</b></p>
+                    <p style="text-align:center; font-size:13px; margin-top:20px; color:var(--text-muted);" onclick="switchAuthScreen('scrLogin')">Already registered? <b style="color:var(--primary); cursor:pointer;">Log In</b></p>
                 </form>
             </div>
         </div>
 
         <div id="scrHome" class="app-screen">
             <div id="userTrackingBox" class="track-container" style="display:none;">
-                <span style="font-size:12px; font-weight:bold; color:#1e40af;">🚚 Order Tracking Monitor</span>
+                <span style="font-size:13px; font-weight:800; color:#1e40af; display:block; margin-bottom:5px;">🚚 Order Tracking Monitor</span>
                 <div class="stepper">
                     <div class="step" id="cust-step-pending">● Placed</div>
                     <div class="step" id="cust-step-shipped">● Shipped</div>
@@ -124,81 +143,81 @@
             </div>
 
             <div id="catalogListView">
-                <h2 style="font-size:1.1rem; margin-bottom:10px;">🌟 Premium Store Inventory</h2>
+                <h2 style="font-size:1.2rem; font-weight:800; margin-bottom:5px;">Exclusive Catalog</h2>
                 <div class="products-grid" id="catalogGrid"></div>
             </div>
 
             <div id="productDetailView" class="detail-view" style="display:none;">
-                <div class="back-to-shop" onclick="closeProductDetails()"><ion-icon name="arrow-back-outline" style="margin-right:4px;"></ion-icon> Back to Catalog</div>
-                <div class="app-card" style="padding:10px;">
+                <div class="back-to-shop" onclick="closeProductDetails()"><ion-icon name="arrow-back-outline" style="margin-right:6px; font-size:18px;"></ion-icon> Back to Catalog</div>
+                <div class="app-card" style="padding:15px; border-radius:20px;">
                     <img id="dtlImg" src="" alt="preview">
-                    <h2 style="font-size:1.3rem; margin:10px 0 4px 0;" id="dtlTitle">-</h2>
-                    <div style="font-size:1.4rem; font-weight:bold; color:var(--price); margin-bottom:10px;" id="dtlPrice">₹0</div>
-                    <p style="color:#475569; font-size:14px;" id="dtlDesc">-</p>
+                    <h2 style="font-size:1.4rem; font-weight:800; margin:15px 0 6px 0;" id="dtlTitle">-</h2>
+                    <div style="font-size:1.5rem; font-weight:800; color:var(--price); margin-bottom:12px;" id="dtlPrice">₹0</div>
+                    <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;" id="dtlDesc">-</p>
 
                     <div class="form-group" id="variantWrapper" style="margin-top:15px;">
-                        <label>Select Product Variant (Size/Color)</label>
+                        <label>Select Option (Size/Color)</label>
                         <select id="dtlVariantSelect"></select>
                     </div>
 
-                    <div class="app-card" style="background:#f8fafc; border:1px solid var(--border); padding:12px; margin-top:15px;">
-                        <h4 style="margin:0 0 8px 0;">💳 Select Checkout Mode</h4>
-                        <select id="checkoutModeSelect" onchange="togglePaymentWindow(this.value)">
+                    <div class="app-card" style="background:#f8fafc; border:1px solid var(--border); padding:15px; margin-top:20px; border-radius:14px;">
+                        <h4 style="margin:0 0 10px 0; font-weight:800; font-size:14px;">💳 Select Checkout Mode</h4>
+                        <select id="checkoutModeSelect" onchange="togglePaymentWindow(this.value)" style="background:#fff;">
                             <option value="COD">Cash on Delivery (COD)</option>
                             <option value="ONLINE">Pay via UPI QR Code Scan</option>
                         </select>
 
-                        <div id="upiPaymentBox" style="display:none; margin-top:12px; text-align:center;">
-                            <p style="font-size:12px; font-weight:bold; color:#64748b;">Scan QR & Pay Amount. Upload proof screenshot:</p>
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=tanishmandloi2006@okaxis%26pn=Tanish%20Mandloi" alt="QR Code Engine" style="width:130px; height:130px; margin-bottom:8px;">
-                            <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px;">
+                        <div id="upiPaymentBox" style="display:none; margin-top:15px; text-align:center;">
+                            <p style="font-size:12px; font-weight:700; color:#64748b; margin-bottom:10px;">Scan QR & Pay Amount. Upload proof screenshot:</p>
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=tanishmandloi2006@okaxis%26pn=Tanish%20Mandloi" alt="QR Code Engine" style="width:140px; height:140px; margin-bottom:12px; border-radius:10px; border:1px solid #e2e8f0; padding:5px;">
+                            <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px; background:none; border:none; padding:0;">
                         </div>
 
-                        <div style="display:flex; gap:8px; margin-top:12px;">
-                            <input type="text" id="couponCodeInp" placeholder="Enter Coupon Code (e.g. FIRST10)" style="padding:8px; font-size:12px;">
-                            <button type="button" onclick="applyPromoCouponCode()" style="width:auto; padding:0 12px; font-size:12px;">Apply</button>
+                        <div style="display:flex; gap:8px; margin-top:15px;">
+                            <input type="text" id="couponCodeInp" placeholder="Coupon Code (e.g. FIRST10)" style="padding:10px; font-size:13px; background:#fff;">
+                            <button type="button" onclick="applyPromoCouponCode()" style="width:auto; padding:0 16px; font-size:13px; background:#0f172a;">Apply</button>
                         </div>
                     </div>
 
-                    <button id="btnCheckout" style="margin-top:10px;">⚡ Lock Instant Order Package</button>
+                    <button id="btnCheckout" style="margin-top:15px; padding:16px;">⚡ Lock Instant Order Package</button>
                 </div>
             </div>
         </div>
 
         <div id="scrOrders" class="app-screen">
             <div class="app-card">
-                <h2>Your Purchase Log Timeline</h2>
-                <div id="customerOrdersList" style="font-size:13px; color:#64748b;">Fetching timeline logs...</div>
+                <h2>Your Orders Timeline</h2>
+                <div id="customerOrdersList" style="font-size:14px; color:var(--text-muted);">Fetching timeline logs...</div>
             </div>
         </div>
 
         <div id="scrProfile" class="app-screen">
             <div class="app-card">
-                <h2>Profile Dashboard</h2>
-                <div style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid var(--border); font-size:14px; margin-bottom:15px;">
-                    <p><b>Client Identity:</b> <span id="profName">-</span></p>
-                    <p><b>Email Parameters:</b> <span id="profEmail">-</span></p>
-                    <p><b>WhatsApp Contact:</b> <span id="profPhone">-</span></p>
-                    <p><b>Logistics Destination:</b> <span id="profAddress">-</span></p>
+                <h2>Profile Settings</h2>
+                <div style="background:#f8fafc; padding:18px; border-radius:14px; border:1px solid var(--border); font-size:14px; margin-bottom:20px; line-height:1.7;">
+                    <p style="margin:4px 0;"><b>Identity Name:</b> <span id="profName" style="color:#000; font-weight:600;">-</span></p>
+                    <p style="margin:4px 0;"><b>Registered Email:</b> <span id="profEmail" style="color:#000; font-weight:600;">-</span></p>
+                    <p style="margin:4px 0;"><b>WhatsApp Contact:</b> <span id="profPhone" style="color:#000; font-weight:600;">-</span></p>
+                    <p style="margin:4px 0; display:flex; flex-direction:column;"><b>Logistics Destination:</b> <span id="profAddress" style="color:#475569; font-weight:600; margin-top:2px; background:#fff; padding:8px; border-radius:8px; border:1px solid #e2e8f0;">-</span></p>
                 </div>
-                <button onclick="appLogout()" style="background:#ef4444;">Disconnect Authentication</button>
+                <button onclick="appLogout()" style="background:#ef4444; box-shadow:0 4px 10px rgba(239, 68, 68, 0.2);">Disconnect Authentication</button>
             </div>
         </div>
 
         <div id="scrAdmin" class="app-screen">
-            <h2>👑 Command Operations Center</h2>
+            <h2>Control Panel</h2>
             <div class="stats-grid">
-                <div class="stat-item"><p style="margin:0; font-size:11px; color:#64748b;">NET REVENUE</p><h3 id="admRevenue" style="color:var(--success);">₹0</h3></div>
-                <div class="stat-item"><p style="margin:0; font-size:11px; color:#64748b;">PIPELINE QUEUE</p><h3 id="admOrderCount">0</h3></div>
+                <div class="stat-item"><p>NET REVENUE</p><h3 id="admRevenue" style="color:var(--success);">₹0</h3></div>
+                <div class="stat-item"><p>TOTAL ORDERS</p><h3 id="admOrderCount">0</h3></div>
             </div>
 
             <div class="app-card">
-                <h2>Incoming System Purchases Log</h2>
+                <h2>Incoming Purchase Logs</h2>
                 <div id="admOrdersContainer" style="font-size:13px;">Awaiting live streams...</div>
             </div>
 
             <div class="app-card">
-                <h2 id="formAdminTitle">➕ Deploy New Marketplace Asset</h2>
+                <h2 id="formAdminTitle">➕ Deploy New Product Asset</h2>
                 <form id="formAdminProduct">
                     <input type="hidden" id="admEditId">
                     <div class="form-group"><label>Product Title Name</label><input type="text" id="admInpTitle" required></div>
@@ -206,18 +225,18 @@
                     <div class="form-group"><label>Specifications Description</label><textarea id="admInpDesc" rows="3" required></textarea></div>
                     <div class="form-group"><label>Product Variants (Comma Separated, e.g: Black, Red, White)</label><input type="text" id="admInpVariants" placeholder="M, L, XL or Black, White"></div>
                     <div class="form-group">
-                        <label>Image Assets Node (Select Gallery File File)</label>
-                        <input type="text" id="admInpImgUrl" placeholder="Direct Link URL string parameters" style="margin-bottom:6px;">
-                        <input type="file" id="admInpFile" accept="image/*" style="border:none; font-size:12px; padding:0;">
+                        <label>Image Assets (Select Gallery File)</label>
+                        <input type="text" id="admInpImgUrl" placeholder="Direct Link URL string parameters" style="margin-bottom:8px;">
+                        <input type="file" id="admInpFile" accept="image/*" style="border:none; font-size:12px; padding:0; background:none;">
                     </div>
-                    <button type="submit" id="btnAdminSave" style="background:#10b981;">Push Changes Live to Channels</button>
-                    <button type="button" id="btnCancelEdit" style="background:#64748b; margin-top:8px; display:none;" onclick="resetAdminForm()">Cancel Edit Mode</button>
+                    <button type="submit" id="btnAdminSave" style="background:#10b981; box-shadow:0 4px 10px rgba(16, 185, 129, 0.2);">Push Changes Live</button>
+                    <button type="button" id="btnCancelEdit" style="background:#64748b; margin-top:8px; display:none; box-shadow:none;" onclick="resetAdminForm()">Cancel Edit Mode</button>
                 </form>
             </div>
 
             <div class="app-card">
                 <h2>Warehouse Stocks Matrix</h2>
-                <div id="admInventoryContainer">Awaiting inventory callback array entries...</div>
+                <div id="admInventoryContainer">Awaiting inventory list...</div>
             </div>
         </div>
 
@@ -272,7 +291,7 @@
             document.getElementById('upiPaymentBox').style.display = (val === 'ONLINE') ? 'block' : 'none';
         }
 
-        // --- IDENTITY REGISTRATION LOGIC ENGINE ---
+        // --- IDENTITY REGISTRATION ---
         document.getElementById('formSignup').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
@@ -283,7 +302,7 @@
             try {
                 const c = await createUserWithEmailAndPassword(auth, email, pass);
                 await setDoc(doc(db, "users", c.user.uid), { name, email, phone, address });
-                alert("Account verification profile registered successfully! 🎉");
+                alert("Account profile registered successfully! 🎉");
             } catch(e) { alert(e.message); }
         });
 
@@ -295,10 +314,10 @@
         });
 
         function fireMockWhatsAppPayloadGateway(ph, txt) {
-            console.log(`%c[WhatsApp Hub Alert Engine] Destination: +${ph} | Payload: "${txt}"`, "color:#1d4ed8; font-weight:bold; font-size:12px;");
+            console.log(`%c[WhatsApp Hub Alert] To: +${ph} | Msg: "${txt}"`, "color:#2563eb; font-weight:bold;");
         }
 
-        // MATRIX DISPATCH HANDLERS ON GLOBAL STATE CHECKS
+        // AUTH WATCHER LIVE STREAMS
         onAuthStateChanged(auth, async (user) => {
             if(user) {
                 document.getElementById('appHeader').style.display = "flex";
@@ -328,11 +347,11 @@
             }
         });
 
-        // --- PUBLIC REAL-TIME MULTIPLEX STORE GRID ---
+        // --- PUBLIC STORE FRONT CATALOG ---
         onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
             const grid = document.getElementById('catalogGrid');
             grid.innerHTML = "";
-            if(snap.empty) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>No structural listings in grid catalog.</p>"; return; }
+            if(snap.empty) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>Catalog is completely empty.</p>"; return; }
             
             snap.forEach(d => {
                 const p = d.data();
@@ -354,10 +373,11 @@
             document.getElementById('dtlTitle').innerText = data.title;
             document.getElementById('dtlPrice').innerText = "₹" + data.price;
             document.getElementById('dtlDesc').innerText = data.desc;
-            document.getElementById('dtlImg').src = data.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500';
+            
+            // BUG FIX HERE: Explicitly prioritizing uploaded custom dynamic URLs over generic defaults
+            document.getElementById('dtlImg').src = data.img ? data.img : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500';
             document.getElementById('couponCodeInp').value = "";
 
-            // Configure dynamic matching dropdown list arrays parameters setup
             const sel = document.getElementById('dtlVariantSelect');
             sel.innerHTML = "";
             if(data.variants && data.variants.length > 0) {
@@ -384,15 +404,15 @@
                 appliedPriceFactor = 0.90;
                 const newPrice = Math.round(activeProductContext.price * appliedPriceFactor);
                 document.getElementById('dtlPrice').innerText = `₹${newPrice} (10% Coupon Applied!)`;
-                alert("Promo Coupon validated successfully! 10% instant checkout markdown deducted.");
-            } else { alert("Invalid system promo parameters code string."); }
+                alert("Promo Coupon validated! 10% instant discount applied.");
+            } else { alert("Invalid promo coupon code configuration."); }
         }
 
-        // SUBMIT AND DEPLOY LIVE CUSTOMER ORDER TRANSACTION PARAMS
+        // CHECKOUT PROCESS ACTION
         document.getElementById('btnCheckout').addEventListener('click', async () => {
             if(!profileCache || !activeProductContext) return;
             const b = document.getElementById('btnCheckout');
-            b.disabled = true; b.innerText = "Locking secure transaction pipelines...";
+            b.disabled = true; b.innerText = "Securing order transaction...";
 
             const mode = document.getElementById('checkoutModeSelect').value;
             const file = document.getElementById('checkoutPaymentProof').files[0];
@@ -400,7 +420,7 @@
 
             try {
                 if(mode === "ONLINE" && file) {
-                    b.innerText = "Syncing media asset token proof...";
+                    b.innerText = "Syncing payment screen asset proof...";
                     const form = new FormData(); form.append('image', file);
                     const res = await fetch(`https://api.imgbb.com/1/upload?key=6df750fdf509531a74d50937a06041ec`, { method: 'POST', body: form });
                     const rData = await res.json();
@@ -408,7 +428,7 @@
                 }
 
                 const finalOrderPrice = Math.round(activeProductContext.price * appliedPriceFactor);
-                const selectedVar = document.getElementById('dtlVariantSelect').value || "Default Regular";
+                const selectedVar = document.getElementById('dtlVariantSelect').value || "Regular Specs";
 
                 const orderPayload = {
                     uid: auth.currentUser.uid,
@@ -424,14 +444,14 @@
                 };
 
                 await addDoc(collection(db, "orders"), orderPayload);
-                alert("Purchase logged pipeline transmission complete! Transaction secure.");
-                fireMockWhatsAppPayloadGateway(orderPayload.phone, `Hello ${orderPayload.name}, purchase for "${orderPayload.item}" logged! Mode: ${mode}. Status: PENDING.`);
+                alert(`Order confirmed for ${orderPayload.item}! 🎉`);
+                fireMockWhatsAppPayloadGateway(orderPayload.phone, `Hello ${orderPayload.name}, purchase entry logged! Status: PENDING.`);
                 closeProductDetails();
-            } catch(e) { alert("Checkout gateway validation error trace execution loop failure."); }
+            } catch(e) { alert("Checkout gateway loops trace failed."); }
             finally { b.disabled = false; b.innerText = "⚡ Lock Instant Order Package"; }
         });
 
-        // LIVE TIMELINE DISPATCH TRACKERS ENGINE
+        // USER TIMELINE HISTORY LIVE STREAMS
         function initCustomerTimelineObserver(uid) {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 let currentActiveOrderTrackerNode = null;
@@ -444,9 +464,8 @@
                         if(!currentActiveOrderTrackerNode && o.status !== 'cancelled') currentActiveOrderTrackerNode = o;
                         
                         const itemCard = document.createElement('div');
-                        itemCard.style.cssText = "border-bottom:1px solid #e2e8f0; padding:12px 0;";
+                        itemCard.style.cssText = "border-bottom:1px solid var(--border); padding:15px 0;";
                         
-                        // User-Side In-App Order Cancellation Timer Logic Implementation (15 Mins Window Block)
                         const timeDiffMinutes = (new Date() - new Date(o.date)) / (1000 * 60);
                         let cancelActionDomTemplateString = "";
                         if(o.status === 'pending' && timeDiffMinutes <= 15) {
@@ -454,9 +473,9 @@
                         }
 
                         itemCard.innerHTML = `
-                            <div>📦 <b>${o.item}</b></div>
-                            <div>Value: <b>₹${o.price}</b> | Mode: <small>${o.payMode}</small></div>
-                            <div>Status Tag: <span class="badge badge-${o.status}">${o.status}</span> ${cancelActionDomTemplateString}</div>
+                            <div style="font-weight:700; font-size:15px; margin-bottom:2px;">📦 ${o.item}</div>
+                            <div style="color:var(--text-muted); font-size:13px; margin-bottom:5px;">Value: <b style="color:var(--price)">₹${o.price}</b> | Mode: ${o.payMode}</div>
+                            <div><span class="badge badge-${o.status}">${o.status}</span> ${cancelActionDomTemplateString}</div>
                         `;
                         histList.appendChild(itemCard);
                     }
@@ -472,19 +491,19 @@
                     if(currentActiveOrderTrackerNode.status === 'pending') document.getElementById('cust-step-pending').className = "step active";
                     if(currentActiveOrderTrackerNode.status === 'shipped') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step active"; }
                     if(currentActiveOrderTrackerNode.status === 'delivered') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step done"; document.getElementById('cust-step-delivered').className = "step done"; }
-                } else { box.style.display = "none"; if(histList.innerHTML==="") histList.innerHTML = "No history records allocated."; }
+                } else { box.style.display = "none"; if(histList.innerHTML==="") histList.innerHTML = "No orders found in your timeline log."; }
             });
         }
 
         window.triggerUserSideCancellation = async function(id, ph, nm, item) {
-            if(confirm("Confirm action pipeline: Cancel this order completely?")) {
+            if(confirm("Are you sure you want to cancel this order entry?")) {
                 await updateDoc(doc(db, "orders", id), { status: "cancelled" });
-                alert("Order status rewritten to CANCELLED!");
-                fireMockWhatsAppPayloadGateway(ph, `Hello ${nm}, purchase order entry for "${item}" was CANCELLED by user request parameter.`);
+                alert("Order cancelled successfully!");
+                fireMockWhatsAppPayloadGateway(ph, `Hello ${nm}, order for "${item}" has been CANCELLED.`);
             }
         }
 
-        // --- MASTER ADMIN LOGISTICS SYSTEM MANAGER MANAGEMENT ---
+        // --- OPERATIONS DESK CENTER (ADMIN) ---
         function initAdminCoreOperationsEngine() {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 document.getElementById('admOrderCount').innerText = snap.size;
@@ -492,24 +511,23 @@
                 const container = document.getElementById('admOrdersContainer');
                 container.innerHTML = "";
 
-                if(snap.empty) { container.innerHTML = "Pipeline array streams empty."; return; }
+                if(snap.empty) { container.innerHTML = "<p style='text-align:center; color:var(--text-muted); padding:15px 0;'>No orders placed yet.</p>"; return; }
 
                 snap.forEach(d => {
                     const id = d.id; const o = d.data();
                     if(o.status === 'delivered') calculatedRevenueMetricSum += Number(o.price);
 
                     let proofLinkDomElementBlock = "";
-                    if(o.proofImg) proofLinkDomElementBlock = `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:bold;">View Payment Screenshot Proof</a>`;
+                    if(o.proofImg) proofLinkDomElementBlock = `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">View Payment Screenshot Proof</a>`;
 
                     const row = document.createElement('div');
                     row.className = "adm-prod-row";
-                    row.style.cssText = "display:flex; flex-direction:column; align-items:flex-start;";
                     row.innerHTML = `
-                        <div style="width:100%; border-bottom:1px dashed #cbd5e1; padding-bottom:4px; margin-bottom:4px;">👤 <b>${o.name}</b> (${o.phone}) <span class="badge badge-${o.status}" style="float:right;">${o.status}</span></div>
-                        <div>Asset: <b>${o.item}</b> | Bill Tag: <b>₹${o.price}</b></div>
-                        <div style="font-size:11px; color:#475569; margin:3px 0;">Destination Path: ${o.address} [Mode: ${o.payMode}] ${proofLinkDomElementBlock}</div>
-                        <div style="margin-top:6px; width:100%;">
-                            <select class="adm-pipeline-status-selector" data-id="${id}" data-phone="${o.phone}" data-name="${o.name}" data-title="${o.item}" style="padding:5px; font-size:12px; width:auto;">
+                        <div style="width:100%; border-bottom:1px dashed #e2e8f0; padding-bottom:6px; margin-bottom:6px;">👤 <b>${o.name}</b> (${o.phone}) <span class="badge badge-${o.status}" style="float:right;">${o.status}</span></div>
+                        <div>Asset: <b>${o.item}</b> | Bill: <b>₹${o.price}</b></div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.4;">📍 Dest: ${o.address} <br><b>Mode:</b> ${o.payMode} ${proofLinkDomElementBlock}</div>
+                        <div style="margin-top:10px; width:100%;">
+                            <select class="adm-pipeline-status-selector" data-id="${id}" data-phone="${o.phone}" data-name="${o.name}" data-title="${o.item}" style="padding:8px; font-size:13px; width:auto; background:#fff;">
                                 <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
                                 <option value="shipped" ${o.status==='shipped'?'selected':''}>Shipped</option>
                                 <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
@@ -527,28 +545,27 @@
                         const targetDocId = e.target.getAttribute('data-id');
                         const statusValueStr = e.target.value;
                         await updateDoc(doc(db, "orders", targetDocId), { status: statusValueStr });
-                        alert("Database configuration fields altered synced successfully!");
-                        fireMockWhatsAppPayloadGateway(e.target.getAttribute('data-phone'), `Hello ${e.target.getAttribute('data-name')}, your order for "${e.target.getAttribute('data-title')}" status has shifted to: ${statusValueStr.toUpperCase()}.`);
+                        alert("Database records updated successfully!");
+                        fireMockWhatsAppPayloadGateway(e.target.getAttribute('data-phone'), `Hello ${e.target.getAttribute('data-name')}, your order for "${e.target.getAttribute('data-title')}" is now: ${statusValueStr.toUpperCase()}.`);
                     });
                 });
             });
 
-            // Stream inventories warehouse tables logs dashboard parameters listings
             onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
                 const holder = document.getElementById('admInventoryContainer');
                 holder.innerHTML = "";
-                if(snap.empty) { holder.innerHTML = "Warehouse database structural entries layout arrays null."; return; }
+                if(snap.empty) { holder.innerHTML = "<p style='text-align:center; color:var(--text-muted);'>No current stock available.</p>"; return; }
 
                 snap.forEach(d => {
                     const p = d.data();
                     const line = document.createElement('div');
                     line.className = "adm-prod-row";
-                    line.style.cssText = "display:flex; justify-content:space-between; align-items:center;";
+                    line.style.cssText = "display:flex; justify-content:space-between; align-items:center; padding:12px 0;";
                     line.innerHTML = `
-                        <div><b>${p.title}</b><br><span style="color:var(--price); font-weight:bold;">₹${p.price}</span></div>
+                        <div style="max-width:60%;"><b>${p.title}</b><br><span style="color:var(--price); font-weight:700;">₹${p.price}</span></div>
                         <div>
-                            <button onclick="launchAdminProductEditMode('${d.id}', \`${btoa(JSON.stringify(p))}\`)" style="padding:4px 8px; font-size:11px; width:auto; background:#f59e0b; margin-right:4px;">Edit</button>
-                            <button onclick="triggerAdminDeleteTransaction('${d.id}')" style="padding:4px 8px; font-size:11px; width:auto; background:#ef4444;">Delete</button>
+                            <button onclick="launchAdminProductEditMode('${d.id}', \`${btoa(JSON.stringify(p))}\`)" style="padding:6px 12px; font-size:12px; width:auto; background:#f59e0b; margin-right:4px; box-shadow:none;">Edit</button>
+                            <button onclick="triggerAdminDeleteTransaction('${d.id}')" style="padding:6px 12px; font-size:12px; width:auto; background:#ef4444; box-shadow:none;">Del</button>
                         </div>
                     `;
                     holder.appendChild(line);
@@ -557,9 +574,9 @@
         }
 
         window.triggerAdminDeleteTransaction = async function(id) {
-            if(confirm("Confirm database wipe: Permanently clear this product asset entry record?")) {
+            if(confirm("Confirm action: Permanently delete this product?")) {
                 await deleteDoc(doc(db, "products", id));
-                alert("Asset deleted from warehouse catalog mappings listings clusters! 🗑️");
+                alert("Asset deleted from catalog store! 🗑️");
             }
         }
 
@@ -572,7 +589,7 @@
             document.getElementById('admInpImgUrl').value = data.img || "";
             document.getElementById('admInpVariants').value = data.variants ? data.variants.join(", ") : "";
 
-            document.getElementById('formAdminTitle').innerText = "📝 Modify Stock Asset Node Properties";
+            document.getElementById('formAdminTitle').innerText = "📝 Edit Store Asset Properties";
             document.getElementById('btnAdminSave').innerText = "Update Storefront Asset Properties";
             document.getElementById('btnCancelEdit').style.display = "block";
         }
@@ -580,15 +597,15 @@
         window.resetAdminForm = function() {
             document.getElementById('admEditId').value = "";
             document.getElementById('formAdminProduct').reset();
-            document.getElementById('formAdminTitle').innerText = "➕ Deploy New Marketplace Asset";
-            document.getElementById('btnAdminSave').innerText = "Push Changes Live to Channels";
+            document.getElementById('formAdminTitle').innerText = "➕ Deploy New Product Asset";
+            document.getElementById('btnAdminSave').innerText = "Push Changes Live";
             document.getElementById('btnCancelEdit').style.display = "none";
         }
 
         document.getElementById('formAdminProduct').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnAdminSave');
-            btn.disabled = true; btn.innerText = "Synchronizing node asset parameters pipeline stream configurations...";
+            btn.disabled = true; btn.innerText = "Synchronizing node asset parameters pipeline...";
 
             const id = document.getElementById('admEditId').value;
             const title = document.getElementById('admInpTitle').value.trim();
@@ -605,7 +622,7 @@
 
             try {
                 if(file) {
-                    btn.innerText = "Bypassing Rules: Uploading Content Stream to Media Server Network Node...";
+                    btn.innerText = "Uploading Content Stream to Media Cloud...";
                     const form = new FormData(); form.append('image', file);
                     const res = await fetch(`https://api.imgbb.com/1/upload?key=6df750fdf509531a74d50937a06041ec`, { method: 'POST', body: form });
                     const resData = await res.json();
@@ -616,13 +633,13 @@
 
                 if(id) {
                     await updateDoc(doc(db, "products", id), productPayload);
-                    alert("Product changes synchronized successfully live! ✨");
+                    alert("Product changes synchronized successfully! ✨");
                 } else {
                     await addDoc(collection(db, "products"), productPayload);
-                    alert("New product asset pushed completely live to grid catalog storefront channels! 🚀");
+                    alert("New product asset pushed live to catalog! 🚀");
                 }
                 resetAdminForm();
-            } catch(e) { alert("Asset synchronization mapping database loop exception callback trigger failure."); }
+            } catch(e) { alert("Asset synchronization failure."); }
             finally { btn.disabled = false; }
         });
     </script>

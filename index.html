@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QuickSell Pro App</title>
+    <title>QuickSell Ultimate Hub</title>
     <style>
         :root {
             --primary: #2563eb;
@@ -21,62 +21,60 @@
         
         .container { max-width: 500px; margin: 0 auto; background: #ffffff; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.05); position: relative; padding: 15px; }
         
-        /* App Header */
         header { display: flex; justify-content: space-between; align-items: center; padding: 10px 5px; border-bottom: 1px solid var(--border); margin-bottom: 15px; }
-        header h1 { font-size: 1.2rem; color: var(--primary); margin: 0; font-weight: 700; }
+        header h1 { font-size: 1.3rem; color: var(--primary); margin: 0; font-weight: 700; }
         .logout-btn { background: #fee2e2; color: #ef4444; border: none; padding: 6px 12px; font-size: 12px; font-weight: 600; border-radius: 20px; cursor: pointer; }
 
-        /* Navigation Bottom Bar */
+        /* Bottom Mobile Tabs bar */
         .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 500px; background: #ffffff; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid var(--border); box-shadow: 0 -4px 10px rgba(0,0,0,0.03); z-index: 999; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 600; text-decoration: none; width: 20%; text-align: center; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 600; text-decoration: none; width: 25%; text-align: center; }
         .nav-item i { font-size: 20px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary); }
-        #adminTab { display: none; } /* Hidden by default */
+        #adminTab { display: none; } 
 
-        /* App Screens Router */
         .app-screen { display: none; }
         .app-screen.active { display: block; animation: fadeIn 0.2s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Cards & Forms UI */
-        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom: 15px; }
+        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); margin-bottom: 15px; }
         .app-card h2 { margin-top: 0; font-size: 1.2rem; color: #0f172a; margin-bottom: 15px; }
         
         .form-group { margin-bottom: 14px; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #475569; }
         
-        input, textarea, select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; transition: 0.2s; background: #f8fafc; }
-        input:focus, textarea:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08); }
+        input, textarea, select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; background: #f8fafc; }
+        input:focus, textarea:focus { border-color: var(--primary); background: #fff; }
         
-        button { background: var(--primary); color: white; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; transition: 0.2s; width: 100%; }
-        button:hover { background: var(--primary-dark); }
-        button:disabled { background: #cbd5e1; cursor: not-allowed; }
+        button { background: var(--primary); color: white; border: none; padding: 14px 20px; font-size: 15px; font-weight: bold; border-radius: 10px; cursor: pointer; width: 100%; }
+        button:disabled { background: #cbd5e1; }
 
-        /* Product Catalog UI */
-        .hero-product-img { width: 100%; height: 280px; object-fit: cover; border-radius: 14px; background: #f1f5f9; border: 1px solid var(--border); }
-        .prod-title { font-size: 1.4rem; color: #0f172a; margin: 12px 0 6px 0; font-weight: 700; }
-        .prod-price { font-size: 1.5rem; font-weight: bold; color: var(--price); margin-bottom: 10px; }
-        .prod-desc { color: #475569; font-size: 14px; line-height: 1.5; margin-bottom: 15px; }
+        /* MultiProduct Feed Layout */
+        .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+        .product-mini-card { background: #fff; border: 1px solid var(--border); border-radius: 12px; padding: 10px; cursor: pointer; }
+        .mini-img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; background: #f1f5f9; }
+        .mini-title { font-size: 13px; font-weight: bold; margin: 6px 0 2px 0; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mini-price { font-size: 14px; color: var(--price); font-weight: bold; }
 
-        /* Live Tracking Component */
-        .track-container { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 15px; margin-bottom: 15px; text-align: center; }
-        .stepper { display: flex; justify-content: space-between; margin-top: 12px; position: relative; }
+        .detail-view img { width: 100%; height: 250px; object-fit: cover; border-radius: 14px; border: 1px solid var(--border); }
+        .back-to-shop { display: inline-flex; align-items: center; color: var(--primary); font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
+
+        .track-container { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 12px; margin-bottom: 15px; text-align: center; }
+        .stepper { display: flex; justify-content: space-between; margin-top: 10px; }
         .step { font-size: 11px; font-weight: bold; color: #94a3b8; flex: 1; text-align: center; }
         .step.active { color: var(--primary); }
         .step.done { color: var(--success); }
 
-        /* Admin Layout Grid */
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .stat-item { background: #f8fafc; padding: 12px; border-radius: 10px; border: 1px solid var(--border); text-align: center; }
-        .stat-item p { margin: 0; font-size: 12px; color: #64748b; text-transform: uppercase; }
-        .stat-item h3 { margin: 4px 0 0 0; font-size: 18px; color: #0f172a; }
-
-        .order-row { border-bottom: 1px solid var(--border); padding: 12px 0; font-size: 13px; }
-        .order-row:last-child { border-bottom: none; }
+        
+        .adm-prod-row { border-bottom: 1px solid var(--border); padding: 12px 0; font-size: 13px; }
         .badge { padding: 3px 6px; border-radius: 6px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
         .badge-pending { background: #fef3c7; color: #d97706; }
         .badge-shipped { background: #e0f2fe; color: #0369a1; }
         .badge-delivered { background: #dcfce7; color: #15803d; }
+        .badge-cancelled { background: #fee2e2; color: #ef4444; }
+
+        .cancel-btn { background: #ef4444; color: white; padding: 6px 12px; font-size: 12px; border-radius: 6px; margin-top: 8px; width: auto; font-weight: bold; display: inline-block; }
     </style>
     <script type="module" src="https://unpkg.com/ionicons@7.10.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
@@ -84,18 +82,18 @@
 
     <div class="container">
         <header id="appHeader" style="display:none;">
-            <h1>QuickSell Pro ⚡</h1>
+            <h1 id="headerText">QuickSell SuperApp 👑</h1>
             <button class="logout-btn" onclick="appLogout()">Logout</button>
         </header>
 
         <div id="scrLogin" class="app-screen active">
-            <div class="app-card" style="margin-top: 40px;">
+            <div class="app-card" style="margin-top: 50px;">
                 <h2>Welcome Back!</h2>
                 <form id="formLogin">
                     <div class="form-group"><label>Email Address</label><input type="email" id="logEmail" required></div>
                     <div class="form-group"><label>Password</label><input type="password" id="logPass" required></div>
                     <button type="submit">Log In</button>
-                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrSignup')">New user? <b style="color:var(--primary);">Create Account</b></p>
+                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrSignup')">New user? <b style="color:var(--primary);">Register Profile</b></p>
                 </form>
             </div>
         </div>
@@ -106,18 +104,18 @@
                 <form id="formSignup">
                     <div class="form-group"><label>Full Name</label><input type="text" id="regName" required></div>
                     <div class="form-group"><label>Email Address</label><input type="email" id="regEmail" required></div>
-                    <div class="form-group"><label>WhatsApp Number (With 91)</label><input type="tel" id="regPhone" placeholder="91XXXXXXXXXX" required></div>
-                    <div class="form-group"><label>Full Delivery Address</label><textarea id="regAddress" rows="2" required></textarea></div>
+                    <div class="form-group"><label>WhatsApp Mobile Number (With 91)</label><input type="tel" id="regPhone" placeholder="91XXXXXXXXXX" required></div>
+                    <div class="form-group"><label>Full Shipping Address</label><textarea id="regAddress" rows="2" required></textarea></div>
                     <div class="form-group"><label>Password</label><input type="password" id="regPass" required></div>
-                    <button type="submit">Sign Up</button>
-                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrLogin')">Have an account? <b style="color:var(--primary);">Log In</b></p>
+                    <button type="submit">Complete Signup</button>
+                    <p style="text-align:center; font-size:13px; margin-top:15px; color:#64748b;" onclick="switchAuthScreen('scrLogin')">Already registered? <b style="color:var(--primary);">Log In</b></p>
                 </form>
             </div>
         </div>
 
         <div id="scrHome" class="app-screen">
             <div id="userTrackingBox" class="track-container" style="display:none;">
-                <span style="font-size:13px; font-weight:bold; color:#1e40af;">🚚 Live Order Tracking Status</span>
+                <span style="font-size:12px; font-weight:bold; color:#1e40af;">🚚 Order Tracking Monitor</span>
                 <div class="stepper">
                     <div class="step" id="cust-step-pending">● Placed</div>
                     <div class="step" id="cust-step-shipped">● Shipped</div>
@@ -125,56 +123,101 @@
                 </div>
             </div>
 
-            <div class="app-card" style="padding:12px;">
-                <img class="hero-product-img" id="viewImg" src="" alt="Product">
-                <h2 class="prod-title" id="viewTitle">Loading Product...</h2>
-                <div class="prod-price" id="viewPrice">₹0</div>
-                <p class="prod-desc" id="viewDesc">Fetching details...</p>
-                <button id="btnCheckout">⚡ Buy Now (Cash on Delivery)</button>
+            <div id="catalogListView">
+                <h2 style="font-size:1.1rem; margin-bottom:10px;">🌟 Premium Store Inventory</h2>
+                <div class="products-grid" id="catalogGrid"></div>
+            </div>
+
+            <div id="productDetailView" class="detail-view" style="display:none;">
+                <div class="back-to-shop" onclick="closeProductDetails()"><ion-icon name="arrow-back-outline" style="margin-right:4px;"></ion-icon> Back to Catalog</div>
+                <div class="app-card" style="padding:10px;">
+                    <img id="dtlImg" src="" alt="preview">
+                    <h2 style="font-size:1.3rem; margin:10px 0 4px 0;" id="dtlTitle">-</h2>
+                    <div style="font-size:1.4rem; font-weight:bold; color:var(--price); margin-bottom:10px;" id="dtlPrice">₹0</div>
+                    <p style="color:#475569; font-size:14px;" id="dtlDesc">-</p>
+
+                    <div class="form-group" id="variantWrapper" style="margin-top:15px;">
+                        <label>Select Product Variant (Size/Color)</label>
+                        <select id="dtlVariantSelect"></select>
+                    </div>
+
+                    <div class="app-card" style="background:#f8fafc; border:1px solid var(--border); padding:12px; margin-top:15px;">
+                        <h4 style="margin:0 0 8px 0;">💳 Select Checkout Mode</h4>
+                        <select id="checkoutModeSelect" onchange="togglePaymentWindow(this.value)">
+                            <option value="COD">Cash on Delivery (COD)</option>
+                            <option value="ONLINE">Pay via UPI QR Code Scan</option>
+                        </select>
+
+                        <div id="upiPaymentBox" style="display:none; margin-top:12px; text-align:center;">
+                            <p style="font-size:12px; font-weight:bold; color:#64748b;">Scan QR & Pay Amount. Upload proof screenshot:</p>
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=tanishmandloi2006@okaxis%26pn=Tanish%20Mandloi" alt="QR Code Engine" style="width:130px; height:130px; margin-bottom:8px;">
+                            <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px;">
+                        </div>
+
+                        <div style="display:flex; gap:8px; margin-top:12px;">
+                            <input type="text" id="couponCodeInp" placeholder="Enter Coupon Code (e.g. FIRST10)" style="padding:8px; font-size:12px;">
+                            <button type="button" onclick="applyPromoCouponCode()" style="width:auto; padding:0 12px; font-size:12px;">Apply</button>
+                        </div>
+                    </div>
+
+                    <button id="btnCheckout" style="margin-top:10px;">⚡ Lock Instant Order Package</button>
+                </div>
             </div>
         </div>
 
         <div id="scrOrders" class="app-screen">
             <div class="app-card">
-                <h2>Your Orders History</h2>
-                <div id="customerOrdersList" style="font-size:14px; color:#64748b;">No orders placed yet.</div>
+                <h2>Your Purchase Log Timeline</h2>
+                <div id="customerOrdersList" style="font-size:13px; color:#64748b;">Fetching timeline logs...</div>
             </div>
         </div>
 
         <div id="scrProfile" class="app-screen">
             <div class="app-card">
-                <h2>My Account Profile</h2>
-                <div style="background:#f8fafc; padding:15px; border-radius:10px; border:1px solid var(--border); margin-bottom:15px;">
-                    <p style="margin:5px 0;"><b>Name:</b> <span id="profName">-</span></p>
-                    <p style="margin:5px 0;"><b>Email:</b> <span id="profEmail">-</span></p>
-                    <p style="margin:5px 0;"><b>WhatsApp:</b> <span id="profPhone">-</span></p>
-                    <p style="margin:5px 0;"><b>Address:</b> <span id="profAddress">-</span></p>
+                <h2>Profile Dashboard</h2>
+                <div style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid var(--border); font-size:14px; margin-bottom:15px;">
+                    <p><b>Client Identity:</b> <span id="profName">-</span></p>
+                    <p><b>Email Parameters:</b> <span id="profEmail">-</span></p>
+                    <p><b>WhatsApp Contact:</b> <span id="profPhone">-</span></p>
+                    <p><b>Logistics Destination:</b> <span id="profAddress">-</span></p>
                 </div>
-                <button onclick="appLogout()" style="background:#ef4444;">Log Out From Account</button>
+                <button onclick="appLogout()" style="background:#ef4444;">Disconnect Authentication</button>
             </div>
         </div>
 
         <div id="scrAdmin" class="app-screen">
-            <h2>👑 Admin Control Center</h2>
+            <h2>👑 Command Operations Center</h2>
             <div class="stats-grid">
-                <div class="stat-item"><p>Revenue</p><h3 id="admRevenue">₹0</h3></div>
-                <div class="stat-item"><p>Total Orders</p><h3 id="admOrderCount">0</h3></div>
+                <div class="stat-item"><p style="margin:0; font-size:11px; color:#64748b;">NET REVENUE</p><h3 id="admRevenue" style="color:var(--success);">₹0</h3></div>
+                <div class="stat-item"><p style="margin:0; font-size:11px; color:#64748b;">PIPELINE QUEUE</p><h3 id="admOrderCount">0</h3></div>
             </div>
 
             <div class="app-card">
-                <h2>Live Orders Pipeline</h2>
-                <div id="admOrdersContainer">Awaiting orders...</div>
+                <h2>Incoming System Purchases Log</h2>
+                <div id="admOrdersContainer" style="font-size:13px;">Awaiting live streams...</div>
             </div>
 
             <div class="app-card">
-                <h2>Configure Product Asset</h2>
+                <h2 id="formAdminTitle">➕ Deploy New Marketplace Asset</h2>
                 <form id="formAdminProduct">
-                    <div class="form-group"><label>Title</label><input type="text" id="admInpTitle" required></div>
-                    <div class="form-group"><label>Price (₹)</label><input type="number" id="admInpPrice" required></div>
-                    <div class="form-group"><label>Description</label><textarea id="admInpDesc" rows="3" required></textarea></div>
-                    <div class="form-group"><label>Upload Product Photo</label><input type="file" id="admInpFile" accept="image/*"></div>
-                    <button type="submit" id="btnAdminSave" style="background:#10b981;">Sync Dynamic Product Assets</button>
+                    <input type="hidden" id="admEditId">
+                    <div class="form-group"><label>Product Title Name</label><input type="text" id="admInpTitle" required></div>
+                    <div class="form-group"><label>Price Parameter Tag (₹)</label><input type="number" id="admInpPrice" required></div>
+                    <div class="form-group"><label>Specifications Description</label><textarea id="admInpDesc" rows="3" required></textarea></div>
+                    <div class="form-group"><label>Product Variants (Comma Separated, e.g: Black, Red, White)</label><input type="text" id="admInpVariants" placeholder="M, L, XL or Black, White"></div>
+                    <div class="form-group">
+                        <label>Image Assets Node (Select Gallery File File)</label>
+                        <input type="text" id="admInpImgUrl" placeholder="Direct Link URL string parameters" style="margin-bottom:6px;">
+                        <input type="file" id="admInpFile" accept="image/*" style="border:none; font-size:12px; padding:0;">
+                    </div>
+                    <button type="submit" id="btnAdminSave" style="background:#10b981;">Push Changes Live to Channels</button>
+                    <button type="button" id="btnCancelEdit" style="background:#64748b; margin-top:8px; display:none;" onclick="resetAdminForm()">Cancel Edit Mode</button>
                 </form>
+            </div>
+
+            <div class="app-card">
+                <h2>Warehouse Stocks Matrix</h2>
+                <div id="admInventoryContainer">Awaiting inventory callback array entries...</div>
             </div>
         </div>
 
@@ -190,8 +233,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDFCJP7HLy3Yri2mLu7o36RrgBgdl98MAk",
@@ -205,13 +247,12 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const storage = getStorage(app);
 
         const ADMIN_EMAIL = "tanishmandloi2006@gmail.com";
-        const productDocRef = doc(db, "store", "current_product");
         let profileCache = null;
+        let activeProductContext = null;
+        let appliedPriceFactor = 1.0;
 
-        // ROUTER FUNCTIONS
         window.switchAuthScreen = function(scrId) {
             document.querySelectorAll('.app-screen').forEach(s => s.classList.remove('active'));
             document.getElementById(scrId).classList.add('active');
@@ -222,12 +263,16 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             el.classList.add('active');
+            closeProductDetails();
         }
 
-        // CUSTOM LOGOUT
         window.appLogout = function() { signOut(auth).then(() => location.reload()); }
 
-        // --- AUTH FORMS HANDLERS ---
+        window.togglePaymentWindow = function(val) {
+            document.getElementById('upiPaymentBox').style.display = (val === 'ONLINE') ? 'block' : 'none';
+        }
+
+        // --- IDENTITY REGISTRATION LOGIC ENGINE ---
         document.getElementById('formSignup').addEventListener('submit', async (e) => {
             e.preventDefault();
             const name = document.getElementById('regName').value.trim();
@@ -238,7 +283,7 @@
             try {
                 const c = await createUserWithEmailAndPassword(auth, email, pass);
                 await setDoc(doc(db, "users", c.user.uid), { name, email, phone, address });
-                alert("Profile Registered Successfully! 🎉");
+                alert("Account verification profile registered successfully! 🎉");
             } catch(e) { alert(e.message); }
         });
 
@@ -249,12 +294,11 @@
             } catch(e) { alert(e.message); }
         });
 
-        // LIVE CONSOLE WHATSAPP METRICS LOGGER WEBHOOK GATEWAY
-        function fakeWhatsAppAlert(phone, msg) {
-            console.log(`%c[WhatsApp Trigger] To: +${phone} | Msg: "${msg}"`, "color:#10b981; font-weight:bold;");
+        function fireMockWhatsAppPayloadGateway(ph, txt) {
+            console.log(`%c[WhatsApp Hub Alert Engine] Destination: +${ph} | Payload: "${txt}"`, "color:#1d4ed8; font-weight:bold; font-size:12px;");
         }
 
-        // ON AUTH STATE CHANGED
+        // MATRIX DISPATCH HANDLERS ON GLOBAL STATE CHECKS
         onAuthStateChanged(auth, async (user) => {
             if(user) {
                 document.getElementById('appHeader').style.display = "flex";
@@ -263,7 +307,7 @@
                 if(user.email === ADMIN_EMAIL) {
                     document.getElementById('adminTab').style.display = "flex";
                     switchTab('scrAdmin', document.getElementById('adminTab'));
-                    initAdminDashboard();
+                    initAdminCoreOperationsEngine();
                 } else {
                     document.getElementById('adminTab').style.display = "none";
                     const snap = await getDoc(doc(db, "users", user.uid));
@@ -275,7 +319,7 @@
                         document.getElementById('profAddress').innerText = profileCache.address;
                     }
                     switchTab('scrHome', document.querySelectorAll('.nav-item')[0]);
-                    initCustomerView(user.uid);
+                    initCustomerTimelineObserver(user.uid);
                 }
             } else {
                 document.getElementById('appHeader').style.display = "none";
@@ -284,150 +328,302 @@
             }
         });
 
-        // --- PUBLIC STORE ENGINE ---
-        onSnapshot(productDocRef, (snap) => {
-            if(snap.exists()) {
-                const d = snap.data();
-                document.getElementById('viewTitle').innerText = d.title;
-                document.getElementById('viewPrice').innerText = "₹" + d.price;
-                document.getElementById('viewDesc').innerText = d.desc;
-                if(d.img) document.getElementById('viewImg').src = d.img;
-
-                // Admin field auto filler buffer
-                document.getElementById('admInpTitle').value = d.title;
-                document.getElementById('admInpPrice').value = d.price;
-                document.getElementById('admInpDesc').value = d.desc;
-            }
+        // --- PUBLIC REAL-TIME MULTIPLEX STORE GRID ---
+        onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = "";
+            if(snap.empty) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center;'>No structural listings in grid catalog.</p>"; return; }
+            
+            snap.forEach(d => {
+                const p = d.data();
+                const card = document.createElement('div');
+                card.className = "product-mini-card";
+                card.onclick = () => launchProductDeepDetails(d.id, p);
+                card.innerHTML = `
+                    <img class="mini-img" src="${p.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300'}" alt="asset">
+                    <div class="mini-title">${p.title}</div>
+                    <div class="mini-price">₹${p.price}</div>
+                `;
+                grid.appendChild(card);
+            });
         });
 
-        // CUSTOMER INSTANT CHECKOUT
+        window.launchProductDeepDetails = function(id, data) {
+            activeProductContext = { id, ...data };
+            appliedPriceFactor = 1.0; 
+            document.getElementById('dtlTitle').innerText = data.title;
+            document.getElementById('dtlPrice').innerText = "₹" + data.price;
+            document.getElementById('dtlDesc').innerText = data.desc;
+            document.getElementById('dtlImg').src = data.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500';
+            document.getElementById('couponCodeInp').value = "";
+
+            // Configure dynamic matching dropdown list arrays parameters setup
+            const sel = document.getElementById('dtlVariantSelect');
+            sel.innerHTML = "";
+            if(data.variants && data.variants.length > 0) {
+                document.getElementById('variantWrapper').style.display = "block";
+                data.variants.forEach(v => {
+                    const opt = document.createElement('option'); opt.value = v; opt.innerText = v; sel.appendChild(opt);
+                });
+            } else { document.getElementById('variantWrapper').style.display = "none"; }
+
+            document.getElementById('catalogListView').style.display = "none";
+            document.getElementById('productDetailView').style.display = "block";
+        }
+
+        window.closeProductDetails = function() {
+            document.getElementById('catalogListView').style.display = "block";
+            document.getElementById('productDetailView').style.display = "none";
+            activeProductContext = null;
+        }
+
+        window.applyPromoCouponCode = function() {
+            const val = document.getElementById('couponCodeInp').value.trim().toUpperCase();
+            if(!activeProductContext) return;
+            if(val === "FIRST10") {
+                appliedPriceFactor = 0.90;
+                const newPrice = Math.round(activeProductContext.price * appliedPriceFactor);
+                document.getElementById('dtlPrice').innerText = `₹${newPrice} (10% Coupon Applied!)`;
+                alert("Promo Coupon validated successfully! 10% instant checkout markdown deducted.");
+            } else { alert("Invalid system promo parameters code string."); }
+        }
+
+        // SUBMIT AND DEPLOY LIVE CUSTOMER ORDER TRANSACTION PARAMS
         document.getElementById('btnCheckout').addEventListener('click', async () => {
-            if(!profileCache) return;
+            if(!profileCache || !activeProductContext) return;
             const b = document.getElementById('btnCheckout');
-            b.disabled = true; b.innerText = "Booking Package order...";
+            b.disabled = true; b.innerText = "Locking secure transaction pipelines...";
+
+            const mode = document.getElementById('checkoutModeSelect').value;
+            const file = document.getElementById('checkoutPaymentProof').files[0];
+            let uploadedProofUrl = "";
+
             try {
-                const order = {
+                if(mode === "ONLINE" && file) {
+                    b.innerText = "Syncing media asset token proof...";
+                    const form = new FormData(); form.append('image', file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=6df750fdf509531a74d50937a06041ec`, { method: 'POST', body: form });
+                    const rData = await res.json();
+                    if(rData.success) uploadedProofUrl = rData.data.url;
+                }
+
+                const finalOrderPrice = Math.round(activeProductContext.price * appliedPriceFactor);
+                const selectedVar = document.getElementById('dtlVariantSelect').value || "Default Regular";
+
+                const orderPayload = {
                     uid: auth.currentUser.uid,
                     name: profileCache.name,
                     phone: profileCache.phone,
                     address: profileCache.address,
-                    item: document.getElementById('viewTitle').innerText,
-                    price: Number(document.getElementById('viewPrice').innerText.replace("₹","")),
+                    item: `${activeProductContext.title} (${selectedVar})`,
+                    price: Number(finalOrderPrice),
+                    payMode: mode,
+                    proofImg: uploadedProofUrl,
                     status: "pending",
                     date: new Date().toISOString()
                 };
-                await addDoc(collection(db, "orders"), order);
-                alert("Order Placed Successfully via COD! 🎉");
-                fakeWhatsAppAlert(order.phone, `Hello ${order.name}, your order for "${order.item}" has been PLACED! Status: PENDING.`);
-            } catch(e) { alert("Checkout failed error callback."); }
-            finally { b.disabled = false; b.innerText = "⚡ Buy Now (Cash on Delivery)"; }
+
+                await addDoc(collection(db, "orders"), orderPayload);
+                alert("Purchase logged pipeline transmission complete! Transaction secure.");
+                fireMockWhatsAppPayloadGateway(orderPayload.phone, `Hello ${orderPayload.name}, purchase for "${orderPayload.item}" logged! Mode: ${mode}. Status: PENDING.`);
+                closeProductDetails();
+            } catch(e) { alert("Checkout gateway validation error trace execution loop failure."); }
+            finally { b.disabled = false; b.innerText = "⚡ Lock Instant Order Package"; }
         });
 
-        // RECONSTRUCT CUSTOMER TRACKING MODULES LIVE PIPELINE
-        function initCustomerView(uid) {
+        // LIVE TIMELINE DISPATCH TRACKERS ENGINE
+        function initCustomerTimelineObserver(uid) {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
-                let activeOrder = null;
-                const list = document.getElementById('customerOrdersList');
-                list.innerHTML = "";
+                let currentActiveOrderTrackerNode = null;
+                const histList = document.getElementById('customerOrdersList');
+                histList.innerHTML = "";
 
                 snap.forEach(d => {
                     const o = d.data();
                     if(o.uid === uid) {
-                        if(!activeOrder) activeOrder = o;
-                        const div = document.createElement('div');
-                        div.style.cssText = "border-bottom:1px solid #e2e8f0; padding:10px 0;";
-                        div.innerHTML = `<b>${o.item}</b> - ₹${o.price}<br><span class="badge badge-${o.status}">${o.status}</span>`;
-                        list.appendChild(div);
+                        if(!currentActiveOrderTrackerNode && o.status !== 'cancelled') currentActiveOrderTrackerNode = o;
+                        
+                        const itemCard = document.createElement('div');
+                        itemCard.style.cssText = "border-bottom:1px solid #e2e8f0; padding:12px 0;";
+                        
+                        // User-Side In-App Order Cancellation Timer Logic Implementation (15 Mins Window Block)
+                        const timeDiffMinutes = (new Date() - new Date(o.date)) / (1000 * 60);
+                        let cancelActionDomTemplateString = "";
+                        if(o.status === 'pending' && timeDiffMinutes <= 15) {
+                            cancelActionDomTemplateString = `<br><span class="cancel-btn" onclick="triggerUserSideCancellation('${d.id}', '${o.phone}', '${o.name}', \`${o.item}\`)">Cancel Order</span>`;
+                        }
+
+                        itemCard.innerHTML = `
+                            <div>📦 <b>${o.item}</b></div>
+                            <div>Value: <b>₹${o.price}</b> | Mode: <small>${o.payMode}</small></div>
+                            <div>Status Tag: <span class="badge badge-${o.status}">${o.status}</span> ${cancelActionDomTemplateString}</div>
+                        `;
+                        histList.appendChild(itemCard);
                     }
                 });
 
-                const trackBox = document.getElementById('userTrackingBox');
-                if(activeOrder) {
-                    trackBox.style.display = "block";
+                const box = document.getElementById('userTrackingBox');
+                if(currentActiveOrderTrackerNode) {
+                    box.style.display = "block";
                     document.getElementById('cust-step-pending').className = "step";
                     document.getElementById('cust-step-shipped').className = "step";
                     document.getElementById('cust-step-delivered').className = "step";
 
-                    if(activeOrder.status === 'pending') document.getElementById('cust-step-pending').className = "step active";
-                    if(activeOrder.status === 'shipped') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step active"; }
-                    if(activeOrder.status === 'delivered') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step done"; document.getElementById('cust-step-delivered').className = "step done"; }
-                } else { trackBox.style.display = "none"; if(list.innerHTML==="") list.innerHTML = "No orders found."; }
+                    if(currentActiveOrderTrackerNode.status === 'pending') document.getElementById('cust-step-pending').className = "step active";
+                    if(currentActiveOrderTrackerNode.status === 'shipped') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step active"; }
+                    if(currentActiveOrderTrackerNode.status === 'delivered') { document.getElementById('cust-step-pending').className = "step done"; document.getElementById('cust-step-shipped').className = "step done"; document.getElementById('cust-step-delivered').className = "step done"; }
+                } else { box.style.display = "none"; if(histList.innerHTML==="") histList.innerHTML = "No history records allocated."; }
             });
         }
 
-        // --- OWNERS BACKEND ANALYTICS CONTROLLER PANEL ---
-        function initAdminDashboard() {
+        window.triggerUserSideCancellation = async function(id, ph, nm, item) {
+            if(confirm("Confirm action pipeline: Cancel this order completely?")) {
+                await updateDoc(doc(db, "orders", id), { status: "cancelled" });
+                alert("Order status rewritten to CANCELLED!");
+                fireMockWhatsAppPayloadGateway(ph, `Hello ${nm}, purchase order entry for "${item}" was CANCELLED by user request parameter.`);
+            }
+        }
+
+        // --- MASTER ADMIN LOGISTICS SYSTEM MANAGER MANAGEMENT ---
+        function initAdminCoreOperationsEngine() {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 document.getElementById('admOrderCount').innerText = snap.size;
-                let revenue = 0;
+                let calculatedRevenueMetricSum = 0;
                 const container = document.getElementById('admOrdersContainer');
                 container.innerHTML = "";
 
-                if(snap.empty) { container.innerHTML = "No customer orders online grid pipeline."; return; }
+                if(snap.empty) { container.innerHTML = "Pipeline array streams empty."; return; }
 
-                snap.forEach((docSnap) => {
-                    const id = docSnap.id;
-                    const o = docSnap.data();
-                    if(o.status === 'delivered') revenue += Number(o.price);
+                snap.forEach(d => {
+                    const id = d.id; const o = d.data();
+                    if(o.status === 'delivered') calculatedRevenueMetricSum += Number(o.price);
 
-                    const div = document.createElement('div');
-                    div.className = "order-row";
-                    div.innerHTML = `
-                        <div>👤 <b>${o.name}</b> (${o.phone})</div>
-                        <div>📍 Address: <small>${o.address}</small></div>
-                        <div style="margin-top:4px;">📦 Item: <b>${o.item}</b> | Price: <b>₹${o.price}</b></div>
-                        <div style="margin-top:6px;">Status: 
-                            <select class="adm-status-select" data-id="${id}" data-phone="${o.phone}" data-name="${o.name}" data-title="${o.item}">
+                    let proofLinkDomElementBlock = "";
+                    if(o.proofImg) proofLinkDomElementBlock = `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:bold;">View Payment Screenshot Proof</a>`;
+
+                    const row = document.createElement('div');
+                    row.className = "adm-prod-row";
+                    row.style.cssText = "display:flex; flex-direction:column; align-items:flex-start;";
+                    row.innerHTML = `
+                        <div style="width:100%; border-bottom:1px dashed #cbd5e1; padding-bottom:4px; margin-bottom:4px;">👤 <b>${o.name}</b> (${o.phone}) <span class="badge badge-${o.status}" style="float:right;">${o.status}</span></div>
+                        <div>Asset: <b>${o.item}</b> | Bill Tag: <b>₹${o.price}</b></div>
+                        <div style="font-size:11px; color:#475569; margin:3px 0;">Destination Path: ${o.address} [Mode: ${o.payMode}] ${proofLinkDomElementBlock}</div>
+                        <div style="margin-top:6px; width:100%;">
+                            <select class="adm-pipeline-status-selector" data-id="${id}" data-phone="${o.phone}" data-name="${o.name}" data-title="${o.item}" style="padding:5px; font-size:12px; width:auto;">
                                 <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
                                 <option value="shipped" ${o.status==='shipped'?'selected':''}>Shipped</option>
                                 <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
+                                <option value="cancelled" ${o.status==='cancelled'?'selected':''}>Cancelled</option>
                             </select>
                         </div>
                     `;
-                    container.appendChild(div);
+                    container.appendChild(row);
                 });
 
-                document.getElementById('admRevenue').innerText = "₹" + revenue;
+                document.getElementById('admRevenue').innerText = "₹" + calculatedRevenueMetricSum;
 
-                document.querySelectorAll('.adm-status-select').forEach(sel => {
+                document.querySelectorAll('.adm-pipeline-status-selector').forEach(sel => {
                     sel.addEventListener('change', async (e) => {
-                        const targetId = e.target.getAttribute('data-id');
-                        const statusVal = e.target.value;
-                        const p = e.target.getAttribute('data-phone');
-                        const n = e.target.getAttribute('data-name');
-                        const t = e.target.getAttribute('data-title');
-
-                        await updateDoc(doc(db, "orders", targetId), { status: statusVal });
-                        alert("Database synchronized updated status!");
-                        fakeWhatsAppAlert(p, `Hello ${n}, update for your order "${t}": It is now ${statusVal.toUpperCase()}!`);
+                        const targetDocId = e.target.getAttribute('data-id');
+                        const statusValueStr = e.target.value;
+                        await updateDoc(doc(db, "orders", targetDocId), { status: statusValueStr });
+                        alert("Database configuration fields altered synced successfully!");
+                        fireMockWhatsAppPayloadGateway(e.target.getAttribute('data-phone'), `Hello ${e.target.getAttribute('data-name')}, your order for "${e.target.getAttribute('data-title')}" status has shifted to: ${statusValueStr.toUpperCase()}.`);
                     });
+                });
+            });
+
+            // Stream inventories warehouse tables logs dashboard parameters listings
+            onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
+                const holder = document.getElementById('admInventoryContainer');
+                holder.innerHTML = "";
+                if(snap.empty) { holder.innerHTML = "Warehouse database structural entries layout arrays null."; return; }
+
+                snap.forEach(d => {
+                    const p = d.data();
+                    const line = document.createElement('div');
+                    line.className = "adm-prod-row";
+                    line.style.cssText = "display:flex; justify-content:space-between; align-items:center;";
+                    line.innerHTML = `
+                        <div><b>${p.title}</b><br><span style="color:var(--price); font-weight:bold;">₹${p.price}</span></div>
+                        <div>
+                            <button onclick="launchAdminProductEditMode('${d.id}', \`${btoa(JSON.stringify(p))}\`)" style="padding:4px 8px; font-size:11px; width:auto; background:#f59e0b; margin-right:4px;">Edit</button>
+                            <button onclick="triggerAdminDeleteTransaction('${d.id}')" style="padding:4px 8px; font-size:11px; width:auto; background:#ef4444;">Delete</button>
+                        </div>
+                    `;
+                    holder.appendChild(line);
                 });
             });
         }
 
-        // ADMIN ASSETS FORM MANAGEMENT (WITH IMAGE BINARY STREAM FILE STORE)
+        window.triggerAdminDeleteTransaction = async function(id) {
+            if(confirm("Confirm database wipe: Permanently clear this product asset entry record?")) {
+                await deleteDoc(doc(db, "products", id));
+                alert("Asset deleted from warehouse catalog mappings listings clusters! 🗑️");
+            }
+        }
+
+        window.launchAdminProductEditMode = function(id, enc) {
+            const data = JSON.parse(atob(enc));
+            document.getElementById('admEditId').value = id;
+            document.getElementById('admInpTitle').value = data.title;
+            document.getElementById('admInpPrice').value = data.price;
+            document.getElementById('admInpDesc').value = data.desc;
+            document.getElementById('admInpImgUrl').value = data.img || "";
+            document.getElementById('admInpVariants').value = data.variants ? data.variants.join(", ") : "";
+
+            document.getElementById('formAdminTitle').innerText = "📝 Modify Stock Asset Node Properties";
+            document.getElementById('btnAdminSave').innerText = "Update Storefront Asset Properties";
+            document.getElementById('btnCancelEdit').style.display = "block";
+        }
+
+        window.resetAdminForm = function() {
+            document.getElementById('admEditId').value = "";
+            document.getElementById('formAdminProduct').reset();
+            document.getElementById('formAdminTitle').innerText = "➕ Deploy New Marketplace Asset";
+            document.getElementById('btnAdminSave').innerText = "Push Changes Live to Channels";
+            document.getElementById('btnCancelEdit').style.display = "none";
+        }
+
         document.getElementById('formAdminProduct').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnAdminSave');
-            btn.disabled = true; btn.innerText = "Uploading Media Framework Asset...";
+            btn.disabled = true; btn.innerText = "Synchronizing node asset parameters pipeline stream configurations...";
 
-            const file = document.getElementById('admInpFile').files[0];
+            const id = document.getElementById('admEditId').value;
             const title = document.getElementById('admInpTitle').value.trim();
             const price = Number(document.getElementById('admInpPrice').value);
             const desc = document.getElementById('admInpDesc').value.trim();
+            const variantsRaw = document.getElementById('admInpVariants').value.trim();
+            let imgUrl = document.getElementById('admInpImgUrl').value.trim();
+            const file = document.getElementById('admInpFile').files[0];
+
+            let variantsArray = [];
+            if(variantsRaw.length > 0) {
+                variantsArray = variantsRaw.split(",").map(v => v.trim()).filter(v => v.length > 0);
+            }
 
             try {
-                let imgUrl = document.getElementById('viewImg').src || "";
                 if(file) {
-                    const fileRef = ref(storage, 'products/' + Date.now() + '_' + file.name);
-                    const uploadTask = await uploadBytes(fileRef, file);
-                    imgUrl = await getDownloadURL(uploadTask.ref);
+                    btn.innerText = "Bypassing Rules: Uploading Content Stream to Media Server Network Node...";
+                    const form = new FormData(); form.append('image', file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=6df750fdf509531a74d50937a06041ec`, { method: 'POST', body: form });
+                    const resData = await res.json();
+                    if(resData.success) imgUrl = resData.data.url;
                 }
 
-                await setDoc(productDocRef, { title, price, desc, img: imgUrl });
-                alert("Storefront assets synchronized completely live! 🚀");
-            } catch(e) { alert("Media sync stream error."); }
-            finally { btn.disabled = false; btn.innerText = "Sync Dynamic Product Assets"; }
+                const productPayload = { title, price, desc, variants: variantsArray, img: imgUrl, createdAt: new Date().toISOString() };
+
+                if(id) {
+                    await updateDoc(doc(db, "products", id), productPayload);
+                    alert("Product changes synchronized successfully live! ✨");
+                } else {
+                    await addDoc(collection(db, "products"), productPayload);
+                    alert("New product asset pushed completely live to grid catalog storefront channels! 🚀");
+                }
+                resetAdminForm();
+            } catch(e) { alert("Asset synchronization mapping database loop exception callback trigger failure."); }
+            finally { btn.disabled = false; }
         });
     </script>
 </body>

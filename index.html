@@ -31,7 +31,7 @@
 
         .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 440px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 999; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 700; text-decoration: none; width: 22%; text-align: center; }
-        .nav-item tensor-icon, .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; }
+        .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary); }
         #adminTab { display: none; } 
 
@@ -52,7 +52,6 @@
         button:hover { background: var(--primary-dark); }
         button:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; }
 
-        /* Dynamic Custom Notifications Banner Bar */
         .notification-banner { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 12px 15px; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; color: #166534; animation: pulse 2s infinite; }
         .notification-banner.alert-admin { background: #fff1f2; border-color: #fecdd3; color: #9f1239; }
         @keyframes pulse { 0% { opacity: 0.95; } 50% { opacity: 1; } 100% { opacity: 0.95; } }
@@ -73,7 +72,6 @@
         .mini-price { font-size: 15px; color: var(--price); font-weight: 800; }
         .mini-mrp { font-size: 11px; text-decoration: line-through; color: var(--text-muted); margin-left: 5px; }
 
-        /* Wishlist Heart Icon Style overlay */
         .wishlist-heart-btn { position: absolute; top: 18px; left: 18px; font-size: 22px; color: #cbd5e1; z-index: 6; transition: 0.2s; cursor: pointer; }
         .wishlist-heart-btn.active { color: #ef4444; }
 
@@ -118,7 +116,6 @@
         .order-expand-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-top: 8px; display: none; font-size: 13px; line-height: 1.5; }
         .upi-intent-btn { background: #10b981; color: white; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: bold; padding: 14px; border-radius: 12px; text-decoration: none; width: 100%; margin-bottom: 12px; font-size: 15px; box-shadow: 0 4px 10px rgba(16,185,129,0.2); }
 
-        /* Review and Rating Section UI Grid */
         .reviews-section { margin-top: 25px; border-top: 1px solid var(--border); padding-top: 15px; }
         .review-card { background: #f8fafc; border: 1px solid var(--border); padding: 12px; border-radius: 10px; margin-bottom: 10px; font-size: 13px; }
         .review-header { display: flex; justify-content: space-between; margin-bottom: 4px; font-weight: bold; color: var(--text); }
@@ -222,8 +219,7 @@
 
                     <div style="font-size: 12px; color: var(--success); font-weight: bold; margin-bottom: 12px;" id="dtlDeliveryEstimationLine">🚚 Estimated Delivery: 3-5 Working Days</div>
                     <div id="dtlStockWarning" style="font-size:13px; font-weight:bold; margin-bottom:12px; display:none;"></div>
-                    
-                    <div id="dtlAdminStockBlinker" style="font-size:12px; font-weight:bold; color:var(--price); margin-bottom:10px; display:none; animation: pulse 1s infinite;">⚠️ SYSTEM CRITICAL ALERT: LOW STOCK IN WAREHOUSE! RE-STOCK IMMEDIATELY.</div>
+                    <div id="dtlAdminStockBlinker" style="font-size:12px; font-weight:bold; color:var(--price); margin-bottom:10px; display:none; animation: pulse 1s infinite;">⚠️ SYSTEM CRITICAL ALERT: LOW STOCK IN WAREHOUSE!</div>
 
                     <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:15px;" id="dtlDesc">-</p>
 
@@ -255,6 +251,10 @@
                                 <label>Enter UPI Ref Number (UTR / Txn ID)</label>
                                 <input type="text" id="checkoutUpiUtrInp" placeholder="12-digit UTR Number or Transaction ID">
                             </div>
+                            <div class="form-group" style="text-align:left; margin-top:10px;">
+                                <label>Upload Payment Proof (Screenshot File)</label>
+                                <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px;">
+                            </div>
                         </div>
                         <div style="display:flex; gap:8px; margin-top:15px;">
                             <input type="text" id="couponCodeInp" placeholder="Enter Coupon Code" style="padding:10px; font-size:13px; background:#fff;">
@@ -265,7 +265,7 @@
                     
                     <div class="reviews-section">
                         <h3 style="font-size:14px; font-weight:800; margin-bottom:12px;">Customer Ratings & Reviews</h3>
-                        <div id="dtlReviewsContainer">No reviews posted yet for this catalog variant asset.</div>
+                        <div id="dtlReviewsContainer">No reviews posted yet.</div>
                         <form id="formSubmitReview" style="margin-top:15px; background:#f8fafc; padding:10px; border-radius:10px; border:1px solid var(--border);">
                             <div class="form-group" style="margin-bottom:8px;">
                                 <label style="font-size:11px;">Star Rating</label>
@@ -298,8 +298,8 @@
                     <div class="form-group"><label>Full Name</label><input type="text" id="profInpName" required></div>
                     <div class="form-group"><label>WhatsApp Number</label><input type="tel" id="profInpPhone" required></div>
                     <div class="form-group"><label>Home Shipping Address</label><textarea id="profInpAddressHome" rows="2" required></textarea></div>
-                    <div class="form-group"><label>Office Shipping Address (Optional)</label><textarea id="profInpAddressOffice" rows="2" placeholder="Workplace coordinate address parameters"></textarea></div>
-                    <div class="form-group"><label>Alternative Friend's Shipping Address (Optional)</label><textarea id="profInpAddressFriend" rows="2" placeholder="Alternative dropshipping parameters address"></textarea></div>
+                    <div class="form-group"><label>Office Shipping Address (Optional)</label><textarea id="profInpAddressOffice" rows="2"></textarea></div>
+                    <div class="form-group"><label>Alternative Friend's Shipping Address (Optional)</label><textarea id="profInpAddressFriend" rows="2"></textarea></div>
                     <button type="submit" id="btnUpdateProfile" style="background:#0f172a; margin-bottom:12px;">Save Profile Changes</button>
                 </form>
                 <button onclick="appLogout()" style="background:#ef4444;">Disconnect Authentication</button>
@@ -391,7 +391,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc, deleteDoc, runTransaction, where } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, setDoc, updateDoc, getDoc, deleteDoc, runTransaction } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
         import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-storage.js";
 
         const firebaseConfig = {
@@ -495,7 +495,7 @@
                 
                 await updateDoc(doc(db, "users", auth.currentUser.uid), { name, phone, addressHome, addressOffice, addressFriend });
                 profileCache = { ...profileCache, name, phone, addressHome, addressOffice, addressFriend }; alert("Profile updated! ✨");
-            } catch(err) { alert("Failed to update profile Changes."); } finally { btn.disabled = false; }
+            } catch(err) { alert("Failed to update."); } finally { btn.disabled = false; }
         });
 
         function recomputeDynamicIntentPaymentGateways() {
@@ -523,7 +523,6 @@
                 document.getElementById('appHeader').style.display = "flex";
                 document.getElementById('appBottomNav').style.display = "flex";
                 
-                // Initialize personal user-side wishlist snapshots pipeline listeners
                 onSnapshot(collection(db, "users", user.uid, "wishlist"), (wSnap) => {
                     wishlistMapCache = {}; wSnap.forEach(d => { wishlistMapCache[d.id] = true; });
                     applyGlobalCatalogPipelineFilters();
@@ -554,18 +553,17 @@
             }
         });
 
-        // WISHLIST HUB ACCELERATOR TRIGGER LOCKS
         window.toggleProductWishlistTokenState = async function(e, id) {
             e.stopPropagation(); if(!auth.currentUser) return;
             const refDoc = doc(db, "users", auth.currentUser.uid, "wishlist", id);
             if(wishlistMapCache[id]) {
-                await deleteDoc(refDoc); pushInAppBannerNotification("Removed item asset from your Wishlist logs.");
+                await deleteDoc(refDoc); pushInAppBannerNotification("Removed from Wishlist.");
             } else {
-                await setDoc(refDoc, { addedAt: new Date().toISOString() }); pushInAppBannerNotification("Added product live into your active Wishlist hub! ❤️");
+                await setDoc(refDoc, { addedAt: new Date().toISOString() }); pushInAppBannerNotification("Added to Wishlist! ❤️");
             }
         }
 
-        // PRODUCT RENDERS
+        // CATALOG FILTERS
         onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
             masterProductsCache = []; snap.forEach(d => { masterProductsCache.push({ id: d.id, ...d.data() }); });
             applyGlobalCatalogPipelineFilters();
@@ -595,7 +593,7 @@
 
         function renderFilteredCatalogView(products) {
             const grid = document.getElementById('catalogGrid'); grid.innerHTML = "";
-            if(products.length === 0) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>No matching items allocated.</p>"; return; }
+            if(products.length === 0) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>No products found.</p>"; return; }
             
             products.forEach(p => {
                 const card = document.createElement('div'); card.className = "product-mini-card"; card.onclick = () => launchProductDeepDetails(p.id, p);
@@ -621,7 +619,7 @@
         window.updatePurchaseQtyMultiplier = function(factor) {
             if(!activeProductContext) return;
             const target = currentPurchaseQty + factor; const maxLimit = Number(activeProductContext.stock || 0);
-            if(target < 1) return; if(target > maxLimit) { alert(`Only ${maxLimit} units remaining inside warehouse stock channels.`); return; }
+            if(target < 1) return; if(target > maxLimit) { alert(`Only ${maxLimit} units remaining.`); return; }
             
             currentPurchaseQty = target; document.getElementById('dtlQtyValue').innerText = currentPurchaseQty;
             let unitPrice = activeProductContext.price;
@@ -633,7 +631,7 @@
             if(document.getElementById('checkoutModeSelect').value === 'ONLINE') recomputeDynamicIntentPaymentGateways();
         }
 
-        // DEEP DETAILS PAGE WITH DYNAMIC ESTIMATED SHIPPING LOGICS AND REVIEWS STREAMS
+        // LAUNCH DEEP DETAILS
         window.launchProductDeepDetails = function(id, data) {
             activeProductContext = { id, ...data };
             activeCouponMeta = null; currentSliderIndex = 0; currentPurchaseQty = 1;
@@ -642,31 +640,29 @@
             document.getElementById('dtlTitle').innerText = data.title;
             document.getElementById('dtlPrice').innerText = "₹" + data.price;
             document.getElementById('dtlOriginalMrp').innerText = data.mrp ? "₹" + data.mrp : "";
-            document.getElementById('dtlDesc').innerText = data.desc || "No descriptions specifications parameters available.";
+            document.getElementById('dtlDesc').innerText = data.desc || "No description available.";
             document.getElementById('couponCodeInp').value = "";
 
-            // Dynamic Date Estimation Calculations Logic Mapping Block
             const offsetDays = Number(data.deliveryDays || 4);
             const deliveryDateObject = new Date(); deliveryDateObject.setDate(deliveryDateObject.getDate() + offsetDays);
             const options = { weekday: 'long', month: 'short', day: 'numeric' };
             const dateStringFormatted = deliveryDateObject.toLocaleDateString('en-US', options);
             const shippingChargesValue = Number(data.shipping || 0);
-            const shippingTextStr = shippingChargesValue === 0 ? "FREE Delivery" : `₹${shippingChargesValue} Shipping Charges`;
+            const shippingTextStr = shippingChargesValue === 0 ? "FREE Delivery" : `₹${shippingChargesValue} Shipping`;
             
-            document.getElementById('dtlDeliveryEstimationLine').innerText = `🚚 Estimated Delivery by: ${dateStringFormatted} (${shippingTextStr})`;
+            document.getElementById('dtlDeliveryEstimationLine').innerText = `🚚 Estimated Delivery: ${dateStringFormatted} (${shippingTextStr})`;
 
             const warningBox = document.getElementById('dtlStockWarning'); const stockNum = Number(data.stock || 0); const btnPay = document.getElementById('btnCheckout');
             const adminBlinker = document.getElementById('dtlAdminStockBlinker');
 
-            // Low Stock Blinker Configuration
             if(auth.currentUser && auth.currentUser.email === ADMIN_EMAIL && stockNum <= 3 && stockNum > 0) adminBlinker.style.display = "block";
             else adminBlinker.style.display = "none";
 
             if(stockNum <= 0) {
-                warningBox.style.display = "block"; warningBox.style.color = "#ef4444"; warningBox.innerText = "❌ Out of Stock! Temporary warehouse node locks activated.";
+                warningBox.style.display = "block"; warningBox.style.color = "#ef4444"; warningBox.innerText = "❌ Out of Stock!";
                 btnPay.disabled = true; btnPay.innerText = "Sold Out";
             } else if(stockNum <= 3) {
-                warningBox.style.display = "block"; warningBox.style.color = "#f59e0b"; warningBox.innerText = `🔥 High Conversion: Only ${stockNum} packages remaining left in registry slots!`;
+                warningBox.style.display = "block"; warningBox.style.color = "#f59e0b"; warningBox.innerText = `🔥 High Demand: Only ${stockNum} left!`;
                 btnPay.disabled = false; btnPay.innerText = "⚡ Lock Instant Order Package";
             } else {
                 warningBox.style.display = "none"; btnPay.disabled = false; btnPay.innerText = "⚡ Lock Instant Order Package";
@@ -687,7 +683,6 @@
                 data.variants.forEach(v => { const opt = document.createElement('option'); opt.value = v; opt.innerText = v; sel.appendChild(opt); });
             } else { document.getElementById('variantWrapper').style.display = "none"; }
 
-            // Re-render Public Ratings & Reviews thread pipeline snapshots arrays
             initProductPublicFeedbackFeed(id);
 
             document.getElementById('catalogListView').style.display = "none";
@@ -718,47 +713,44 @@
                 
                 document.getElementById('dtlPrice').innerText = "₹" + totalBillWithShippingCalculated;
                 if(document.getElementById('checkoutModeSelect').value === 'ONLINE') recomputeDynamicIntentPaymentGateways();
-                alert("Smart coupon validation successful matrix sync! ✨");
-            } else { alert("Voucher validation exception parameters mismatch."); }
+                alert("Coupon applied successfully! ✨");
+            } else { alert("Invalid Coupon Code."); }
         }
 
-        // RE-ORDER CONVENIENCE READD FEATURE ALGORITHM
         window.triggerFastReorderSequencePipeline = async function(titleText, basePrice) {
             if(!profileCache) return;
-            if(!confirm(`Do you completely want to instantly reorder another package of "${titleText}" for flat COD value amount?`)) return;
-            
+            if(!confirm(`Do you want to reorder "${titleText}" instantly via COD?`)) return;
             try {
                 const fastOrderPayload = {
                     uid: auth.currentUser.uid, name: profileCache.name, phone: profileCache.phone, address: profileCache.addressHome,
                     item: `${titleText} (Reordered)`, qty: 1, price: Number(basePrice), payMode: "COD", proofImg: "", utr: "COD_REORDER", status: "pending", date: new Date().toISOString()
                 };
                 await addDoc(collection(db, "orders"), fastOrderPayload);
-                alert("Fast Reorder processing pipeline complete! Check tracker matrix. 🚀");
-            } catch(e) { alert("Fast reorder routing failed."); }
+                alert("Reorder successful! 🚀");
+            } catch(e) { alert("Fast reorder failed."); }
         }
 
-        // RATINGS & REVIEWS SUBMISSION PIPELINE CORE
+        // SUBMIT REVIEW
         document.getElementById('formSubmitReview').addEventListener('submit', async (e) => {
             e.preventDefault(); if(!activeProductContext || !auth.currentUser) return;
             const stars = Number(document.getElementById('revInpStars').value);
             const comment = document.getElementById('revInpText').value.trim();
             const reviewerName = profileCache ? profileCache.name : auth.currentUser.email;
-
             try {
                 await addDoc(collection(db, "products", activeProductContext.id, "reviews"), {
                     name: reviewerName, stars, comment, date: new Date().toISOString()
                 });
-                alert("Feedback feedback matrix dispatched live to catalog thread nodes! 📝");
+                alert("Review submitted successfully! 📝");
                 document.getElementById('formSubmitReview').reset();
                 initProductPublicFeedbackFeed(activeProductContext.id);
-            } catch(err) { alert("Submission thread array tracking error."); }
+            } catch(err) { alert("Review submission failed."); }
         });
 
         function initProductPublicFeedbackFeed(prodId) {
             const container = document.getElementById('dtlReviewsContainer');
             onSnapshot(query(collection(db, "products", prodId, "reviews"), orderBy("date", "desc")), (snap) => {
                 container.innerHTML = "";
-                if(snap.empty) { container.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>No feedback logs published yet for this listing registry node.</p>"; return; }
+                if(snap.empty) { container.innerHTML = "<p style='font-size:12px; color:var(--text-muted);'>No reviews yet.</p>"; return; }
                 snap.forEach(d => {
                     const r = d.data(); const card = document.createElement('div'); card.className = "review-card";
                     let starsStringStr = "⭐".repeat(r.stars);
@@ -768,26 +760,25 @@
             });
         }
 
-        // CUSTOMER ATOMIC CHECKOUT SECURE TRANSACTION
+        // FIXED CRITICAL SOLUTION: CHECKOUT PICTURE PROOF IS DISPATCHED SECURELY TO THE STORAGE DRIVERS
         document.getElementById('btnCheckout').addEventListener('click', async () => {
             if(!profileCache || !activeProductContext) return;
             
-            // Choose dynamic profile addresses from form cache selections array fallback
-            const finalDestinationPath = profileCache.addressHome; // Defaults to home coordinate parameters pipeline
-
+            const finalDestinationPath = profileCache.addressHome;
             const b = document.getElementById('btnCheckout'); const mode = document.getElementById('checkoutModeSelect').value;
             const file = document.getElementById('checkoutPaymentProof').files[0]; const utrNumber = document.getElementById('checkoutUpiUtrInp').value.trim();
 
             if(mode === "ONLINE" && !utrNumber) { alert("Requires bank 12-digit UTR ID."); return; }
-            b.disabled = true; b.innerText = "Securing transaction array matrix locks...";
+            b.disabled = true; b.innerText = "Securing transaction locks...";
             let proofUrl = "";
 
             try {
+                // Fixed: Enforce real storage drivers instead of heavy base64 strings array
                 if(mode === "ONLINE" && file) {
-                    b.innerText = "Syncing backup image asset proof stream...";
+                    b.innerText = "Uploading receipt screenshot to cloud bucket...";
                     const storageRef = ref(storage, `receipts/${Date.now()}_${file.name}`);
                     const uploadSnap = await uploadBytes(storageRef, file);
-                    proofUrl = await getDownloadURL(uploadSnap.ref);
+                    proofUrl = await getDownloadURL(uploadSnap.ref); // Clean safe URL link generated
                 }
 
                 let unitPrice = activeProductContext.price;
@@ -798,7 +789,7 @@
                 const baseProductsSumTotal = Math.round(unitPrice * currentPurchaseQty);
                 const finalOrderBillCalculation = baseProductsSumTotal + Number(activeProductContext.shipping || 0);
 
-                const selectedVar = document.getElementById('dtlVariantSelect').value || "Regular Specs";
+                const selectedVar = document.getElementById('dtlVariantSelect').value || "Regular";
                 const productRef = doc(db, "products", activeProductContext.id);
 
                 await runTransaction(db, async (transaction) => {
@@ -815,13 +806,13 @@
                     });
                 });
 
-                alert(`Order confirmed successfully pipeline metrics safe! 🎉`); closeProductDetails();
+                alert(`Order confirmed successfully! 🎉`); closeProductDetails();
             } catch(e) { 
-                if(e === "INSUFFICIENT_STOCK_MUTATION") alert("Race condition rollback initiated."); else alert("Execution terminal failure trace."); 
+                if(e === "INSUFFICIENT_STOCK_MUTATION") alert("Race condition error. Item sold out."); else alert("Checkout pipeline failed."); 
             } finally { b.disabled = false; b.innerText = "⚡ Lock Instant Order Package"; }
         });
 
-        // CLIENT PURCHASES TIMELINE AND ACCOUNT CONSUMERS LOYALTY METRIC STATS
+        // CUSTOMER TIMELINE AND STATS
         function initCustomerMetricsDashboard(uid) {
             onSnapshot(query(collection(db, "orders")), (snap) => {
                 let cnt = 0; let totalSpendValueSum = 0;
@@ -842,7 +833,7 @@
                     if(o.uid === uid) {
                         const id = d.id; if(!currentActiveNode && o.status !== 'cancelled') currentActiveNode = o;
                         if(customerActiveOrdersPreviousStatusCacheMap[id] && customerActiveOrdersPreviousStatusCacheMap[id] !== o.status) {
-                            pushInAppBannerNotification(`🔔 Order Status Update: Your package for "${o.item}" is now shifted to [${o.status.toUpperCase()}]!`);
+                            pushInAppBannerNotification(`🔔 Order Update: Your package for "${o.item}" status changed to [${o.status.toUpperCase()}]!`);
                         }
                         customerActiveOrdersPreviousStatusCacheMap[id] = o.status;
 
@@ -855,7 +846,7 @@
                             <div onclick="toggleDetailedViewPanel('${id}')" style="cursor:pointer; font-weight:700;">📦 ${o.item} (x${o.qty || 1}) <ion-icon name="chevron-down-outline" style="float:right;"></ion-icon></div>
                             <div style="font-size:13px; color:var(--text-muted); margin-top:2px;">Bill: <b style="color:var(--price)">₹${o.price}</b> | Status: <span class="badge badge-${o.status}">${o.status}</span></div>
                             <div class="order-expand-box" id="exp-${id}">
-                                <b>Booking Invoice Reference:</b> #${id}<br><b>Logistics Destination:</b> ${o.address}<br><b>Checkout Channel:</b> ${o.payMode} ${utrDisplayString}
+                                <b>Booking Invoice Reference:</b> #${id}<br><b>Address:</b> ${o.address}<br><b>Channel:</b> ${o.payMode} ${utrDisplayString}
                                 <br><button type="button" onclick="triggerFastReorderSequencePipeline(\`${o.item}\`, ${o.price})" style='padding:6px 10px; font-size:11px; margin-top:8px; width:auto; background:#0f172a;'>🔄 Order Again</button>
                             </div>
                             ${cancelBtn}
@@ -881,7 +872,7 @@
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 masterOrdersCache = []; snap.forEach(d => masterOrdersCache.push({ id: d.id, ...d.data() }));
                 if(totalOrdersSnapshotCounter !== -1 && snap.size > totalOrdersSnapshotCounter) {
-                    pushInAppBannerNotification("🔥 Alert: New Incoming Sales Order Received in Pipeline Queue!", true);
+                    pushInAppBannerNotification("🔥 Alert: New Incoming Sales Order Received!", true);
                 }
                 totalOrdersSnapshotCounter = snap.size; applyAdminOrderSearchingPipeline();
             });
@@ -890,7 +881,7 @@
                 const holder = document.getElementById('admInventoryContainer'); holder.innerHTML = "";
                 snap.forEach(d => {
                     const p = d.data(); const line = document.createElement('div'); line.className = "adm-prod-row";
-                    const criticalBlinkerStyleLabel = Number(p.stock || 0) <= 3 ? "<span style='color:var(--price); font-weight:bold; animation:pulse 1s infinite;'> [⚠️ LOW STOCK]</span>" : "";
+                    const criticalBlinkerStyleLabel = Number(p.stock || 0) <= 3 ? "<span style='color:var(--price); font-weight:bold;'> [⚠️ LOW STOCK]</span>" : "";
                     line.innerHTML = `<div><b>${p.title}</b> [Cat: ${p.category || 'None'}] (Units: ${p.stock}) ${criticalBlinkerStyleLabel}<br><b>₹${p.price}</b></div><div><button type="button" onclick="launchAdminProductEditMode('${d.id}')" style='padding:6px 12px; background:#f59e0b; margin-right:4px;'>Edit</button><button type="button" onclick="triggerAdminDeleteTransaction('${d.id}')" style='padding:6px 12px; background:#ef4444;'>Del</button></div>`;
                     holder.appendChild(line);
                 });
@@ -918,11 +909,11 @@
             stream.forEach(o => {
                 if(o.status === 'delivered') deliveredRev += Number(o.price); if(o.status === 'pending') pendingRev += Number(o.price);
 
-                let linkBlock = o.proofImg ? `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">Open Payment Proof</a>` : "";
+                let linkBlock = o.proofImg ? `<br>还原 🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">Open Payment Receipt Attachment</a>` : "";
                 let utrDisplay = o.utr ? `<br>🔑 <b>UTR Reference ID:</b> <mark style='font-family:monospace; font-weight:bold;'>${o.utr}</mark>` : "";
 
                 const card = document.createElement('div'); card.className = "adm-prod-row";
-                card.innerHTML = `<div>👤 <b>${o.name}</b> (${o.phone}) <span class='badge badge-${o.status}' style='float:right;'>${o.status}</span></div><div>Item Matrix: <b>${o.item} (x${o.qty || 1})</b> | Price: <b>₹${o.price}</b></div><div style='font-size:12px; color:var(--text-muted);'>📍 Destination: ${o.address} <br><b>Mode:</b> ${o.payMode} ${utrDisplay} ${linkBlock}</div><div style='margin-top:10px;'><select class='adm-pipeline-status-selector' data-id='${o.id}' style='padding:6px; background:#fff;'><option value='pending' ${o.status==='pending'?'selected':''}>Pending</option><option value='shipped' ${o.status==='shipped'?'selected':''}>Shipped</option><option value='delivered' ${o.status==='delivered'?'selected':''}>Delivered</option><option value='cancelled' ${o.status==='cancelled'?'selected':''}>Cancelled</option></select></div>`;
+                card.innerHTML = `<div>👤 <b>${o.name}</b> (${o.phone}) <span class='badge badge-${o.status}' style='float:right;'>${o.status}</span></div><div>Item Package: <b>${o.item} (x${o.qty || 1})</b> | Price: <b>₹${o.price}</b></div><div style='font-size:12px; color:var(--text-muted);'>📍 Destination: ${o.address} <br><b>Mode:</b> ${o.payMode} ${utrDisplay} ${linkBlock}</div><div style='margin-top:10px;'><select class='adm-pipeline-status-selector' data-id='${o.id}' style='padding:6px; background:#fff;'><option value='pending' ${o.status==='pending'?'selected':''}>Pending</option><option value='shipped' ${o.status==='shipped'?'selected':''}>Shipped</option><option value='delivered' ${o.status==='delivered'?'selected':''}>Delivered</option><option value='cancelled' ${o.status==='cancelled'?'selected':''}>Cancelled</option></select></div>`;
                 container.appendChild(card);
             });
 
@@ -934,21 +925,18 @@
             });
         }
 
-        // LOGISTICS EXCEL DATA EXPORTER CSV ENGINE WRITER
         window.exportOrderLogsToCsvFileFormat = function() {
-            if(masterOrdersCache.length === 0) { alert("No transaction records available in buffer map."); return; }
+            if(masterOrdersCache.length === 0) { alert("No transaction records available."); return; }
             let csvContentString = "data:text/csv;charset=utf-8,InvoiceID,CustomerName,Phone,Item,Quantity,TotalPrice,PaymentMode,UTR,Status,Date\n";
-            
             masterOrdersCache.forEach(o => {
                 let sanitizedAddress = (o.address || "").replace(/,/g, " ");
                 let sanitizedItem = (o.item || "").replace(/,/g, " ");
                 csvContentString += `${o.id},${o.name},${o.phone},${sanitizedItem},${o.qty || 1},${o.price},${o.payMode},${o.utr || "None"},${o.status},${o.date}\n`;
             });
-
             const encodedUriString = encodeURI(csvContentString);
             const anchorTokenElement = document.createElement("a");
             anchorTokenElement.setAttribute("href", encodedUriString);
-            anchorTokenElement.setAttribute("download", `QuickSell_Orders_Report_${new Date().toLocaleDateString()}.csv`);
+            anchorTokenElement.setAttribute("download", `QuickSell_Orders_Report.csv`);
             document.body.appendChild(anchorTokenElement);
             anchorTokenElement.click(); document.body.removeChild(anchorTokenElement);
         }
@@ -979,7 +967,7 @@
             document.getElementById('btnAdminSave').innerText = "Push Changes Live"; document.getElementById('btnCancelEdit').style.display = "none";
         }
 
-        // DEPLOY SECURE FILE ATTACHMENTS
+        // SAVE AND UPLOAD IMAGES
         document.getElementById('formAdminProduct').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnAdminSave'); btn.disabled = true; btn.innerText = "Processing Cloud Sync Nodes...";
@@ -1006,7 +994,7 @@
                 if(files.length > 0) {
                     finalImagesArray = [];
                     for(let i=0; i<files.length; i++) {
-                        btn.innerText = `Uploading image array node (${i+1}/${files.length})...`;
+                        btn.innerText = `Uploading images to bucket (${i+1}/${files.length})...`;
                         const fileRef = ref(storage, `products/${Date.now()}_${files[i].name}`);
                         const uploadSnap = await uploadBytes(fileRef, files[i]);
                         const downloadUrl = await getDownloadURL(uploadSnap.ref);
@@ -1023,3 +1011,5 @@
     </script>
 </body>
 </html>
+
+

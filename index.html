@@ -29,46 +29,40 @@
         header h1 { font-size: 1.4rem; color: var(--text); margin: 0; font-weight: 800; letter-spacing: -0.5px; }
         header h1 span { color: var(--primary); }
         .logout-btn { background: #fee2e2; color: #ef4444; border: none; padding: 8px 16px; font-size: 12px; font-weight: 700; border-radius: 30px; cursor: pointer; transition: 0.2s; }
-        .logout-btn:hover { background: #fca5a5; }
 
         /* Elegant Floating Bottom Nav Bar */
         .bottom-nav { position: fixed; bottom: 15px; left: 50%; transform: translateX(-50%); width: 92%; max-width: 440px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); display: flex; justify-content: space-around; padding: 12px 0; border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 24px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 999; }
         .nav-item { display: flex; flex-direction: column; align-items: center; color: #94a3b8; cursor: pointer; font-size: 11px; font-weight: 700; text-decoration: none; width: 22%; text-align: center; transition: 0.2s; }
-        .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; transition: 0.2s; }
+        .nav-item ion-icon { font-size: 22px; margin-bottom: 4px; }
         .nav-item.active { color: var(--primary); }
-        .nav-item.active ion-icon { transform: translateY(-2px); color: var(--primary); }
         #adminTab { display: none; } 
 
         .app-screen { display: none; }
         .app-screen.active { display: block; animation: smoothSlide 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         @keyframes smoothSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Luxury Cards & Elements */
-        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02), 0 2px 4px -1px rgba(0,0,0,0.01); margin-bottom: 20px; }
-        .app-card h2 { margin-top: 0; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 18px; letter-spacing: -0.3px; }
+        .app-card { background: #ffffff; border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); margin-bottom: 20px; }
+        .app-card h2 { margin-top: 0; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 18px; }
         
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; margin-bottom: 6px; font-weight: 700; font-size: 13px; color: #475569; }
         
-        input, textarea, select { padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; background: #f8fafc; color: var(--text); transition: 0.2s; }
-        input:focus, textarea:focus, select:focus { border-color: var(--primary); background: #fff; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+        input, textarea, select { padding: 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 15px; width: 100%; box-sizing: border-box; outline: none; background: #f8fafc; color: var(--text); }
         
         button { background: var(--primary); color: white; border: none; padding: 15px 20px; font-size: 15px; font-weight: 700; border-radius: 12px; cursor: pointer; transition: 0.2s; width: 100%; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2); }
-        button:hover { background: var(--primary-dark); transform: translateY(-1px); }
         button:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; }
 
         /* High-End MultiProduct Grid */
         .products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .product-mini-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; cursor: pointer; transition: 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.01); }
-        .product-mini-card:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -8px rgba(0,0,0,0.08); border-color: #cbd5e1; }
-        .mini-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; background: #f8fafc; }
+        .product-mini-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; cursor: pointer; transition: 0.2s; }
+        .product-mini-card:hover { transform: translateY(-3px); box-shadow: 0 12px 20px -8px rgba(0,0,0,0.08); }
+        .mini-img { width: 100%; height: 140px; object-fit: cover; border-radius: 10px; background: #e2e8f0; }
         .mini-title { font-size: 14px; font-weight: 700; margin: 8px 0 3px 0; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .mini-price { font-size: 15px; color: var(--price); font-weight: 800; }
 
         /* Premium Detail View Overlay */
-        .detail-view img { width: 100%; height: 280px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-        .back-to-shop { display: inline-flex; align-items: center; color: var(--primary); font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 15px; transition: 0.2s; }
-        .back-to-shop:hover { color: var(--primary-dark); }
+        .detail-view img { width: 100%; height: 280px; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); }
+        .back-to-shop { display: inline-flex; align-items: center; color: var(--primary); font-size: 14px; font-weight: 700; cursor: pointer; margin-bottom: 15px; }
 
         /* Sleek Stepper */
         .track-container { background: var(--primary-light); border: 1px solid #c7d2fe; border-radius: var(--radius); padding: 16px; margin-bottom: 20px; }
@@ -79,21 +73,17 @@
 
         .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
         .stat-item { background: #f8fafc; padding: 16px; border-radius: 12px; border: 1px solid var(--border); text-align: center; }
-        .stat-item p { margin: 0 0 4px 0; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; }
+        .stat-item p { margin: 0 0 4px 0; font-size: 11px; font-weight: 700; color: var(--text-muted); }
         .stat-item h3 { margin: 0; font-size: 20px; font-weight: 800; }
         
         .adm-prod-row { border-bottom: 1px solid var(--border); padding: 15px 0; font-size: 14px; }
-        .adm-prod-row:last-child { border-bottom: none; }
-        
-        /* Modern Badges */
-        .badge { padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3px; display: inline-block; }
+        .badge { padding: 4px 10px; border-radius: 30px; font-size: 10px; font-weight: 800; text-transform: uppercase; display: inline-block; }
         .badge-pending { background: #fef3c7; color: #d97706; }
         .badge-shipped { background: #e0f2fe; color: #0369a1; }
         .badge-delivered { background: #dcfce7; color: #15803d; }
         .badge-cancelled { background: #fee2e2; color: #ef4444; }
 
-        .cancel-btn { background: #fee2e2; color: #ef4444; padding: 6px 14px; font-size: 11px; border-radius: 8px; margin-top: 10px; width: auto; font-weight: 700; display: inline-block; cursor: pointer; transition: 0.2s; }
-        .cancel-btn:hover { background: #fca5a5; }
+        .cancel-btn { background: #fee2e2; color: #ef4444; padding: 6px 14px; font-size: 11px; border-radius: 8px; margin-top: 10px; display: inline-block; cursor: pointer; font-weight: 700; }
     </style>
     <script type="module" src="https://unpkg.com/ionicons@7.10.0/dist/ionicons/ionicons.esm.js"></script>
 </head>
@@ -106,7 +96,7 @@
         </header>
 
         <div id="scrLogin" class="app-screen active">
-            <div class="app-card" style="margin-top: 60px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);">
+            <div class="app-card" style="margin-top: 60px;">
                 <h2>Welcome Back</h2>
                 <form id="formLogin">
                     <div class="form-group"><label>Email Address</label><input type="email" id="logEmail" required></div>
@@ -150,7 +140,7 @@
             <div id="productDetailView" class="detail-view" style="display:none;">
                 <div class="back-to-shop" onclick="closeProductDetails()"><ion-icon name="arrow-back-outline" style="margin-right:6px; font-size:18px;"></ion-icon> Back to Catalog</div>
                 <div class="app-card" style="padding:15px; border-radius:20px;">
-                    <img id="dtlImg" src="" alt="preview">
+                    <img id="dtlImg" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23f1f5f9'/><text x='50%' y='50%' font-family='sans-serif' font-size='12' fill='%2394a3b8' text-anchor='middle' dy='.3em'>Loading Image...</text></svg>" alt="preview">
                     <h2 style="font-size:1.4rem; font-weight:800; margin:15px 0 6px 0;" id="dtlTitle">-</h2>
                     <div style="font-size:1.5rem; font-weight:800; color:var(--price); margin-bottom:12px;" id="dtlPrice">₹0</div>
                     <p style="color:#475569; font-size:14px; line-height:1.6; margin-bottom:20px;" id="dtlDesc">-</p>
@@ -169,7 +159,7 @@
 
                         <div id="upiPaymentBox" style="display:none; margin-top:15px; text-align:center;">
                             <p style="font-size:12px; font-weight:700; color:#64748b; margin-bottom:10px;">Scan QR & Pay Amount. Upload proof screenshot:</p>
-                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=tanishmandloi2006@okaxis%26pn=Tanish%20Mandloi" alt="QR Code Engine" style="width:140px; height:140px; margin-bottom:12px; border-radius:10px; border:1px solid #e2e8f0; padding:5px;">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=tanishmandloi2006@okaxis%26pn=Tanish%20Mandloi" alt="QR Code" style="width:140px; height:140px; margin-bottom:12px; border-radius:10px; border:1px solid #e2e8f0; padding:5px;">
                             <input type="file" id="checkoutPaymentProof" accept="image/*" style="font-size:12px; background:none; border:none; padding:0;">
                         </div>
 
@@ -200,7 +190,7 @@
                     <p style="margin:4px 0;"><b>WhatsApp Contact:</b> <span id="profPhone" style="color:#000; font-weight:600;">-</span></p>
                     <p style="margin:4px 0; display:flex; flex-direction:column;"><b>Logistics Destination:</b> <span id="profAddress" style="color:#475569; font-weight:600; margin-top:2px; background:#fff; padding:8px; border-radius:8px; border:1px solid #e2e8f0;">-</span></p>
                 </div>
-                <button onclick="appLogout()" style="background:#ef4444; box-shadow:0 4px 10px rgba(239, 68, 68, 0.2);">Disconnect Authentication</button>
+                <button onclick="appLogout()" style="background:#ef4444;">Disconnect Authentication</button>
             </div>
         </div>
 
@@ -226,11 +216,11 @@
                     <div class="form-group"><label>Product Variants (Comma Separated, e.g: Black, Red, White)</label><input type="text" id="admInpVariants" placeholder="M, L, XL or Black, White"></div>
                     <div class="form-group">
                         <label>Image Assets (Select Gallery File)</label>
-                        <input type="text" id="admInpImgUrl" placeholder="Direct Link URL string parameters" style="margin-bottom:8px;">
+                        <input type="text" id="admInpImgUrl" placeholder="Direct URL (Optional)" style="margin-bottom:8px;">
                         <input type="file" id="admInpFile" accept="image/*" style="border:none; font-size:12px; padding:0; background:none;">
                     </div>
-                    <button type="submit" id="btnAdminSave" style="background:#10b981; box-shadow:0 4px 10px rgba(16, 185, 129, 0.2);">Push Changes Live</button>
-                    <button type="button" id="btnCancelEdit" style="background:#64748b; margin-top:8px; display:none; box-shadow:none;" onclick="resetAdminForm()">Cancel Edit Mode</button>
+                    <button type="submit" id="btnAdminSave" style="background:#10b981;">Push Changes Live</button>
+                    <button type="button" id="btnCancelEdit" style="background:#64748b; margin-top:8px; display:none;" onclick="resetAdminForm()">Cancel Edit Mode</button>
                 </form>
             </div>
 
@@ -351,15 +341,19 @@
         onSnapshot(query(collection(db, "products"), orderBy("createdAt", "desc")), (snap) => {
             const grid = document.getElementById('catalogGrid');
             grid.innerHTML = "";
-            if(snap.empty) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>Catalog is completely empty.</p>"; return; }
+            if(snap.empty) { grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:var(--text-muted); padding:30px 0;'>Catalog is empty. Add products from Admin!</p>"; return; }
             
             snap.forEach(d => {
                 const p = d.data();
                 const card = document.createElement('div');
                 card.className = "product-mini-card";
                 card.onclick = () => launchProductDeepDetails(d.id, p);
+                
+                // HEADPHONE FALLBACK REMOVED: Replaced with clean gray canvas base tag code
+                const imageSrc = p.img ? p.img : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23e2e8f0'/></svg>";
+                
                 card.innerHTML = `
-                    <img class="mini-img" src="${p.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300'}" alt="asset">
+                    <img class="mini-img" src="${imageSrc}" alt="asset">
                     <div class="mini-title">${p.title}</div>
                     <div class="mini-price">₹${p.price}</div>
                 `;
@@ -374,8 +368,8 @@
             document.getElementById('dtlPrice').innerText = "₹" + data.price;
             document.getElementById('dtlDesc').innerText = data.desc;
             
-            // BUG FIX HERE: Explicitly prioritizing uploaded custom dynamic URLs over generic defaults
-            document.getElementById('dtlImg').src = data.img ? data.img : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500';
+            // HEADPHONE FALLBACK REMOVED
+            document.getElementById('dtlImg').src = data.img ? data.img : "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'><rect width='100%' height='100%' fill='%23f1f5f9'/></svg>";
             document.getElementById('couponCodeInp').value = "";
 
             const sel = document.getElementById('dtlVariantSelect');
@@ -404,11 +398,11 @@
                 appliedPriceFactor = 0.90;
                 const newPrice = Math.round(activeProductContext.price * appliedPriceFactor);
                 document.getElementById('dtlPrice').innerText = `₹${newPrice} (10% Coupon Applied!)`;
-                alert("Promo Coupon validated! 10% instant discount applied.");
-            } else { alert("Invalid promo coupon code configuration."); }
+                alert("Promo Coupon validated! 10% discount applied.");
+            } else { alert("Invalid promo coupon code."); }
         }
 
-        // CHECKOUT PROCESS ACTION
+        // CHECKOUT
         document.getElementById('btnCheckout').addEventListener('click', async () => {
             if(!profileCache || !activeProductContext) return;
             const b = document.getElementById('btnCheckout');
@@ -420,7 +414,7 @@
 
             try {
                 if(mode === "ONLINE" && file) {
-                    b.innerText = "Syncing payment screen asset proof...";
+                    b.innerText = "Syncing payment proof...";
                     const form = new FormData(); form.append('image', file);
                     const res = await fetch(`https://api.imgbb.com/1/upload?key=6df750fdf509531a74d50937a06041ec`, { method: 'POST', body: form });
                     const rData = await res.json();
@@ -447,11 +441,11 @@
                 alert(`Order confirmed for ${orderPayload.item}! 🎉`);
                 fireMockWhatsAppPayloadGateway(orderPayload.phone, `Hello ${orderPayload.name}, purchase entry logged! Status: PENDING.`);
                 closeProductDetails();
-            } catch(e) { alert("Checkout gateway loops trace failed."); }
+            } catch(e) { alert("Checkout failed."); }
             finally { b.disabled = false; b.innerText = "⚡ Lock Instant Order Package"; }
         });
 
-        // USER TIMELINE HISTORY LIVE STREAMS
+        // TIMELINE HISTORY
         function initCustomerTimelineObserver(uid) {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 let currentActiveOrderTrackerNode = null;
@@ -503,7 +497,7 @@
             }
         }
 
-        // --- OPERATIONS DESK CENTER (ADMIN) ---
+        // --- ADMIN OPERATIONAL CORE ---
         function initAdminCoreOperationsEngine() {
             onSnapshot(query(collection(db, "orders"), orderBy("date", "desc")), (snap) => {
                 document.getElementById('admOrderCount').innerText = snap.size;
@@ -518,16 +512,16 @@
                     if(o.status === 'delivered') calculatedRevenueMetricSum += Number(o.price);
 
                     let proofLinkDomElementBlock = "";
-                    if(o.proofImg) proofLinkDomElementBlock = `<br>🖼️ <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">View Payment Screenshot Proof</a>`;
+                    if(o.proofImg) proofLinkDomElementBlock = `<br>🖼 ... <a href="${o.proofImg}" target="_blank" style="color:var(--primary); font-weight:700;">View Payment Proof</a>`;
 
                     const row = document.createElement('div');
                     row.className = "adm-prod-row";
                     row.innerHTML = `
                         <div style="width:100%; border-bottom:1px dashed #e2e8f0; padding-bottom:6px; margin-bottom:6px;">👤 <b>${o.name}</b> (${o.phone}) <span class="badge badge-${o.status}" style="float:right;">${o.status}</span></div>
                         <div>Asset: <b>${o.item}</b> | Bill: <b>₹${o.price}</b></div>
-                        <div style="font-size:12px; color:var(--text-muted); margin-top:4px; line-height:1.4;">📍 Dest: ${o.address} <br><b>Mode:</b> ${o.payMode} ${proofLinkDomElementBlock}</div>
+                        <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">📍 Dest: ${o.address} [Mode: ${o.payMode}] ${proofLinkDomElementBlock}</div>
                         <div style="margin-top:10px; width:100%;">
-                            <select class="adm-pipeline-status-selector" data-id="${id}" data-phone="${o.phone}" data-name="${o.name}" data-title="${o.item}" style="padding:8px; font-size:13px; width:auto; background:#fff;">
+                            <select class="adm-pipeline-status-selector" data-id="${id}" data-phone="${o.phone}" data-name="${o.name}" data-title="${o.item}" style="padding:8px; font-size:13px; background:#fff;">
                                 <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
                                 <option value="shipped" ${o.status==='shipped'?'selected':''}>Shipped</option>
                                 <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
@@ -546,7 +540,7 @@
                         const statusValueStr = e.target.value;
                         await updateDoc(doc(db, "orders", targetDocId), { status: statusValueStr });
                         alert("Database records updated successfully!");
-                        fireMockWhatsAppPayloadGateway(e.target.getAttribute('data-phone'), `Hello ${e.target.getAttribute('data-name')}, your order for "${e.target.getAttribute('data-title')}" is now: ${statusValueStr.toUpperCase()}.`);
+                        fireMockWhatsAppPayloadGateway(e.target.getAttribute('data-phone'), `Hello ${e.target.getAttribute('data-name')}, your order status is: ${statusValueStr.toUpperCase()}.`);
                     });
                 });
             });
@@ -564,8 +558,8 @@
                     line.innerHTML = `
                         <div style="max-width:60%;"><b>${p.title}</b><br><span style="color:var(--price); font-weight:700;">₹${p.price}</span></div>
                         <div>
-                            <button onclick="launchAdminProductEditMode('${d.id}', \`${btoa(JSON.stringify(p))}\`)" style="padding:6px 12px; font-size:12px; width:auto; background:#f59e0b; margin-right:4px; box-shadow:none;">Edit</button>
-                            <button onclick="triggerAdminDeleteTransaction('${d.id}')" style="padding:6px 12px; font-size:12px; width:auto; background:#ef4444; box-shadow:none;">Del</button>
+                            <button onclick="launchAdminProductEditMode('${d.id}', \`${btoa(JSON.stringify(p))}\`)" style="padding:6px 12px; font-size:12px; width:auto; background:#f59e0b; margin-right:4px;">Edit</button>
+                            <button onclick="triggerAdminDeleteTransaction('${d.id}')" style="padding:6px 12px; font-size:12px; width:auto; background:#ef4444;">Del</button>
                         </div>
                     `;
                     holder.appendChild(line);
